@@ -1,0 +1,516 @@
+```css
+/* =================================
+   CIVICVOICE COMMON CSS
+   ================================= */
+
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #f4f6f8;
+    color: #222;
+}
+
+h1,
+h2,
+h3 {
+    color: #1f3c88;
+}
+
+button {
+    padding: 10px 18px;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 14px;
+}
+
+input,
+select,
+textarea {
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    font-size: 14px;
+}
+
+a {
+    color: #1f3c88;
+    text-decoration: none;
+}
+
+a:hover {
+    text-decoration: underline;
+}
+
+
+/* =================================
+   CIVICVOICE HEADER
+   ================================= */
+
+.civic-header {
+    background-color: white;
+    padding: 15px 30px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    border-bottom: 1px solid #ddd;
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+}
+
+.civic-logo {
+    font-size: 24px;
+    font-weight: bold;
+    color: #1f3c88;
+}
+
+.civic-nav {
+    display: flex;
+    gap: 10px;
+    align-items: center;
+}
+
+.civic-nav a {
+    padding: 8px 12px;
+    color: #333;
+    text-decoration: none;
+    border-radius: 5px;
+}
+
+.civic-nav a:hover {
+    background-color: #f0f2f5;
+    text-decoration: none;
+}
+
+
+/* =================================
+   HOME FEED
+   ================================= */
+
+.feed-title {
+    max-width: 680px;
+    margin: 30px auto 20px;
+    padding: 0 15px;
+}
+
+.feed-card {
+    max-width: 680px;
+    margin: 0 auto 24px;
+    padding: 0;
+    background-color: white;
+    border: 1px solid #ddd;
+    border-radius: 14px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
+    overflow: hidden;
+}
+
+.feed-card h3 {
+    margin: 0;
+    padding: 18px 20px 8px;
+}
+
+.feed-info {
+    padding: 0 20px;
+    line-height: 1.6;
+    margin: 6px 0;
+}
+
+
+/* =================================
+   FEED ACTIONS
+   ================================= */
+
+.feed-actions {
+    display: flex;
+    gap: 10px;
+    margin: 0;
+    padding: 14px 20px;
+    border-top: 1px solid #eee;
+    background-color: white;
+    flex-wrap: wrap;
+}
+
+.feed-actions a {
+    text-decoration: none;
+}
+
+.feed-actions button {
+    min-width: 110px;
+    padding: 10px 14px;
+    border-radius: 20px;
+    background-color: #f0f2f5;
+    color: #333;
+    border: 1px solid #ddd;
+    font-weight: 500;
+    cursor: pointer;
+    transition: 0.2s;
+}
+
+.feed-actions button:hover {
+    background-color: #e2e5e9;
+    transform: translateY(-1px);
+}
+
+
+/* =================================
+   CIVICVOICE MEDIA
+   ================================= */
+
+.carousel {
+    width: 100%;
+    max-width: 600px;
+    margin: 18px auto 5px;
+    border-radius: 10px;
+    overflow: hidden;
+    background-color: #f5f5f5;
+}
+
+.slide img {
+    width: 100%;
+    max-width: 600px;
+    height: 450px;
+    object-fit: cover;
+    display: block;
+}
+
+.image-counter {
+    width: 100%;
+    max-width: 600px;
+    margin: 8px auto;
+    text-align: center;
+    font-size: 14px;
+    color: #666;
+}
+
+.civic-video {
+    width: 100%;
+    max-width: 600px;
+    max-height: 600px;
+    display: block;
+    margin: 18px auto;
+    border-radius: 10px;
+    background-color: #000;
+}
+
+.feed-card .carousel,
+.feed-card .civic-video {
+    margin-top: 18px;
+    margin-bottom: 0;
+    border-radius: 0;
+}
+
+
+/* =================================
+   CREATE POST PAGE
+   ================================= */
+
+.create-page {
+    min-height: calc(100vh - 70px);
+    padding: 30px 15px 50px;
+}
+
+.create-post-container {
+    max-width: 700px;
+    margin: 0 auto;
+    padding: 30px;
+    background-color: white;
+    border: 1px solid #ddd;
+    border-radius: 16px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
+}
+
+.create-post-heading {
+    text-align: center;
+    margin-bottom: 30px;
+}
+
+.create-icon {
+    width: 55px;
+    height: 55px;
+    margin: 0 auto 12px;
+    border-radius: 50%;
+    background-color: #1f3c88;
+    color: white;
+    font-size: 32px;
+    line-height: 52px;
+    font-weight: bold;
+}
+
+.create-post-heading h1 {
+    margin: 0;
+    font-size: 28px;
+}
+
+.create-post-heading p {
+    margin-top: 8px;
+    color: #666;
+}
+
+
+/* =================================
+   CREATE POST FORM
+   ================================= */
+
+.form-section {
+    margin-bottom: 28px;
+    padding-bottom: 22px;
+    border-bottom: 1px solid #eee;
+}
+
+.form-section:last-of-type {
+    border-bottom: none;
+}
+
+.form-section h3 {
+    margin-top: 0;
+    margin-bottom: 15px;
+    font-size: 18px;
+}
+
+.form-section label {
+    display: block;
+    margin-bottom: 7px;
+    font-weight: bold;
+    color: #333;
+}
+
+.create-post-container input,
+.create-post-container select,
+.create-post-container textarea {
+    width: 100%;
+    box-sizing: border-box;
+    margin-bottom: 15px;
+}
+
+.create-post-container input:focus,
+.create-post-container select:focus,
+.create-post-container textarea:focus {
+    outline: none;
+    border-color: #1f3c88;
+    box-shadow: 0 0 0 2px rgba(31, 60, 136, 0.1);
+}
+
+
+/* =================================
+   LOCATION ROW
+   ================================= */
+
+.form-row {
+    display: flex;
+    gap: 15px;
+}
+
+.form-group {
+    flex: 1;
+}
+
+
+/* =================================
+   ISSUE DESCRIPTION
+   ================================= */
+
+.create-post-container textarea {
+    min-height: 140px;
+    resize: vertical;
+}
+
+.form-section small {
+    display: block;
+    margin-top: -5px;
+    color: #777;
+    line-height: 1.5;
+}
+
+
+/* =================================
+   UPLOAD AREA
+   ================================= */
+
+.upload-box {
+    padding: 20px;
+    border: 2px dashed #ccc;
+    border-radius: 10px;
+    background-color: #fafafa;
+    text-align: center;
+}
+
+.upload-box input {
+    margin-bottom: 8px;
+}
+
+#upload_message {
+    margin: 5px 0 0;
+    color: #666;
+}
+
+
+/* =================================
+   PUBLISH BUTTON
+   ================================= */
+
+.publish-button {
+    width: 100%;
+    padding: 14px;
+    margin-top: 5px;
+    background-color: #1f3c88;
+    color: white;
+    border-radius: 25px;
+    font-size: 16px;
+    font-weight: bold;
+}
+
+.publish-button:hover {
+    background-color: #162d66;
+    transform: translateY(-1px);
+}
+
+
+/* =================================
+   BACK TO HOME
+   ================================= */
+
+.back-home {
+    display: block;
+    margin-top: 20px;
+    text-align: center;
+    font-weight: bold;
+}
+
+
+/* =================================
+   SUCCESS PAGE
+   ================================= */
+
+.success-container {
+    max-width: 500px;
+    margin: 100px auto;
+    padding: 35px;
+    background-color: white;
+    border: 1px solid #ddd;
+    border-radius: 16px;
+    text-align: center;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
+}
+
+.success-icon {
+    width: 65px;
+    height: 65px;
+    margin: 0 auto 15px;
+    border-radius: 50%;
+    background-color: #1f3c88;
+    color: white;
+    font-size: 40px;
+    line-height: 62px;
+}
+
+.success-container h2 {
+    margin-bottom: 8px;
+}
+
+.success-container p {
+    color: #666;
+}
+
+.success-details {
+    margin: 25px 0;
+    padding: 15px;
+    background-color: #f5f6f8;
+    border-radius: 8px;
+}
+
+.success-details p {
+    margin: 8px 0;
+}
+
+.success-button {
+    display: inline-block;
+    padding: 12px 22px;
+    background-color: #1f3c88;
+    color: white;
+    border-radius: 22px;
+    text-decoration: none;
+}
+
+.success-button:hover {
+    background-color: #162d66;
+    text-decoration: none;
+}
+
+
+/* =================================
+   MOBILE RESPONSIVE DESIGN
+   ================================= */
+
+@media (max-width: 700px) {
+
+    .civic-header {
+        padding: 12px 15px;
+    }
+
+    .civic-logo {
+        font-size: 20px;
+    }
+
+    .civic-nav {
+        gap: 3px;
+    }
+
+    .civic-nav a {
+        padding: 7px 6px;
+        font-size: 13px;
+    }
+
+    .feed-title {
+        margin-top: 20px;
+        padding: 0 10px;
+    }
+
+    .feed-card {
+        width: 100%;
+        margin-bottom: 15px;
+        border-left: none;
+        border-right: none;
+        border-radius: 0;
+    }
+
+    .feed-card h3 {
+        padding-left: 15px;
+        padding-right: 15px;
+    }
+
+    .feed-info {
+        padding-left: 15px;
+        padding-right: 15px;
+    }
+
+    .feed-actions {
+        padding-left: 15px;
+        padding-right: 15px;
+    }
+
+    .create-page {
+        padding: 15px 10px 35px;
+    }
+
+    .create-post-container {
+        padding: 20px 15px;
+        border-radius: 12px;
+    }
+
+    .create-post-heading h1 {
+        font-size: 24px;
+    }
+
+    .form-row {
+        flex-direction: column;
+        gap: 0;
+    }
+
+    .success-container {
+        margin: 50px 15px;
+        padding: 25px 20px;
+    }
+}
+```
