@@ -13,14 +13,15 @@ include "db.php";
 
 
 /* ================================================= */
-/* SUPPORT BUTTON PROCESSING */
+/* SUPPORT BUTTON */
 /* ================================================= */
 
 if (isset($_GET["support"])) {
 
     $feed_id = $_GET["support"];
 
-    $check = "SELECT * FROM complaint_support
+    $check = "SELECT *
+              FROM complaint_support
               WHERE complaint_id='$feed_id'
               AND citizen_id='$citizen_id'";
 
@@ -44,47 +45,52 @@ if (isset($_GET["support"])) {
 /* GET COMPLAINTS */
 /* ================================================= */
 
-$complaint_sql = "SELECT
-                    complaint_id AS feed_id,
-                    'Complaint' AS feed_type,
-                    citizen_id,
-                    area_name,
-                    department_id,
-                    issue_description,
-                    issue_image AS post_image,
-                    NULL AS post_video,
-                    status,
-                    created_at
-                  FROM complaints";
+$complaint_sql = "
+    SELECT
+        complaint_id AS feed_id,
+        'Complaint' AS feed_type,
+        citizen_id,
+        area_name,
+        department_id,
+        issue_description,
+        issue_image AS post_image,
+        NULL AS post_video,
+        status,
+        created_at
+    FROM complaints
+";
 
 
 /* ================================================= */
 /* GET CIVIC POSTS */
 /* ================================================= */
 
-$post_sql = "SELECT
-                CONCAT('P', post_id) AS feed_id,
-                'Post' AS feed_type,
-                citizen_id,
-                area_name,
-                department_id,
-                issue_description,
-                post_image,
-                post_video,
-                'Posted' AS status,
-                created_at
-             FROM civic_posts";
+$post_sql = "
+    SELECT
+        CONCAT('P', post_id) AS feed_id,
+        'Post' AS feed_type,
+        citizen_id,
+        area_name,
+        department_id,
+        issue_description,
+        post_image,
+        post_video,
+        'Posted' AS status,
+        created_at
+    FROM civic_posts
+";
 
 
 /* ================================================= */
-/* COMBINE COMPLAINTS AND POSTS */
+/* COMBINE FEED */
 /* ================================================= */
 
-$sql = "($complaint_sql)
-        UNION ALL
-        ($post_sql)
-        ORDER BY created_at DESC";
-
+$sql = "
+    ($complaint_sql)
+    UNION ALL
+    ($post_sql)
+    ORDER BY created_at DESC
+";
 
 $result = mysqli_query($conn, $sql);
 
@@ -96,9 +102,9 @@ $result = mysqli_query($conn, $sql);
 
 <head>
 
-    <link rel="stylesheet" href="style.css">
-
     <title>CivicVoice Home</title>
+
+    <link rel="stylesheet" href="style.css">
 
     <style>
 
@@ -108,11 +114,12 @@ $result = mysqli_query($conn, $sql);
 
         body {
             background-color: #f4f6f8;
+            margin: 0;
         }
 
 
         /* ================================================= */
-        /* CIVICVOICE HEADER */
+        /* HEADER */
         /* ================================================= */
 
         .civic-header {
@@ -158,7 +165,7 @@ $result = mysqli_query($conn, $sql);
 
 
         /* ================================================= */
-        /* WELCOME SECTION */
+        /* WELCOME */
         /* ================================================= */
 
         .welcome-section {
@@ -197,35 +204,56 @@ $result = mysqli_query($conn, $sql);
         /* ================================================= */
 
         .feed-card {
+            width: calc(100% - 40px);
             max-width: 700px;
             margin: 20px auto;
             padding: 20px;
             background-color: white;
             border: 1px solid #ddd;
-            border-radius: 10px;
+            border-radius: 12px;
+            box-sizing: border-box;
         }
 
 
         .feed-card h3 {
             margin-top: 0;
+            margin-bottom: 15px;
         }
 
 
         .feed-info {
             margin: 8px 0;
+            line-height: 1.6;
         }
 
 
+        /* ================================================= */
+        /* FEED ACTIONS */
+        /* ================================================= */
+
         .feed-actions {
-            margin-top: 15px;
+            margin-top: 18px;
+            padding-top: 15px;
+            border-top: 1px solid #eee;
+
             display: flex;
-            gap: 8px;
+            gap: 10px;
             flex-wrap: wrap;
+        }
+
+
+        .feed-actions a {
+            text-decoration: none;
         }
 
 
         .feed-actions button {
             background-color: #f0f2f5;
+            color: #333;
+            border: 1px solid #ddd;
+            padding: 10px 14px;
+            border-radius: 20px;
+            cursor: pointer;
         }
 
 
@@ -239,73 +267,58 @@ $result = mysqli_query($conn, $sql);
         /* ================================================= */
 
         .carousel {
-
-            width: 300px;
-
+            width: 600px;
             max-width: 100%;
-
             overflow: hidden;
-
             position: relative;
 
             touch-action: pan-y;
-
             cursor: grab;
-
             user-select: none;
 
-            background: #f5f5f5;
+            background-color: #f5f5f5;
 
-            margin: 15px auto;
+            margin: 18px auto 5px;
 
+            border-radius: 10px;
         }
 
 
         .carousel.dragging {
-
             cursor: grabbing;
-
         }
 
 
         .slider {
-
             display: flex;
-
             width: 100%;
 
             transition: transform 0.35s ease;
 
             will-change: transform;
-
         }
 
 
         .slide {
-
             flex: 0 0 100%;
-
             width: 100%;
-
         }
 
 
         .slide img {
+            width: 600px;
+            max-width: 100%;
 
-            width: 300px;
-
-            height: 300px;
+            height: 450px;
 
             object-fit: cover;
 
             display: block;
 
             pointer-events: none;
-
             user-select: none;
 
             -webkit-user-drag: none;
-
         }
 
 
@@ -314,9 +327,7 @@ $result = mysqli_query($conn, $sql);
         /* ================================================= */
 
         .image-counter {
-
-            width: 300px;
-
+            width: 600px;
             max-width: 100%;
 
             text-align: center;
@@ -324,7 +335,7 @@ $result = mysqli_query($conn, $sql);
             margin: 8px auto;
 
             font-weight: bold;
-
+            color: #555;
         }
 
 
@@ -333,15 +344,18 @@ $result = mysqli_query($conn, $sql);
         /* ================================================= */
 
         .civic-video {
-
-            width: 300px;
-
+            width: 600px;
             max-width: 100%;
+
+            max-height: 600px;
 
             display: block;
 
-            margin: 15px auto;
+            margin: 18px auto;
 
+            border-radius: 10px;
+
+            background-color: black;
         }
 
 
@@ -350,12 +364,20 @@ $result = mysqli_query($conn, $sql);
         /* ================================================= */
 
         .bottom-navigation {
+            width: calc(100% - 40px);
             max-width: 700px;
+
             margin: 30px auto;
+
             padding: 20px;
+
             text-align: center;
+
             background-color: white;
+
             border-top: 1px solid #ddd;
+
+            box-sizing: border-box;
         }
 
 
@@ -371,16 +393,34 @@ $result = mysqli_query($conn, $sql);
                 gap: 12px;
             }
 
+
             .civic-nav {
                 justify-content: center;
             }
 
+
             .welcome-section,
-            .feed-title,
-            .feed-card,
-            .bottom-navigation {
+            .feed-title {
                 margin-left: 10px;
                 margin-right: 10px;
+            }
+
+
+            .feed-card {
+                width: calc(100% - 20px);
+                margin-left: 10px;
+                margin-right: 10px;
+                padding: 15px;
+            }
+
+
+            .bottom-navigation {
+                width: calc(100% - 20px);
+            }
+
+
+            .slide img {
+                height: 350px;
             }
 
         }
@@ -436,7 +476,7 @@ $result = mysqli_query($conn, $sql);
 
 
 <!-- ================================================= -->
-<!-- WELCOME SECTION -->
+<!-- WELCOME -->
 <!-- ================================================= -->
 
 <div class="welcome-section">
@@ -444,7 +484,6 @@ $result = mysqli_query($conn, $sql);
     <h2>
         Welcome, Citizen <?php echo $citizen_id; ?>
     </h2>
-
 
     <p>
         Stay informed. Support civic issues. Make your community better.
@@ -479,91 +518,160 @@ if (mysqli_num_rows($result) > 0) {
 
 
         /* ================================================= */
-        /* GET DEPARTMENT NAME */
+        /* DEPARTMENT */
         /* ================================================= */
 
-        $department_sql =
-            "SELECT department_name
-             FROM departments
-             WHERE department_id='"
-             . $row["department_id"] . "'";
+        $department_sql = "
+            SELECT department_name
+            FROM departments
+            WHERE department_id='" . $row["department_id"] . "'
+        ";
 
 
-        $department_result =
-            mysqli_query(
-                $conn,
-                $department_sql
-            );
+        $department_result = mysqli_query(
+            $conn,
+            $department_sql
+        );
 
 
-        $department_data =
-            mysqli_fetch_assoc(
-                $department_result
-            );
+        $department_data = mysqli_fetch_assoc(
+            $department_result
+        );
 
 
-        $department_name =
-            $department_data["department_name"];
+        $department_name = "";
+
+        if ($department_data) {
+            $department_name = $department_data["department_name"];
+        }
 
 
         /* ================================================= */
         /* SUPPORT COUNT */
         /* ================================================= */
 
-        $support_count_sql =
-            "SELECT COUNT(*) AS total_support
-             FROM complaint_support
-             WHERE complaint_id='$feed_id'";
+        $support_count_sql = "
+            SELECT COUNT(*) AS total_support
+            FROM complaint_support
+            WHERE complaint_id='$feed_id'
+        ";
 
 
-        $support_count_result =
-            mysqli_query(
-                $conn,
-                $support_count_sql
-            );
+        $support_count_result = mysqli_query(
+            $conn,
+            $support_count_sql
+        );
 
 
-        $support_data =
-            mysqli_fetch_assoc(
-                $support_count_result
-            );
+        $support_data = mysqli_fetch_assoc(
+            $support_count_result
+        );
 
 
-        $support_count =
-            $support_data["total_support"];
+        $support_count = $support_data["total_support"];
 
 
         /* ================================================= */
         /* COMMENT COUNT */
         /* ================================================= */
 
-        $comment_count_sql =
-            "SELECT COUNT(*) AS total_comments
-             FROM complaint_comments
-             WHERE complaint_id='$feed_id'";
+        $comment_count_sql = "
+            SELECT COUNT(*) AS total_comments
+            FROM complaint_comments
+            WHERE complaint_id='$feed_id'
+        ";
 
 
-        $comment_count_result =
-            mysqli_query(
-                $conn,
-                $comment_count_sql
+        $comment_count_result = mysqli_query(
+            $conn,
+            $comment_count_sql
+        );
+
+
+        $comment_data = mysqli_fetch_assoc(
+            $comment_count_result
+        );
+
+
+        $comment_count = $comment_data["total_comments"];
+
+
+        /* ================================================= */
+        /* GET IMAGES */
+        /* ================================================= */
+
+        $image_paths = array();
+
+
+        if ($row["feed_type"] == "Post") {
+
+            $actual_post_id = substr(
+                $feed_id,
+                1
             );
 
 
-        $comment_data =
-            mysqli_fetch_assoc(
-                $comment_count_result
-            );
+            $image_sql = "
+                SELECT image_path
+                FROM civic_post_images
+                WHERE post_id='$actual_post_id'
+                ORDER BY image_id ASC
+            ";
+
+        } else {
+
+            $image_sql = "
+                SELECT image_path
+                FROM complaint_images
+                WHERE complaint_id='$feed_id'
+                ORDER BY image_id ASC
+            ";
+
+        }
 
 
-        $comment_count =
-            $comment_data["total_comments"];
+        $image_result = mysqli_query(
+            $conn,
+            $image_sql
+        );
+
+
+        if ($image_result) {
+
+            while (
+                $image_row = mysqli_fetch_assoc(
+                    $image_result
+                )
+            ) {
+
+                $image_paths[] =
+                    $image_row["image_path"];
+
+            }
+
+        }
+
+
+        /* ================================================= */
+        /* FALLBACK IMAGE */
+        /* ================================================= */
+
+        if (
+            count($image_paths) == 0 &&
+            !empty($row["post_image"])
+        ) {
+
+            $image_paths[] =
+                $row["post_image"];
+
+        }
+
 
 ?>
 
 
 <!-- ================================================= -->
-<!-- FEED CARD -->
+<!-- ONE FEED CARD -->
 <!-- ================================================= -->
 
 <div class="feed-card">
@@ -571,63 +679,51 @@ if (mysqli_num_rows($result) > 0) {
 
 <?php
 
-
 /* ================================================= */
-/* COMPLAINT OR POST */
+/* FEED TYPE */
 /* ================================================= */
 
 if ($row["feed_type"] == "Complaint") {
 
-
 ?>
 
-<h3>
+    <h3>
+        🚨 Civic Complaint
+    </h3>
 
-    🚨 Civic Complaint
+    <p class="feed-info">
 
-</h3>
+        🆔
 
+        <strong>
+            Complaint ID:
+        </strong>
 
-<p class="feed-info">
+        <?php echo htmlspecialchars($feed_id); ?>
 
-    🆔
-
-    <strong>
-        Complaint ID:
-    </strong>
-
-    <?php echo $feed_id; ?>
-
-</p>
-
+    </p>
 
 <?php
 
-
 } else {
-
 
 ?>
 
-<h3>
+    <h3>
+        📢 Civic Post
+    </h3>
 
-    📢 Civic Post
+    <p class="feed-info">
 
-</h3>
+        🆔
 
+        <strong>
+            Post ID:
+        </strong>
 
-<p class="feed-info">
+        <?php echo htmlspecialchars($feed_id); ?>
 
-    🆔
-
-    <strong>
-        Post ID:
-    </strong>
-
-    <?php echo $feed_id; ?>
-
-</p>
-
+    </p>
 
 <?php
 
@@ -635,6 +731,10 @@ if ($row["feed_type"] == "Complaint") {
 
 ?>
 
+
+<!-- ================================================= -->
+<!-- AREA -->
+<!-- ================================================= -->
 
 <p class="feed-info">
 
@@ -644,10 +744,14 @@ if ($row["feed_type"] == "Complaint") {
         Area:
     </strong>
 
-    <?php echo $row["area_name"]; ?>
+    <?php echo htmlspecialchars($row["area_name"]); ?>
 
 </p>
 
+
+<!-- ================================================= -->
+<!-- DEPARTMENT -->
+<!-- ================================================= -->
 
 <p class="feed-info">
 
@@ -657,10 +761,14 @@ if ($row["feed_type"] == "Complaint") {
         Department:
     </strong>
 
-    <?php echo $department_name; ?>
+    <?php echo htmlspecialchars($department_name); ?>
 
 </p>
 
+
+<!-- ================================================= -->
+<!-- ISSUE -->
+<!-- ================================================= -->
 
 <p class="feed-info">
 
@@ -670,7 +778,7 @@ if ($row["feed_type"] == "Complaint") {
         Issue:
     </strong>
 
-    <?php echo $row["issue_description"]; ?>
+    <?php echo nl2br(htmlspecialchars($row["issue_description"])); ?>
 
 </p>
 
@@ -703,81 +811,7 @@ if ($row["feed_type"] == "Complaint") {
 
 
 /* ================================================= */
-/* GET IMAGE PATHS */
-/* ================================================= */
-
-$image_paths = [];
-
-
-if ($row["feed_type"] == "Post") {
-
-    $actual_post_id =
-        substr(
-            $feed_id,
-            1
-        );
-
-
-    $image_sql =
-        "SELECT image_path
-         FROM civic_post_images
-         WHERE post_id='$actual_post_id'
-         ORDER BY image_id ASC";
-
-
-} else {
-
-
-    $image_sql =
-        "SELECT image_path
-         FROM complaint_images
-         WHERE complaint_id='$feed_id'
-         ORDER BY image_id ASC";
-
-}
-
-
-$image_result =
-    mysqli_query(
-        $conn,
-        $image_sql
-    );
-
-
-if ($image_result) {
-
-    while (
-        $image_row =
-        mysqli_fetch_assoc(
-            $image_result
-        )
-    ) {
-
-        $image_paths[] =
-            $image_row["image_path"];
-
-    }
-
-}
-
-
-/* ================================================= */
-/* FALLBACK IMAGE */
-/* ================================================= */
-
-if (
-    count($image_paths) == 0 &&
-    !empty($row["post_image"])
-) {
-
-    $image_paths[] =
-        $row["post_image"];
-
-}
-
-
-/* ================================================= */
-/* DISPLAY IMAGE CAROUSEL */
+/* IMAGE CAROUSEL */
 /* ================================================= */
 
 if (count($image_paths) > 0) {
@@ -785,7 +819,11 @@ if (count($image_paths) > 0) {
 
     $carousel_id =
         "carousel_" .
-        $feed_id;
+        preg_replace(
+            "/[^a-zA-Z0-9_]/",
+            "_",
+            $feed_id
+        );
 
 ?>
 
@@ -804,24 +842,17 @@ if (count($image_paths) > 0) {
 
 <?php
 
-
-    foreach (
-        $image_paths
-        as $image_path
-    ) {
-
+    foreach ($image_paths as $image_path) {
 
 ?>
 
-
         <div class="slide">
 
-
             <img
-                src="<?php echo $image_path; ?>"
+                src="<?php echo htmlspecialchars($image_path); ?>"
                 draggable="false"
+                alt="Civic issue image"
             >
-
 
         </div>
 
@@ -848,7 +879,6 @@ if (count($image_paths) > 0) {
 
 if (count($image_paths) > 1) {
 
-
 ?>
 
 
@@ -868,7 +898,7 @@ if (count($image_paths) > 1) {
 
 
 /* ================================================= */
-/* CREATE SLIDER */
+/* IMAGE SLIDER JAVASCRIPT */
 /* ================================================= */
 
 ?>
@@ -932,10 +962,7 @@ if (count($image_paths) > 1) {
     }
 
 
-    function setSlide(
-        index,
-        animate
-    ) {
+    function setSlide(index, animate) {
 
         currentImage = index;
 
@@ -964,36 +991,35 @@ if (count($image_paths) > 1) {
     }
 
 
+    if (totalImages <= 1) {
+
+        return;
+
+    }
+
+
+    /* ================================================= */
+    /* POINTER DOWN */
+    /* ================================================= */
+
     carousel.addEventListener(
         "pointerdown",
         function (event) {
 
-            if (totalImages <= 1) {
-
-                return;
-
-            }
-
-
             startX =
                 event.clientX;
-
 
             currentX =
                 event.clientX;
 
-
             startPosition =
                 currentImage * -100;
-
 
             isDragging =
                 true;
 
-
             moved =
                 false;
-
 
             carousel.classList.add(
                 "dragging"
@@ -1004,13 +1030,23 @@ if (count($image_paths) > 1) {
                 "none";
 
 
-            carousel.setPointerCapture(
-                event.pointerId
-            );
+            try {
+
+                carousel.setPointerCapture(
+                    event.pointerId
+                );
+
+            } catch (error) {
+
+            }
 
         }
     );
 
+
+    /* ================================================= */
+    /* POINTER MOVE */
+    /* ================================================= */
 
     carousel.addEventListener(
         "pointermove",
@@ -1042,17 +1078,22 @@ if (count($image_paths) > 1) {
                 carousel.offsetWidth;
 
 
+            if (width <= 0) {
+
+                return;
+
+            }
+
+
             var movement =
-                (
-                    difference /
-                    width
-                ) * 100;
+                (difference / width) * 100;
 
 
             var position =
-                startPosition +
-                movement;
+                startPosition + movement;
 
+
+            /* FIRST IMAGE */
 
             if (
                 currentImage == 0 &&
@@ -1064,11 +1105,12 @@ if (count($image_paths) > 1) {
 
 
                 position =
-                    startPosition +
-                    movement;
+                    startPosition + movement;
 
             }
 
+
+            /* LAST IMAGE */
 
             if (
                 currentImage ==
@@ -1081,8 +1123,7 @@ if (count($image_paths) > 1) {
 
 
                 position =
-                    startPosition +
-                    movement;
+                    startPosition + movement;
 
             }
 
@@ -1095,6 +1136,10 @@ if (count($image_paths) > 1) {
         }
     );
 
+
+    /* ================================================= */
+    /* POINTER UP */
+    /* ================================================= */
 
     carousel.addEventListener(
         "pointerup",
@@ -1160,17 +1205,10 @@ if (count($image_paths) > 1) {
             }
 
 
-            slider.style.transition =
-                "transform 0.35s ease";
-
-
-            slider.style.transform =
-                "translateX(-" +
-                (currentImage * 100) +
-                "%)";
-
-
-            updateCounter();
+            setSlide(
+                currentImage,
+                true
+            );
 
 
             try {
@@ -1187,9 +1225,13 @@ if (count($image_paths) > 1) {
     );
 
 
+    /* ================================================= */
+    /* POINTER CANCEL */
+    /* ================================================= */
+
     carousel.addEventListener(
         "pointercancel",
-        function (event) {
+        function () {
 
             if (!isDragging) {
 
@@ -1207,18 +1249,23 @@ if (count($image_paths) > 1) {
             );
 
 
-            slider.style.transition =
-                "transform 0.35s ease";
-
-
-            slider.style.transform =
-                "translateX(-" +
-                (currentImage * 100) +
-                "%)";
+            setSlide(
+                currentImage,
+                true
+            );
 
         }
     );
 
+
+    /* ================================================= */
+    /* INITIAL SLIDE */
+    /* ================================================= */
+
+    setSlide(
+        0,
+        false
+    );
 
 })();
 
@@ -1229,8 +1276,6 @@ if (count($image_paths) > 1) {
 
 }
 
-}
-
 
 /* ================================================= */
 /* VIDEO */
@@ -1238,25 +1283,21 @@ if (count($image_paths) > 1) {
 
 if (!empty($row["post_video"])) {
 
-
 ?>
 
 
 <video
     class="civic-video"
     controls
+    playsinline
 >
 
-
     <source
-        src="<?php echo $row["post_video"]; ?>"
+        src="<?php echo htmlspecialchars($row["post_video"]); ?>"
         type="video/mp4"
     >
 
-
-    Your browser does not support
-    video playback.
-
+    Your browser does not support video playback.
 
 </video>
 
@@ -1265,12 +1306,13 @@ if (!empty($row["post_video"])) {
 
 }
 
+
+/* ================================================= */
+/* STATUS */
+/* ================================================= */
+
 ?>
 
-
-<!-- ================================================= -->
-<!-- STATUS -->
-<!-- ================================================= -->
 
 <p class="feed-info">
 
@@ -1280,13 +1322,13 @@ if (!empty($row["post_video"])) {
         Status:
     </strong>
 
-    <?php echo $row["status"]; ?>
+    <?php echo htmlspecialchars($row["status"]); ?>
 
 </p>
 
 
 <!-- ================================================= -->
-<!-- FEED ACTIONS -->
+<!-- ACTION BUTTONS -->
 <!-- ================================================= -->
 
 <div class="feed-actions">
@@ -1295,10 +1337,10 @@ if (!empty($row["post_video"])) {
     <!-- SUPPORT -->
 
     <a
-        href="home.php?support=<?php echo $feed_id; ?>"
+        href="home.php?support=<?php echo urlencode($feed_id); ?>"
     >
 
-        <button>
+        <button type="button">
 
             👍 Support <?php echo $support_count; ?>
 
@@ -1310,10 +1352,10 @@ if (!empty($row["post_video"])) {
     <!-- COMMENT -->
 
     <a
-        href="comments.php?complaint_id=<?php echo $feed_id; ?>"
+        href="comments.php?complaint_id=<?php echo urlencode($feed_id); ?>"
     >
 
-        <button>
+        <button type="button">
 
             💬 Comment <?php echo $comment_count; ?>
 
@@ -1322,17 +1364,7 @@ if (!empty($row["post_video"])) {
     </a>
 
 
-    <!-- SHARE -->
-
-    <button
-        onclick="shareComplaint(
-            '<?php echo $feed_id; ?>'
-        )"
-    >
-
-        🔗 Share
-
-    </button>
+   
 
 
 </div>
@@ -1343,14 +1375,18 @@ if (!empty($row["post_video"])) {
 
 <?php
 
-
     }
 
- else {
+}
 
+else {
 
 ?>
 
+
+<!-- ================================================= -->
+<!-- NO POSTS -->
+<!-- ================================================= -->
 
 <div class="feed-card">
 
@@ -1376,6 +1412,7 @@ if (!empty($row["post_video"])) {
 
 
     <button
+        type="button"
         onclick="window.location.href='dashboard.php'"
     >
 
@@ -1385,6 +1422,7 @@ if (!empty($row["post_video"])) {
 
 
     <button
+        type="button"
         onclick="window.location.href='logout.php'"
     >
 
@@ -1396,24 +1434,21 @@ if (!empty($row["post_video"])) {
 </div>
 
 
+<!-- ================================================= -->
+<!-- SHARE FUNCTION -->
+<!-- ================================================= -->
+
 <script>
 
-
-/* ================================================= */
-/* SHARE FUNCTION */
-/* ================================================= */
-
-function shareComplaint(feedId) {
 
 
     var shareUrl =
         window.location.origin +
         "/CivicVoice/comments.php?complaint_id=" +
-        feedId;
+        encodeURIComponent(feedId);
 
 
     if (navigator.share) {
-
 
         navigator.share({
 
@@ -1426,20 +1461,46 @@ function shareComplaint(feedId) {
             url:
                 shareUrl
 
+        }).catch(function () {
+
+            /* User cancelled share */
+
         });
 
+    }
 
-    } else {
+    else {
 
+        if (
+            navigator.clipboard &&
+            navigator.clipboard.writeText
+        ) {
 
-        navigator.clipboard.writeText(
-            shareUrl
-        );
+            navigator.clipboard.writeText(
+                shareUrl
+            ).then(function () {
 
+                alert(
+                    "Post link copied!"
+                );
 
-        alert(
-            "Post link copied!"
-        );
+            }).catch(function () {
+
+                alert(
+                    "Unable to copy the link."
+                );
+
+            });
+
+        }
+
+        else {
+
+            alert(
+                "Sharing is not supported on this browser."
+            );
+
+        }
 
     }
 
