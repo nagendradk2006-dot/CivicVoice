@@ -18,14 +18,31 @@ include "db.php";
 
 if (isset($_GET["support"])) {
 
-    $feed_id = $_GET["support"];
+    $feed_id = mysqli_real_escape_string(
+        $conn,
+        $_GET["support"]
+    );
+
+
+    /* CHECK WHETHER THIS CITIZEN ALREADY SUPPORTED */
 
     $check = "SELECT *
               FROM complaint_support
               WHERE complaint_id='$feed_id'
               AND citizen_id='$citizen_id'";
 
-    $check_result = mysqli_query($conn, $check);
+    $check_result = mysqli_query(
+        $conn,
+        $check
+    );
+
+
+    if (!$check_result) {
+        die("Support Check Error: " . mysqli_error($conn));
+    }
+
+
+    /* INSERT SUPPORT ONLY ONCE */
 
     if (mysqli_num_rows($check_result) == 0) {
 
@@ -33,8 +50,23 @@ if (isset($_GET["support"])) {
                         (complaint_id, citizen_id)
                         VALUES ('$feed_id', '$citizen_id')";
 
-        mysqli_query($conn, $support_sql);
+        $support_result = mysqli_query(
+            $conn,
+            $support_sql
+        );
+
+
+        if (!$support_result) {
+            die("Support Error: " . mysqli_error($conn));
+        }
     }
+
+
+    /*
+     * Return to home page.
+     * JavaScript below will restore the previous
+     * scroll position.
+     */
 
     header("Location: home.php");
     exit;
@@ -92,7 +124,16 @@ $sql = "
     ORDER BY created_at DESC
 ";
 
-$result = mysqli_query($conn, $sql);
+
+$result = mysqli_query(
+    $conn,
+    $sql
+);
+
+
+if (!$result) {
+    die("Feed Error: " . mysqli_error($conn));
+}
 
 ?>
 
@@ -105,6 +146,7 @@ $result = mysqli_query($conn, $sql);
     <title>CivicVoice Home</title>
 
     <link rel="stylesheet" href="style.css">
+
 
     <style>
 
@@ -124,42 +166,59 @@ $result = mysqli_query($conn, $sql);
 
         .civic-header {
             background-color: white;
+
             padding: 15px 30px;
+
             display: flex;
+
             align-items: center;
+
             justify-content: space-between;
+
             border-bottom: 1px solid #ddd;
+
             position: sticky;
+
             top: 0;
+
             z-index: 1000;
         }
 
 
         .civic-logo {
             font-size: 24px;
+
             font-weight: bold;
+
             color: #1f3c88;
         }
 
 
         .civic-nav {
             display: flex;
+
             gap: 10px;
+
             align-items: center;
+
             flex-wrap: wrap;
         }
 
 
         .civic-nav a {
             padding: 8px 12px;
+
             color: #333;
+
             text-decoration: none;
+
             border-radius: 5px;
         }
 
 
         .civic-nav a:hover {
             background-color: #f0f2f5;
+
             text-decoration: none;
         }
 
@@ -170,10 +229,15 @@ $result = mysqli_query($conn, $sql);
 
         .welcome-section {
             max-width: 700px;
+
             margin: 30px auto 15px;
+
             padding: 20px;
+
             background-color: white;
+
             border-radius: 10px;
+
             border: 1px solid #ddd;
         }
 
@@ -194,7 +258,9 @@ $result = mysqli_query($conn, $sql);
 
         .feed-title {
             max-width: 700px;
+
             margin: 20px auto;
+
             color: #1f3c88;
         }
 
@@ -205,24 +271,35 @@ $result = mysqli_query($conn, $sql);
 
         .feed-card {
             width: calc(100% - 40px);
+
             max-width: 700px;
+
             margin: 20px auto;
+
             padding: 20px;
+
             background-color: white;
+
             border: 1px solid #ddd;
+
             border-radius: 12px;
+
             box-sizing: border-box;
+
+            scroll-margin-top: 100px;
         }
 
 
         .feed-card h3 {
             margin-top: 0;
+
             margin-bottom: 15px;
         }
 
 
         .feed-info {
             margin: 8px 0;
+
             line-height: 1.6;
         }
 
@@ -233,11 +310,15 @@ $result = mysqli_query($conn, $sql);
 
         .feed-actions {
             margin-top: 18px;
+
             padding-top: 15px;
+
             border-top: 1px solid #eee;
 
             display: flex;
+
             gap: 10px;
+
             flex-wrap: wrap;
         }
 
@@ -249,10 +330,15 @@ $result = mysqli_query($conn, $sql);
 
         .feed-actions button {
             background-color: #f0f2f5;
+
             color: #333;
+
             border: 1px solid #ddd;
+
             padding: 10px 14px;
+
             border-radius: 20px;
+
             cursor: pointer;
         }
 
@@ -268,12 +354,17 @@ $result = mysqli_query($conn, $sql);
 
         .carousel {
             width: 600px;
+
             max-width: 100%;
+
             overflow: hidden;
+
             position: relative;
 
             touch-action: pan-y;
+
             cursor: grab;
+
             user-select: none;
 
             background-color: #f5f5f5;
@@ -289,37 +380,31 @@ $result = mysqli_query($conn, $sql);
         }
 
 
-        .slider {
-            display: flex;
-            width: 100%;
-
-            transition: transform 0.35s ease;
-
-            will-change: transform;
-        }
+       .slider {
+    display: flex;
+    width: 100%;
+    transition: transform 0.35s ease;
+    will-change: transform;
+}
 
 
-        .slide {
-            flex: 0 0 100%;
-            width: 100%;
-        }
+.slide {
+    flex: 0 0 100%;
+    width: 100%;
+    min-width: 100%;
+    box-sizing: border-box;
+}
 
 
-        .slide img {
-            width: 600px;
-            max-width: 100%;
-
-            height: 450px;
-
-            object-fit: cover;
-
-            display: block;
-
-            pointer-events: none;
-            user-select: none;
-
-            -webkit-user-drag: none;
-        }
+.slide img {
+    display: block;
+    width: 100%;
+    height: 450px;
+    object-fit: cover;
+    pointer-events: none;
+    user-select: none;
+    -webkit-user-drag: none;
+}
 
 
         /* ================================================= */
@@ -328,6 +413,7 @@ $result = mysqli_query($conn, $sql);
 
         .image-counter {
             width: 600px;
+
             max-width: 100%;
 
             text-align: center;
@@ -335,6 +421,7 @@ $result = mysqli_query($conn, $sql);
             margin: 8px auto;
 
             font-weight: bold;
+
             color: #555;
         }
 
@@ -345,6 +432,7 @@ $result = mysqli_query($conn, $sql);
 
         .civic-video {
             width: 600px;
+
             max-width: 100%;
 
             max-height: 600px;
@@ -365,6 +453,7 @@ $result = mysqli_query($conn, $sql);
 
         .bottom-navigation {
             width: calc(100% - 40px);
+
             max-width: 700px;
 
             margin: 30px auto;
@@ -389,7 +478,9 @@ $result = mysqli_query($conn, $sql);
 
             .civic-header {
                 padding: 15px;
+
                 flex-direction: column;
+
                 gap: 12px;
             }
 
@@ -402,14 +493,18 @@ $result = mysqli_query($conn, $sql);
             .welcome-section,
             .feed-title {
                 margin-left: 10px;
+
                 margin-right: 10px;
             }
 
 
             .feed-card {
                 width: calc(100% - 20px);
+
                 margin-left: 10px;
+
                 margin-right: 10px;
+
                 padding: 15px;
             }
 
@@ -485,6 +580,7 @@ $result = mysqli_query($conn, $sql);
         Welcome, Citizen <?php echo $citizen_id; ?>
     </h2>
 
+
     <p>
         Stay informed. Support civic issues. Make your community better.
     </p>
@@ -512,7 +608,9 @@ $result = mysqli_query($conn, $sql);
 
 if (mysqli_num_rows($result) > 0) {
 
+
     while ($row = mysqli_fetch_assoc($result)) {
+
 
         $feed_id = $row["feed_id"];
 
@@ -541,8 +639,12 @@ if (mysqli_num_rows($result) > 0) {
 
         $department_name = "";
 
+
         if ($department_data) {
-            $department_name = $department_data["department_name"];
+
+            $department_name =
+                $department_data["department_name"];
+
         }
 
 
@@ -568,7 +670,8 @@ if (mysqli_num_rows($result) > 0) {
         );
 
 
-        $support_count = $support_data["total_support"];
+        $support_count =
+            $support_data["total_support"];
 
 
         /* ================================================= */
@@ -593,7 +696,8 @@ if (mysqli_num_rows($result) > 0) {
         );
 
 
-        $comment_count = $comment_data["total_comments"];
+        $comment_count =
+            $comment_data["total_comments"];
 
 
         /* ================================================= */
@@ -605,10 +709,9 @@ if (mysqli_num_rows($result) > 0) {
 
         if ($row["feed_type"] == "Post") {
 
-            $actual_post_id = substr(
-                $feed_id,
-                1
-            );
+
+            $actual_post_id =
+                substr($feed_id, 1);
 
 
             $image_sql = "
@@ -618,7 +721,9 @@ if (mysqli_num_rows($result) > 0) {
                 ORDER BY image_id ASC
             ";
 
+
         } else {
+
 
             $image_sql = "
                 SELECT image_path
@@ -638,11 +743,12 @@ if (mysqli_num_rows($result) > 0) {
 
         if ($image_result) {
 
+
             while (
-                $image_row = mysqli_fetch_assoc(
-                    $image_result
-                )
+                $image_row =
+                mysqli_fetch_assoc($image_result)
             ) {
+
 
                 $image_paths[] =
                     $image_row["image_path"];
@@ -661,6 +767,7 @@ if (mysqli_num_rows($result) > 0) {
             !empty($row["post_image"])
         ) {
 
+
             $image_paths[] =
                 $row["post_image"];
 
@@ -674,10 +781,14 @@ if (mysqli_num_rows($result) > 0) {
 <!-- ONE FEED CARD -->
 <!-- ================================================= -->
 
-<div class="feed-card">
+<div
+    class="feed-card"
+    id="post_<?php echo htmlspecialchars($feed_id); ?>"
+>
 
 
 <?php
+
 
 /* ================================================= */
 /* FEED TYPE */
@@ -685,11 +796,13 @@ if (mysqli_num_rows($result) > 0) {
 
 if ($row["feed_type"] == "Complaint") {
 
+
 ?>
 
     <h3>
         🚨 Civic Complaint
     </h3>
+
 
     <p class="feed-info">
 
@@ -703,15 +816,19 @@ if ($row["feed_type"] == "Complaint") {
 
     </p>
 
+
 <?php
 
+
 } else {
+
 
 ?>
 
     <h3>
         📢 Civic Post
     </h3>
+
 
     <p class="feed-info">
 
@@ -724,6 +841,7 @@ if ($row["feed_type"] == "Complaint") {
         <?php echo htmlspecialchars($feed_id); ?>
 
     </p>
+
 
 <?php
 
@@ -778,7 +896,9 @@ if ($row["feed_type"] == "Complaint") {
         Issue:
     </strong>
 
-    <?php echo nl2br(htmlspecialchars($row["issue_description"])); ?>
+    <?php echo nl2br(
+        htmlspecialchars($row["issue_description"])
+    ); ?>
 
 </p>
 
@@ -842,17 +962,22 @@ if (count($image_paths) > 0) {
 
 <?php
 
+
     foreach ($image_paths as $image_path) {
+
 
 ?>
 
+
         <div class="slide">
+
 
             <img
                 src="<?php echo htmlspecialchars($image_path); ?>"
                 draggable="false"
                 alt="Civic issue image"
             >
+
 
         </div>
 
@@ -878,6 +1003,7 @@ if (count($image_paths) > 0) {
 /* ================================================= */
 
 if (count($image_paths) > 1) {
+
 
 ?>
 
@@ -907,6 +1033,7 @@ if (count($image_paths) > 1) {
 <script>
 
 (function () {
+
 
     var carousel =
         document.getElementById(
@@ -945,12 +1072,11 @@ if (count($image_paths) > 1) {
     var isDragging = false;
 
 
-    var moved = false;
-
-
     function updateCounter() {
 
+
         if (counter) {
+
 
             counter.innerHTML =
                 (currentImage + 1) +
@@ -964,15 +1090,19 @@ if (count($image_paths) > 1) {
 
     function setSlide(index, animate) {
 
+
         currentImage = index;
 
 
         if (animate) {
 
+
             slider.style.transition =
                 "transform 0.35s ease";
 
+
         } else {
+
 
             slider.style.transition =
                 "none";
@@ -1006,20 +1136,22 @@ if (count($image_paths) > 1) {
         "pointerdown",
         function (event) {
 
+
             startX =
                 event.clientX;
+
 
             currentX =
                 event.clientX;
 
+
             startPosition =
                 currentImage * -100;
+
 
             isDragging =
                 true;
 
-            moved =
-                false;
 
             carousel.classList.add(
                 "dragging"
@@ -1032,9 +1164,11 @@ if (count($image_paths) > 1) {
 
             try {
 
+
                 carousel.setPointerCapture(
                     event.pointerId
                 );
+
 
             } catch (error) {
 
@@ -1052,6 +1186,7 @@ if (count($image_paths) > 1) {
         "pointermove",
         function (event) {
 
+
             if (!isDragging) {
 
                 return;
@@ -1065,13 +1200,6 @@ if (count($image_paths) > 1) {
 
             var difference =
                 currentX - startX;
-
-
-            if (Math.abs(difference) > 5) {
-
-                moved = true;
-
-            }
 
 
             var width =
@@ -1100,6 +1228,7 @@ if (count($image_paths) > 1) {
                 difference > 0
             ) {
 
+
                 movement =
                     movement * 0.35;
 
@@ -1117,6 +1246,7 @@ if (count($image_paths) > 1) {
                 totalImages - 1 &&
                 difference < 0
             ) {
+
 
                 movement =
                     movement * 0.35;
@@ -1144,6 +1274,7 @@ if (count($image_paths) > 1) {
     carousel.addEventListener(
         "pointerup",
         function (event) {
+
 
             if (!isDragging) {
 
@@ -1188,6 +1319,7 @@ if (count($image_paths) > 1) {
                     totalImages - 1
                 ) {
 
+
                     currentImage++;
 
                 }
@@ -1197,6 +1329,7 @@ if (count($image_paths) > 1) {
                     difference > 0 &&
                     currentImage > 0
                 ) {
+
 
                     currentImage--;
 
@@ -1213,9 +1346,11 @@ if (count($image_paths) > 1) {
 
             try {
 
+
                 carousel.releasePointerCapture(
                     event.pointerId
                 );
+
 
             } catch (error) {
 
@@ -1232,6 +1367,7 @@ if (count($image_paths) > 1) {
     carousel.addEventListener(
         "pointercancel",
         function () {
+
 
             if (!isDragging) {
 
@@ -1267,6 +1403,7 @@ if (count($image_paths) > 1) {
         false
     );
 
+
 })();
 
 </script>
@@ -1277,11 +1414,14 @@ if (count($image_paths) > 1) {
 }
 
 
+
+
 /* ================================================= */
 /* VIDEO */
 /* ================================================= */
 
 if (!empty($row["post_video"])) {
+
 
 ?>
 
@@ -1292,12 +1432,15 @@ if (!empty($row["post_video"])) {
     playsinline
 >
 
+
     <source
         src="<?php echo htmlspecialchars($row["post_video"]); ?>"
         type="video/mp4"
     >
 
+
     Your browser does not support video playback.
+
 
 </video>
 
@@ -1338,6 +1481,7 @@ if (!empty($row["post_video"])) {
 
     <a
         href="home.php?support=<?php echo urlencode($feed_id); ?>"
+        onclick="sessionStorage.setItem('civicvoice_scroll', window.scrollY);"
     >
 
         <button type="button">
@@ -1364,9 +1508,6 @@ if (!empty($row["post_video"])) {
     </a>
 
 
-   
-
-
 </div>
 
 
@@ -1377,9 +1518,8 @@ if (!empty($row["post_video"])) {
 
     }
 
-}
+ }else {
 
-else {
 
 ?>
 
@@ -1435,76 +1575,36 @@ else {
 
 
 <!-- ================================================= -->
-<!-- SHARE FUNCTION -->
+<!-- RESTORE SCROLL POSITION AFTER SUPPORT -->
 <!-- ================================================= -->
 
 <script>
 
+window.addEventListener("load", function () {
 
 
-    var shareUrl =
-        window.location.origin +
-        "/CivicVoice/comments.php?complaint_id=" +
-        encodeURIComponent(feedId);
+    var savedScroll =
+        sessionStorage.getItem(
+            "civicvoice_scroll"
+        );
 
 
-    if (navigator.share) {
+    if (savedScroll !== null) {
 
-        navigator.share({
 
-            title:
-                "CivicVoice Civic Issue",
+        window.scrollTo(
+            0,
+            parseInt(savedScroll)
+        );
 
-            text:
-                "Check this civic issue on CivicVoice",
 
-            url:
-                shareUrl
-
-        }).catch(function () {
-
-            /* User cancelled share */
-
-        });
+        sessionStorage.removeItem(
+            "civicvoice_scroll"
+        );
 
     }
 
-    else {
-
-        if (
-            navigator.clipboard &&
-            navigator.clipboard.writeText
-        ) {
-
-            navigator.clipboard.writeText(
-                shareUrl
-            ).then(function () {
-
-                alert(
-                    "Post link copied!"
-                );
-
-            }).catch(function () {
-
-                alert(
-                    "Unable to copy the link."
-                );
-
-            });
-
-        }
-
-        else {
-
-            alert(
-                "Sharing is not supported on this browser."
-            );
-
-        }
-
-    }
-
-}
+});
 
 </script>
 

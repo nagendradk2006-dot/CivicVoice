@@ -86,13 +86,11 @@ a:hover {
     z-index: 1000;
 }
 
-
 .civic-logo {
     font-size: 24px;
     font-weight: bold;
     color: #1f3c88;
 }
-
 
 .civic-nav {
     display: flex;
@@ -101,17 +99,12 @@ a:hover {
     flex-wrap: wrap;
 }
 
-
 .civic-nav a {
     padding: 8px 12px;
-
     color: #333;
-
     text-decoration: none;
-
     border-radius: 6px;
 }
-
 
 .civic-nav a:hover {
     background-color: #f0f2f5;
@@ -128,24 +121,20 @@ a:hover {
     max-width: 700px;
 
     margin: 30px auto 20px;
-
     padding: 22px;
 
     background-color: white;
 
     border: 1px solid #ddd;
-
     border-radius: 12px;
 
     box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
 }
 
-
 .welcome-section h2 {
     margin-top: 0;
     margin-bottom: 8px;
 }
-
 
 .welcome-section p {
     margin-bottom: 0;
@@ -173,39 +162,45 @@ a:hover {
 
 .feed-card {
     width: calc(100% - 40px);
-    max-width: 700px;
+    max-width: 650px;
 
-    margin: 20px auto;
-
-    padding: 20px;
+    margin: 24px auto;
+    padding: 22px;
 
     background-color: white;
 
-    border: 1px solid #ddd;
+    border: 1px solid #e3e6ea;
+    border-radius: 16px;
 
-    border-radius: 12px;
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.10);
 
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
+    transition: box-shadow 0.2s ease, transform 0.2s ease;
 }
 
+.feed-card:hover {
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.12);
+    transform: translateY(-2px);
+}
 
 .feed-card h3 {
     margin-top: 0;
     margin-bottom: 15px;
 }
 
-
 .feed-info {
-    margin: 8px 0;
+    margin: 12px 0;
 
     line-height: 1.6;
 
-    color: #333;
-}
+    color: #555;
 
+    font-size: 14px;
+}
 
 .feed-info strong {
     color: #222;
+
+    font-weight: 600;
 }
 
 
@@ -222,38 +217,48 @@ a:hover {
 
     display: flex;
 
-    gap: 10px;
+    gap: 12px;
 
     flex-wrap: wrap;
-}
 
+    align-items: center;
+}
 
 .feed-actions a {
     text-decoration: none;
 }
 
-
 .feed-actions button {
     background-color: #f0f2f5;
 
-    color: #333;
+    color: #222;
 
     border: 1px solid #ddd;
 
-    padding: 10px 16px;
+    padding: 10px 18px;
 
     border-radius: 20px;
 
-    font-weight: 500;
+    font-weight: 600;
 
-    transition: 0.2s;
+    cursor: pointer;
+
+    transition:
+        background-color 0.2s ease,
+        transform 0.2s ease,
+        box-shadow 0.2s ease;
 }
-
 
 .feed-actions button:hover {
     background-color: #e2e5e9;
 
     transform: translateY(-1px);
+
+    box-shadow: 0 3px 8px rgba(0, 0, 0, 0.08);
+}
+
+.feed-actions button:active {
+    transform: translateY(0);
 }
 
 
@@ -279,48 +284,13 @@ a:hover {
 
     margin: 18px auto 5px;
 
-    border-radius: 10px;
-}
+    border-radius: 12px;
 
+    box-shadow: 0 3px 12px rgba(0, 0, 0, 0.08);
+}
 
 .carousel.dragging {
     cursor: grabbing;
-}
-
-
-.slider {
-    display: flex;
-
-    width: 100%;
-
-    transition: transform 0.35s ease;
-
-    will-change: transform;
-}
-
-
-.slide {
-    flex: 0 0 100%;
-
-    width: 100%;
-}
-
-
-.slide img {
-    width: 600px;
-    max-width: 100%;
-
-    height: 450px;
-
-    object-fit: cover;
-
-    display: block;
-
-    pointer-events: none;
-
-    user-select: none;
-
-    -webkit-user-drag: none;
 }
 
 
@@ -358,12 +328,12 @@ a:hover {
 
     margin: 18px auto;
 
-    border-radius: 10px;
+    border-radius: 12px;
 
     background-color: #000;
+
+    box-shadow: 0 3px 12px rgba(0, 0, 0, 0.10);
 }
-
-
 /* ================================================= */
 /* CREATE POST PAGE */
 /* ================================================= */
@@ -374,37 +344,50 @@ a:hover {
 
     margin: 30px auto;
 
-    padding: 25px;
+    padding: 28px;
 
     background-color: white;
 
-    border: 1px solid #ddd;
+    border: 1px solid #e1e5ea;
 
-    border-radius: 12px;
+    border-radius: 16px;
 
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.08);
 }
 
 
 .create-post-container h2 {
     margin-top: 0;
+    margin-bottom: 25px;
 
     text-align: center;
 
     color: #1f3c88;
+
+    font-size: 26px;
 }
 
+
+/* ================================================= */
+/* FORM LABELS */
+/* ================================================= */
 
 .create-post-container label {
     display: block;
 
-    margin-top: 15px;
+    margin-top: 18px;
 
-    margin-bottom: 6px;
+    margin-bottom: 7px;
 
-    font-weight: bold;
+    font-weight: 600;
+
+    color: #333;
 }
 
+
+/* ================================================= */
+/* FORM INPUTS */
+/* ================================================= */
 
 .create-post-container input,
 .create-post-container select,
@@ -412,15 +395,65 @@ a:hover {
     width: 100%;
 
     box-sizing: border-box;
+
+    padding: 11px 13px;
+
+    border: 1px solid #d5d9df;
+
+    border-radius: 8px;
+
+    background-color: #fff;
+
+    font-size: 14px;
+
+    color: #333;
+
+    outline: none;
+
+    transition:
+        border-color 0.2s ease,
+        box-shadow 0.2s ease;
 }
 
+
+.create-post-container input:focus,
+.create-post-container select:focus,
+.create-post-container textarea:focus {
+    border-color: #1f3c88;
+
+    box-shadow: 0 0 0 3px rgba(31, 60, 136, 0.10);
+}
+
+
+/* ================================================= */
+/* TEXTAREA */
+/* ================================================= */
 
 .create-post-container textarea {
     min-height: 120px;
 
     resize: vertical;
+
+    line-height: 1.5;
 }
 
+
+/* ================================================= */
+/* FILE INPUT */
+/* ================================================= */
+
+.create-post-container input[type="file"] {
+    padding: 9px;
+
+    background-color: #f8f9fb;
+
+    cursor: pointer;
+}
+
+
+/* ================================================= */
+/* CREATE POST BUTTON */
+/* ================================================= */
 
 .create-post-container button {
     margin-top: 20px;
@@ -430,11 +463,29 @@ a:hover {
     background-color: #1f3c88;
 
     color: white;
-}
 
+    font-weight: 600;
+
+    padding: 12px;
+
+    border-radius: 8px;
+
+    transition:
+        background-color 0.2s ease,
+        transform 0.2s ease,
+        box-shadow 0.2s ease;
+}
 
 .create-post-container button:hover {
     background-color: #162d66;
+
+    transform: translateY(-1px);
+
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.12);
+}
+
+.create-post-container button:active {
+    transform: translateY(0);
 }
 
 
@@ -499,7 +550,7 @@ a:hover {
 
 
     .slide img {
-        height: 350px;
+        height: 300px;
     }
 
 
@@ -517,4 +568,17 @@ a:hover {
         padding: 18px;
     }
 
+
+    .create-post-container h2 {
+        font-size: 22px;
+    }
+
+
+    .create-post-container input,
+    .create-post-container select,
+    .create-post-container textarea {
+        font-size: 14px;
+    }
+
 }
+   
