@@ -146,7 +146,11 @@ if (!$result) {
     <title>CivicVoice Home</title>
 
     <link rel="stylesheet" href="style.css">
-
+.civic-logo img {
+    width: 300px;
+    height: auto;
+    display: block;
+}
 
     <style>
 
@@ -184,15 +188,18 @@ if (!$result) {
             z-index: 1000;
         }
 
+.civic-logo {
+    font-size: 26px;
+    font-weight: 700;
+    color: #1769e0;
+    white-space: nowrap;
+}
 
-        .civic-logo {
-            font-size: 24px;
-
-            font-weight: bold;
-
-            color: #1f3c88;
-        }
-
+.civic-logo img {
+    width: 300px;
+    height: auto;
+    display: block;
+}
 
         .civic-nav {
             display: flex;
@@ -519,8 +526,77 @@ if (!$result) {
             }
 
         }
+.civic-page-layout {
+    display: flex;
+    align-items: flex-start;
+    gap: 25px;
+    max-width: 1250px;
+    margin: 25px auto;
+    padding: 0 20px;
+}
 
-    </style>
+.civic-sidebar {
+    width: 210px;
+    flex-shrink: 0;
+    background: #ffffff;
+    border: 1px solid #e5e7eb;
+    border-radius: 16px;
+    padding: 15px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
+    position: sticky;
+    top: 90px;
+}
+
+.sidebar-title {
+    font-size: 14px;
+    font-weight: 700;
+    color: #9ca3af;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    padding: 5px 14px 12px;
+}
+
+.civic-sidebar a {
+    display: block;
+    text-decoration: none;
+    color: #374151;
+    font-size: 15px;
+    font-weight: 600;
+    padding: 13px 14px;
+    margin-bottom: 5px;
+    border-radius: 10px;
+    transition: all 0.2s ease;
+}
+
+.civic-sidebar a:hover {
+    background: #eaf2ff;
+    color: #1769e0;
+    transform: translateX(3px);
+}
+
+.civic-sidebar a:first-of-type {
+    background: #1769e0;
+    color: #ffffff;
+    box-shadow: 0 4px 10px rgba(23, 105, 224, 0.20);
+}
+.civic-main-content {
+    flex: 1;
+    min-width: 0;
+}
+   .civic-sidebar a {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+  .civic-main-content {
+    flex: 1;
+    max-width: 750px;
+}
+  .civic-sidebar a {
+    margin-bottom: 8px;
+    padding: 14px 15px;
+}
+  </style>
 
 </head>
 
@@ -535,9 +611,8 @@ if (!$result) {
 <header class="civic-header">
 
     <div class="civic-logo">
-        🏛️ CivicVoice
-    </div>
-
+    <img src="logo.jpg" alt="CivicVoice Logo">
+</div>
 
     <nav class="civic-nav">
 
@@ -570,6 +645,35 @@ if (!$result) {
 </header>
 
 
+<div class="civic-page-layout">
+
+    <aside class="civic-sidebar">
+
+        <div class="sidebar-title">
+            CivicVoice Menu
+        </div>
+
+        <a href="home.php">
+            🏠 Home
+        </a>
+
+        <a href="profile.php">
+            👤 My Profile
+        </a>
+
+        <a href="create_post.php">
+            ➕ Create Post
+        </a>
+
+        <a href="my_complaints.php">
+            📋 My Issues
+        </a>
+
+    </aside>
+
+    <main class="civic-main-content">
+
+<!-- WELCOME -->
 <!-- ================================================= -->
 <!-- WELCOME -->
 <!-- ================================================= -->
@@ -1547,6 +1651,8 @@ if (!empty($row["post_video"])) {
 <!-- ================================================= -->
 <!-- BOTTOM NAVIGATION -->
 <!-- ================================================= -->
+</main>
+</div>
 
 <div class="bottom-navigation">
 
