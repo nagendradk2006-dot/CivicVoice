@@ -1,4 +1,4 @@
-```php
+
 <?php
 
 session_start();
@@ -289,13 +289,20 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $display_post_id = "P" . $post_id;
 
     echo "
-    <!DOCTYPE html>
-    <html>
-    <head>
+<!DOCTYPE html>
+<html>
+<head>
         <title>Post Created - CivicVoice</title>
         <link rel='stylesheet' href='style.css'>
-    </head>
+   ";
+?>
+<style>
+   
+</style>
 
+<?php
+echo "
+</head>
     <body>
 
         <div class='success-container'>
@@ -349,41 +356,316 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
     <link rel="stylesheet" href="style.css">
 
-</head>
+<style>
+
+/* =========================================================
+   1. PAGE BACKGROUND
+   ========================================================= */
+
+body {
+    margin: 0;
+    background-color: #E8E2D5;
+    color: #1F2937;
+}
 
 
-<body>
 
+/* =========================================================
+   2. HEADER
+   ========================================================= */
 
-<!-- =========================
-     HEADER
-     ========================= -->
+.civic-header {
+    background-color: #ffffff;
+    padding: 15px 30px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    border-bottom: 2px solid #C9A227;
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+}
 
-<header class="civic-header">
+/* =========================================================
+   3. LOGO
+   ========================================================= */
 
-    <div class="civic-logo">
-        CivicVoice
-    </div>
+.civic-logo img {
+    width: 180px;
+    max-width: 180px;
+    height: auto;
+    display: block;
+}
+/* =========================================================
+   4. NAVIGATION
+   ========================================================= */
 
-    <nav class="civic-nav">
+.civic-nav {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    flex-wrap: wrap;
+}
 
-        <a href="home.php">
-            Home
-        </a>
+.civic-nav a {
+    background-color: #C9A227;
+    color: #1F2937;
+    text-decoration: none;
+    font-weight: 600;
+    padding: 9px 14px;
+    border-radius: 8px;
+    transition: 0.2s ease;
+}
 
-        <a href="profile.php">
-            Profile
-        </a>
+.civic-nav a:hover {
+    background-color: #C9A227;
+    color: #000000;
+}
+/* =========================================================
+   5. CREATE POST BOX
+   ========================================================= */
 
-        <a href="logout.php">
-            Logout
-        </a>
+.create-post-container {
+    max-width: 700px;
+    margin: 35px auto;
+    padding: 30px;
+    background-color: #ffffff;
+    border: 2px solid #166534;
+    border-radius: 18px;
+    box-shadow: 0 6px 18px rgba(22, 101, 52, 0.12);
+}
+/* =========================================================
+   6. FORM HEADINGS
+   ========================================================= */
 
-    </nav>
+.create-post-container h1,
+.create-post-container h2 {
+    margin-top: 0;
+    margin-bottom: 20px;
+    text-align: center;
+    color: #166534;
+    font-weight: 700;
+}
+/* =========================================================
+   7. FORM LABELS
+   ========================================================= */
 
-</header>
+.create-post-container label {
+    display: block;
+    margin-top: 16px;
+    margin-bottom: 7px;
+    color: #166534;
+    font-size: 15px;
+    font-weight: 700;
+}
+/* =========================================================
+   8. FORM FIELDS
+   ========================================================= */
 
+.create-post-container input[type="text"],
+.create-post-container input[type="number"],
+.create-post-container input[type="email"],
+.create-post-container input[type="file"],
+.create-post-container select,
+.create-post-container textarea {
+    width: 100%;
+    box-sizing: border-box;
+    padding: 12px 14px;
+    border: 1px solid #d1d5db;
+    border-radius: 10px;
+    background-color: #ffffff;
+    color: #1F2937;
+    font-size: 15px;
+    outline: none;
+}
+/* =========================================================
+   9. CREATE PAGE
+   ========================================================= */
 
+.create-page {
+    max-width: 760px;
+    margin: 30px auto;
+    padding: 0 20px 40px;
+}
+/* =========================================================
+   10. CREATE POST HEADING
+   ========================================================= */
+
+.create-post-heading {
+    text-align: center;
+    margin-bottom: 30px;
+}
+
+.create-post-heading h1 {
+    margin: 0 0 8px;
+    color: #166534;
+    font-size: 28px;
+    font-weight: 700;
+}
+
+.create-post-heading p {
+    margin: 0;
+    color: #666666;
+    font-size: 15px;
+    line-height: 1.6;
+}
+
+.create-icon {
+    width: 42px;
+    height: 42px;
+    margin: 0 auto 12px;
+    background-color: #C9A227;
+    color: #1F2937;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 25px;
+    font-weight: 700;
+}
+/* =========================================================
+   11. FORM SECTIONS
+   ========================================================= */
+
+.form-section {
+    margin-bottom: 25px;
+    padding: 20px;
+    background-color: #faf9f5;
+    border: 1px solid #ddd6c8;
+    border-radius: 14px;
+}
+
+.form-section h3 {
+    margin: 0 0 18px;
+    color: #166534;
+    font-size: 18px;
+    font-weight: 700;
+}
+/* =========================================================
+   12. FORM ROWS
+   ========================================================= */
+
+.form-row {
+    display: flex;
+    gap: 15px;
+}
+
+.form-group {
+    flex: 1;
+}
+
+.form-group label {
+    display: block;
+    margin-top: 0;
+}
+/* =========================================================
+   13. UPLOAD BOX
+   ========================================================= */
+
+.upload-box {
+    padding: 20px;
+    background-color: #ffffff;
+    border: 2px dashed #C9A227;
+    border-radius: 12px;
+    text-align: center;
+}
+
+.upload-box input[type="file"] {
+    border: none;
+    padding: 10px;
+}
+
+.upload-box p {
+    margin: 10px 0 0;
+    color: #666666;
+    font-size: 14px;
+}
+/* =========================================================
+   14. PUBLISH BUTTON
+   ========================================================= */
+
+.publish-button {
+    width: 100%;
+    padding: 14px 20px;
+    margin-top: 10px;
+    border: none;
+    border-radius: 10px;
+    background-color: #166534;
+    color: #ffffff;
+    font-size: 16px;
+    font-weight: 700;
+    cursor: pointer;
+    transition: 0.2s ease;
+}
+
+.publish-button:hover {
+    background-color: #14532d;
+    transform: translateY(-1px);
+}
+/* =========================================================
+   15. BACK TO HOME
+   ========================================================= */
+
+.back-home {
+    display: block;
+    width: fit-content;
+    margin: 20px auto 0;
+    color: #166534;
+    text-decoration: none;
+    font-size: 15px;
+    font-weight: 600;
+}
+
+.back-home:hover {
+    color: #C9A227;
+    text-decoration: underline;
+}
+/* =========================================================
+   16. HELPER TEXT
+   ========================================================= */
+
+.form-section small {
+    display: block;
+    margin-top: 8px;
+    color: #6b7280;
+    font-size: 13px;
+    line-height: 1.5;
+}
+/* =========================================================
+   17. MOBILE RESPONSIVE
+   ========================================================= */
+
+@media (max-width: 700px) {
+
+    .civic-header {
+        padding: 15px;
+        flex-direction: column;
+        gap: 12px;
+    }
+
+    .civic-nav {
+        justify-content: center;
+    }
+
+    .create-page {
+        padding: 0 10px 30px;
+    }
+
+    .create-post-container {
+        padding: 20px 15px;
+        margin: 20px auto;
+    }
+
+    .form-row {
+        flex-direction: column;
+        gap: 0;
+    }
+
+    .create-post-heading h1 {
+        font-size: 24px;
+    }
+}
+</style>
 <!-- =========================
      CREATE POST
      ========================= -->
@@ -794,4 +1076,4 @@ media.addEventListener(
 </body>
 
 </html>
-```
+
