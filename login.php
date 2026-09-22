@@ -1,4 +1,5 @@
 <?php
+
 session_start();
 include "db.php";
 
@@ -59,11 +60,13 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
                 $_SESSION["citizen_id"] = $user["citizen_id"];
 
+
                 /* Generate new CAPTCHA for next login */
 
                 $characters = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
 
                 $_SESSION["captcha"] = substr(str_shuffle($characters), 0, 6);
+
 
                 header("Location: home.php");
 
@@ -83,16 +86,19 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
     }
 }
+
 ?>
 
 
 <!DOCTYPE html>
 
-html>
+<html>
 
 <head>
-<link rel="stylesheet" href="style.css">
-<title>CivicVoice Login</title>
+
+    <link rel="stylesheet" href="style.css?v=2">
+
+    <title>CivicVoice Login</title>
 
 </head>
 
@@ -100,65 +106,266 @@ html>
 <body>
 
 
-<h2>Citizen Login</h2>
+<div class="civic-container">
 
 
-<form method="POST">
+    <!-- LEFT SIDE : CIVICVOICE INFORMATION -->
+
+    <div class="civic-intro">
 
 
-<label>Username:</label>
+        <!-- CIVICVOICE LOGO -->
 
-<br>
+        <div class="civic-logo">
 
-<input type="text" name="username" required>
+            <img
+                src="logo.jpg"
+                alt="CivicVoice Logo"
+            >
 
-<br><br>
-
-
-<label>Password:</label>
-
-<br>
-
-<input type="password"
-       name="password"
-       id="password"
-       required>
-
-<button type="button" onclick="showPassword()">👁</button>
-
-<br><br>
+        </div>
 
 
-<label>
+        <!-- CIVICVOICE NAME -->
 
-CAPTCHA:
-
-<?php echo $_SESSION["captcha"]; ?>
-
-</label>
+        <h1>
+            CivicVoice
+        </h1>
 
 
-<button type="button" onclick="refreshCaptcha()">🔄</button>
+        <!-- PROJECT TITLE -->
 
-<br>
-
-<input type="text" name="captcha" required>
-
-<br><br>
+        <h3>
+            Intelligent Public Grievance & Issue Tracking System
+        </h3>
 
 
-<button type="submit">Login</button>
+        <!-- DESCRIPTION -->
+
+        <p class="intro-text">
+
+            CivicVoice is a digital platform that allows citizens
+            to report public issues, submit grievances and participate
+            in improving their community.
+
+        </p>
 
 
-</form>
+        <!-- FEATURES -->
+
+        <div class="civic-features">
+
+
+            <!-- REPORT ISSUES -->
+
+            <div class="feature">
+
+                <div class="feature-icon">
+                    📢
+                </div>
+
+                <div>
+
+                    <strong>
+                        Report Issues
+                    </strong>
+
+                    <p>
+                        Report public problems and bring important
+                        civic issues to the attention of authorities.
+                    </p>
+
+                </div>
+
+            </div>
+
+
+            <!-- CITIZEN PARTICIPATION -->
+
+            <div class="feature">
+
+                <div class="feature-icon">
+                    🤝
+                </div>
+
+                <div>
+
+                    <strong>
+                        Citizen Participation
+                    </strong>
+
+                    <p>
+                        Participate in creating a cleaner, safer
+                        and better community.
+                    </p>
+
+                </div>
+
+            </div>
+
+
+        </div>
+
+
+        <!-- TAGLINE -->
+
+        <p class="civic-tagline">
+
+            "Your Voice. Your City. Your Change."
+
+        </p>
+
+
+    </div>
+
+
+
+    <!-- RIGHT SIDE : LOGIN -->
+
+    <div class="login-section">
+
+
+        <h2>
+            Citizen Login
+        </h2>
+
+
+        <p class="login-subtitle">
+
+            Login to access your CivicVoice account
+
+        </p>
+
+
+        <form method="POST">
+
+
+            <!-- USERNAME -->
+
+            <label>
+                Username:
+            </label>
+
+            <br>
+
+            <input
+                type="text"
+                name="username"
+                required
+            >
+
+            <br><br>
+
+
+            <!-- PASSWORD -->
+
+            <label>
+                Password:
+            </label>
+
+            <br>
+
+
+            <div class="password-box">
+
+                <input
+                    type="password"
+                    name="password"
+                    id="password"
+                    required
+                >
+
+                <button
+                    type="button"
+                    class="password-toggle"
+                    onclick="showPassword()"
+                >
+                    👁
+                </button>
+
+            </div>
+
+
+            <br><br>
+
+
+            <!-- CAPTCHA -->
+
+            <label>
+
+                CAPTCHA:
+
+                <?php echo $_SESSION["captcha"]; ?>
+
+            </label>
+
+
+            <button
+                type="button"
+                onclick="refreshCaptcha()"
+            >
+                🔄
+            </button>
+
+
+            <br>
+
+
+            <input
+                type="text"
+                name="captcha"
+                required
+            >
+
+
+            <br><br>
+
+
+            <!-- LOGIN BUTTON -->
+
+            <button type="submit">
+
+                Login
+
+            </button>
+
+
+            <!-- REGISTER LINK -->
+
+            <div class="register-section">
+
+                <p>
+                    New to CivicVoice?
+                </p>
+
+                <a href="register.php">
+
+                    Create a Citizen Account →
+
+                </a>
+
+            </div>
+
+
+        </form>
+
+
+    </div>
+
+
+</div>
+
 
 
 <script>
 
 
+/* Show / Hide Password */
+
 function showPassword() {
 
     var password = document.getElementById("password");
+
 
     if (password.type === "password") {
 
@@ -172,6 +379,8 @@ function showPassword() {
 
 }
 
+
+/* Refresh CAPTCHA */
 
 function refreshCaptcha() {
 

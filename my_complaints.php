@@ -27,13 +27,43 @@ $result = mysqli_query($conn, $sql);
 <html>
 
 <head>
-    <link rel="stylesheet" href="style.css">
-<title>My Complaints - CivicVoice</title>
+
+    <link rel="stylesheet" href="style.css?v=2">
+
+    <title>My Complaints - CivicVoice</title>
+
 </head>
 
 <body>
 
-<h2>My Complaints</h2>
+<div class="my-complaints-page">
+
+
+    <!-- TOP HEADER -->
+
+    <div class="complaints-top-bar">
+
+        <div>
+            <h2>My Complaints</h2>
+
+            <p>
+                View and track the public issues you have reported through CivicVoice.
+            </p>
+        </div>
+
+        <button
+            class="top-dashboard-button"
+            onclick="window.location.href='dashboard.php'"
+        >
+            ← Back to Dashboard
+        </button>
+
+    </div>
+
+
+    <!-- COMPLAINTS -->
+
+    <div class="complaints-list">
 
 <?php
 
@@ -43,91 +73,211 @@ if (mysqli_num_rows($result) > 0) {
 
 ?>
 
-<hr>
+        <div class="complaint-card">
 
-<p>
-    <strong>Complaint ID:</strong>
-    <?php echo $row["complaint_id"]; ?>
-</p>
 
-<p>
-    <strong>Department:</strong>
-    <?php echo $row["department_name"]; ?>
-</p>
+            <!-- COMPLAINT HEADER -->
 
-<p>
-    <strong>Constituency:</strong>
-    <?php echo $row["constituency_name"]; ?>
-</p>
+            <div class="complaint-card-header">
 
-<p>
-    <strong>Ward Number:</strong>
-    <?php echo $row["ward_number"]; ?>
-</p>
+                <div>
 
-<p>
-    <strong>Area:</strong>
-    <?php echo $row["area_name"]; ?>
-</p>
+                    <span class="complaint-label">
+                        Complaint ID
+                    </span>
 
-<p>
-    <strong>PIN Code:</strong>
-    <?php echo $row["pincode"]; ?>
-</p>
+                    <h3>
+                        #<?php echo $row["complaint_id"]; ?>
+                    </h3>
 
-<p>
-    <strong>Issue:</strong>
-    <?php echo $row["issue_description"]; ?>
-</p>
+                </div>
 
-<p>
-    <strong>Status:</strong>
-    <?php echo $row["status"]; ?>
-</p>
-<p>
-    <strong>Resolution Remarks:</strong>
-    <?php
-    if (!empty($row["resolution_remarks"])) {
-        echo $row["resolution_remarks"];
-    } else {
-        echo "No resolution remarks yet.";
-    }
-    ?>
-</p>
 
-<p>
-    <strong>Submitted On:</strong>
-    <?php echo $row["created_at"]; ?>
-</p>
+                <div class="complaint-status">
+
+                    <span class="complaint-label">
+                        Status
+                    </span>
+
+                    <span class="status-badge">
+                        <?php echo $row["status"]; ?>
+                    </span>
+
+                </div>
+
+            </div>
+
+
+            <!-- COMPLAINT DETAILS -->
+
+            <div class="complaint-details">
+
+
+                <div class="complaint-detail">
+
+                    <span>Department</span>
+
+                    <strong>
+                        <?php echo $row["department_name"]; ?>
+                    </strong>
+
+                </div>
+
+
+                <div class="complaint-detail">
+
+                    <span>Constituency</span>
+
+                    <strong>
+                        <?php echo $row["constituency_name"]; ?>
+                    </strong>
+
+                </div>
+
+
+                <div class="complaint-detail">
+
+                    <span>Ward Number</span>
+
+                    <strong>
+                        <?php echo $row["ward_number"]; ?>
+                    </strong>
+
+                </div>
+
+
+                <div class="complaint-detail">
+
+                    <span>Area</span>
+
+                    <strong>
+                        <?php echo $row["area_name"]; ?>
+                    </strong>
+
+                </div>
+
+
+                <div class="complaint-detail">
+
+                    <span>PIN Code</span>
+
+                    <strong>
+                        <?php echo $row["pincode"]; ?>
+                    </strong>
+
+                </div>
+
+
+                <div class="complaint-detail">
+
+                    <span>Submitted On</span>
+
+                    <strong>
+                        <?php echo $row["created_at"]; ?>
+                    </strong>
+
+                </div>
+
+
+            </div>
+
+
+            <!-- ISSUE -->
+
+            <div class="complaint-issue">
+
+                <span>Issue Description</span>
+
+                <p>
+                    <?php echo $row["issue_description"]; ?>
+                </p>
+
+            </div>
+
+
+            <!-- RESOLUTION -->
+
+            <div class="resolution-section">
+
+                <span>Resolution Remarks</span>
+
+                <p>
+
 <?php
-if (!empty($row["resolved_at"])) {
-?>
 
-<p>
-    <strong>Resolved On:</strong>
-    <?php echo $row["resolved_at"]; ?>
-</p>
+if (!empty($row["resolution_remarks"])) {
 
-<?php
+    echo $row["resolution_remarks"];
+
+} else {
+
+    echo "No resolution remarks yet.";
+
 }
+
 ?>
+
+                </p>
+
+            </div>
+
+
+<?php
+
+if (!empty($row["resolved_at"])) {
+
+?>
+
+            <!-- RESOLVED DATE -->
+
+            <div class="resolved-date">
+
+                <span>Resolved On</span>
+
+                <strong>
+                    <?php echo $row["resolved_at"]; ?>
+                </strong>
+
+            </div>
+
+<?php
+
+}
+
+?>
+
+        </div>
+
 <?php
 
     }
 
 } else {
 
-    echo "<p>You have not submitted any complaints yet.</p>";
+?>
+
+        <!-- NO COMPLAINTS -->
+
+        <div class="no-complaints">
+
+            <h3>No Complaints Yet</h3>
+
+            <p>
+                You have not submitted any complaints yet.
+            </p>
+
+        </div>
+
+<?php
 
 }
 
 ?>
 
-<br>
+    </div>
 
-<button onclick="window.location.href='dashboard.php'">
-    Back to Dashboard
-</button>
+</div>
+
 
 </body>
 

@@ -581,4 +581,3300 @@ a:hover {
     }
 
 }
-   
+   /* =========================================================
+   CIVICVOICE REGISTRATION PAGE
+   ========================================================= */
+
+.register-container {
+    width: 1050px;
+    max-width: calc(100% - 40px);
+    min-height: 620px;
+    margin: 45px auto;
+    display: flex;
+    background: #ffffff;
+    border-radius: 28px;
+    overflow: hidden;
+    box-shadow: 0 15px 45px rgba(31, 41, 55, 0.18);
+}
+
+
+/* =========================================================
+   LEFT BRANDING SECTION
+   ========================================================= */
+
+.register-brand {
+    width: 45%;
+    padding: 50px;
+    box-sizing: border-box;
+    background: linear-gradient(145deg, #166534, #14532d);
+    color: #ffffff;
+
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+
+.register-logo {
+    width: 100px;
+    height: 100px;
+    object-fit: contain;
+
+    background: #ffffff;
+    padding: 10px;
+    border-radius: 20px;
+
+    margin-bottom: 20px;
+    box-sizing: border-box;
+
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.18);
+}
+
+
+.register-brand h1 {
+    margin: 0 0 8px;
+
+    font-size: 44px;
+    font-weight: 800;
+    letter-spacing: 1px;
+}
+
+
+.register-brand h3 {
+    margin: 0 0 20px;
+
+    color: #C9A227;
+    font-size: 18px;
+    line-height: 1.5;
+}
+
+
+.register-brand > p {
+    margin: 0 0 25px;
+
+    color: #f1f5f1;
+    font-size: 15px;
+    line-height: 1.7;
+}
+
+
+/* =========================================================
+   HIGHLIGHT
+   ========================================================= */
+
+.register-highlight {
+    display: flex;
+    align-items: flex-start;
+    gap: 14px;
+
+    padding: 18px;
+
+    background: rgba(255, 255, 255, 0.10);
+    border: 1px solid rgba(255, 255, 255, 0.20);
+
+    border-radius: 14px;
+}
+
+
+.register-highlight span {
+    font-size: 25px;
+}
+
+
+.register-highlight p {
+    margin: 0;
+
+    color: #e5e7eb;
+    font-size: 14px;
+    line-height: 1.5;
+}
+
+
+.register-highlight strong {
+    color: #ffffff;
+}
+
+
+/* =========================================================
+   RIGHT REGISTRATION SECTION
+   ========================================================= */
+
+.register-form-section {
+    width: 55%;
+    padding: 45px 50px;
+
+    box-sizing: border-box;
+
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+
+    background: #ffffff;
+}
+
+
+.register-form-section h2 {
+    margin: 0 0 7px;
+
+    color: #166534;
+    font-size: 30px;
+    font-weight: 800;
+}
+
+
+.register-subtitle {
+    margin: 0 0 25px;
+
+    color: #777777;
+    font-size: 14px;
+}
+
+
+/* =========================================================
+   REGISTRATION FORM
+   ========================================================= */
+
+.register-form-section form {
+    width: 100%;
+    margin: 0;
+    padding: 0;
+
+    background: transparent;
+    border: none;
+    box-shadow: none;
+}
+
+
+.register-form-section form label {
+    display: inline-block;
+
+    margin-bottom: 6px;
+
+    color: #166534;
+    font-size: 14px;
+    font-weight: 700;
+}
+
+
+/* =========================================================
+   INPUT FIELDS
+   ========================================================= */
+
+.register-form-section form input[type="text"],
+.register-form-section form input[type="email"],
+.register-form-section form input[type="password"] {
+    width: 100%;
+
+    padding: 11px 13px;
+
+    box-sizing: border-box;
+
+    border: 2px solid #ddd6c8;
+    border-radius: 10px;
+
+    background: #faf9f5;
+    color: #1F2937;
+
+    font-size: 14px;
+
+    outline: none;
+
+    transition: 0.2s ease;
+}
+
+
+.register-form-section form input[type="text"]:focus,
+.register-form-section form input[type="email"]:focus,
+.register-form-section form input[type="password"]:focus {
+    border-color: #166534;
+
+    background: #ffffff;
+
+    box-shadow: 0 0 0 3px rgba(22, 101, 52, 0.10);
+}
+
+
+/* =========================================================
+   PASSWORD BOX
+   ========================================================= */
+
+.register-form-section .password-box {
+    position: relative;
+    width: 100%;
+}
+
+
+.register-form-section .password-box input {
+    padding-right: 50px !important;
+}
+
+
+.register-form-section .password-toggle {
+    position: absolute;
+
+    right: 7px;
+    top: 50%;
+
+    transform: translateY(-50%);
+
+    width: 36px;
+    height: 36px;
+
+    padding: 0 !important;
+
+    border: none !important;
+    background: transparent !important;
+
+    color: #166534;
+
+    font-size: 17px !important;
+
+    cursor: pointer;
+
+    box-shadow: none !important;
+}
+
+
+.register-form-section .password-toggle:hover {
+    background: #f1eee5 !important;
+    color: #C9A227;
+}
+
+
+/* =========================================================
+   PASSWORD MATCH MESSAGE
+   ========================================================= */
+
+#passwordMessage {
+    margin: 7px 0 0;
+
+    font-size: 13px;
+    font-weight: 600;
+}
+
+
+/* =========================================================
+   REGISTER BUTTON
+   ========================================================= */
+
+.register-form-section form button[type="submit"] {
+    width: 100%;
+
+    padding: 13px;
+
+    margin-top: 5px;
+
+    border: none;
+    border-radius: 10px;
+
+    background: #166534;
+    color: #ffffff;
+
+    font-size: 16px;
+    font-weight: 700;
+
+    cursor: pointer;
+
+    box-shadow: 0 5px 15px rgba(22, 101, 52, 0.20);
+
+    transition: 0.25s ease;
+}
+
+
+.register-form-section form button[type="submit"]:hover {
+    background: #C9A227;
+    color: #1F2937;
+
+    transform: translateY(-2px);
+}
+
+
+/* =========================================================
+   LOGIN LINK
+   ========================================================= */
+
+.login-link {
+    margin-top: 20px;
+
+    padding-top: 16px;
+
+    border-top: 1px solid #ddd6c8;
+
+    text-align: center;
+}
+
+
+.login-link p {
+    margin: 0 0 6px;
+
+    color: #777777;
+    font-size: 14px;
+}
+
+
+.login-link a {
+    color: #166534;
+
+    font-size: 15px;
+    font-weight: 700;
+
+    text-decoration: none;
+
+    transition: 0.2s ease;
+}
+
+
+.login-link a:hover {
+    color: #C9A227;
+    text-decoration: underline;
+}
+
+
+/* =========================================================
+   MOBILE
+   ========================================================= */
+
+@media (max-width: 850px) {
+
+    .register-container {
+        width: auto;
+        max-width: calc(100% - 25px);
+
+        margin: 20px auto;
+
+        flex-direction: column;
+    }
+
+    .register-brand,
+    .register-form-section {
+        width: 100%;
+    }
+
+    .register-brand {
+        padding: 40px 30px;
+    }
+
+    .register-form-section {
+        padding: 40px 30px;
+    }
+
+}
+
+
+@media (max-width: 500px) {
+
+    .register-container {
+        max-width: calc(100% - 15px);
+
+        margin: 10px auto;
+
+        border-radius: 18px;
+    }
+
+    .register-brand {
+        padding: 30px 20px;
+    }
+
+    .register-form-section {
+        padding: 30px 20px;
+    }
+
+    
+
+}
+/* Registration logo and title */
+
+.register-brand .register-logo {
+    width: 90px;
+    height: 90px;
+}
+
+.register-brand h1 {
+    margin: 0 0 8px;
+    font-size: 38px;
+    color: #ffffff;
+    font-weight: 800;
+    letter-spacing: 1px;
+}
+.register-container {
+    border: 8px solid red !important;
+}
+/* Registration Logo and Title */
+
+.register-brand .register-logo {
+    width: 110px;
+    height: 110px;
+}
+
+.register-brand h1 {
+    margin: 0 0 10px;
+    font-size: 44px;
+    color: #ffffff;
+    font-weight: 800;
+    letter-spacing: 1px;
+}
+/* Final Registration Size Adjustment */
+
+.register-container {
+    width: 950px;
+    min-height: 580px;
+}
+
+.register-brand .register-logo {
+    width: 140px;
+    height: 140px;
+}
+
+.register-brand h1 {
+    font-size: 46px;
+    color: #ffffff;
+    margin: 0 0 10px;
+}
+/* Registration Form Spacing */
+
+.register-form-section {
+    padding: 40px 45px;
+}
+
+.register-form-section h2 {
+    font-size: 32px;
+    margin-bottom: 8px;
+}
+
+.register-subtitle {
+    margin-bottom: 22px;
+}
+
+.register-form-section form input[type="text"],
+.register-form-section form input[type="email"],
+.register-form-section form input[type="password"] {
+    padding: 12px 14px;
+}
+/* Registration Button */
+
+.register-form-section form button[type="submit"] {
+    height: 48px;
+    border-radius: 12px;
+    font-size: 16px;
+    letter-spacing: 0.3px;
+    box-shadow: 0 6px 18px rgba(22, 101, 52, 0.25);
+}
+
+.register-form-section form button[type="submit"]:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 20px rgba(201, 162, 39, 0.30);
+}
+/* Registration Brand Section Polish */
+
+.register-brand > p {
+    max-width: 430px;
+    font-size: 16px;
+    line-height: 1.8;
+}
+
+.register-highlight {
+    max-width: 430px;
+    padding: 20px;
+    border-radius: 16px;
+    margin-top: 5px;
+}
+
+.register-highlight span {
+    font-size: 30px;
+}
+
+.register-highlight p {
+    font-size: 14px;
+    line-height: 1.6;
+}
+/* Registration Login Link */
+
+.login-link {
+    margin-top: 18px;
+    padding-top: 15px;
+}
+
+.login-link p {
+    color: #777;
+    font-size: 13px;
+}
+
+.login-link a {
+    display: inline-block;
+    padding: 8px 14px;
+    border-radius: 8px;
+    color: #166534;
+    font-size: 15px;
+    font-weight: 700;
+    transition: 0.25s ease;
+}
+
+.login-link a:hover {
+    background-color: #f1eee5;
+    color: #C9A227;
+    text-decoration: none;
+}
+/* Password Match Message */
+
+#passwordMessage {
+    min-height: 18px;
+    margin: 6px 0 0;
+    font-size: 13px;
+    font-weight: 600;
+    letter-spacing: 0.2px;
+}
+/* Registration Brand Section Polish */
+
+.register-brand > p {
+    max-width: 430px;
+    font-size: 16px;
+    line-height: 1.8;
+}
+
+.register-highlight {
+    max-width: 430px;
+    padding: 20px;
+    border-radius: 16px;
+    margin-top: 5px;
+}
+
+.register-highlight span {
+    font-size: 30px;
+}
+
+.register-highlight p {
+    font-size: 14px;
+    line-height: 1.6;
+}
+/* =========================================================
+   CIVICVOICE - MY COMPLAINTS PAGE
+   ========================================================= */
+
+
+/* Main Page */
+
+.my-complaints-page {
+    width: 100%;
+    max-width: 1100px;
+    margin: 0 auto;
+    padding: 45px 25px 50px;
+    box-sizing: border-box;
+}
+
+
+/* Page Header */
+
+.my-complaints-header {
+    margin-bottom: 30px;
+}
+
+.my-complaints-header h2 {
+    margin: 0 0 8px;
+    color: #166534;
+    font-size: 34px;
+    font-weight: 800;
+}
+
+.my-complaints-header p {
+    margin: 0;
+    color: #6b7280;
+    font-size: 15px;
+    line-height: 1.6;
+}
+
+
+/* Complaints List */
+
+.complaints-list {
+    display: flex;
+    flex-direction: column;
+    gap: 22px;
+}
+
+
+/* Complaint Card */
+
+.complaint-card {
+    background: #ffffff;
+    border: 1px solid #e5e0d5;
+    border-radius: 18px;
+    padding: 25px;
+    box-shadow: 0 8px 25px rgba(31, 41, 55, 0.08);
+    transition: 0.25s ease;
+}
+
+.complaint-card:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 12px 30px rgba(31, 41, 55, 0.12);
+}
+
+
+/* Complaint Card Header */
+
+.complaint-card-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 20px;
+    padding-bottom: 20px;
+    border-bottom: 1px solid #eee9df;
+}
+
+
+/* Small Labels */
+
+.complaint-label {
+    display: block;
+    margin-bottom: 6px;
+    color: #8a8a8a;
+    font-size: 12px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.7px;
+}
+
+
+/* Complaint ID */
+
+.complaint-card-header h3 {
+    margin: 0;
+    color: #1f2937;
+    font-size: 23px;
+    font-weight: 800;
+}
+
+
+/* Status Area */
+
+.complaint-status {
+    text-align: right;
+}
+
+
+/* Status Badge */
+
+.status-badge {
+    display: inline-block;
+    padding: 7px 15px;
+    border-radius: 20px;
+    background: #e8f5ec;
+    color: #166534;
+    font-size: 13px;
+    font-weight: 700;
+}
+
+
+/* Complaint Details */
+
+.complaint-details {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 18px;
+    padding: 22px 0;
+}
+
+
+/* Individual Detail */
+
+.complaint-detail {
+    padding: 13px 15px;
+    background: #faf9f5;
+    border: 1px solid #eee9df;
+    border-radius: 10px;
+}
+
+.complaint-detail span {
+    display: block;
+    margin-bottom: 5px;
+    color: #888;
+    font-size: 12px;
+    font-weight: 600;
+}
+
+.complaint-detail strong {
+    display: block;
+    color: #1f2937;
+    font-size: 14px;
+    line-height: 1.5;
+}
+
+
+/* Issue Description */
+
+.complaint-issue {
+    padding: 18px;
+    margin-top: 2px;
+    background: #f7f4ec;
+    border-left: 4px solid #166534;
+    border-radius: 10px;
+}
+
+.complaint-issue > span,
+.resolution-section > span,
+.resolved-date > span {
+    display: block;
+    margin-bottom: 8px;
+    color: #166534;
+    font-size: 13px;
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.complaint-issue p,
+.resolution-section p {
+    margin: 0;
+    color: #374151;
+    font-size: 14px;
+    line-height: 1.7;
+}
+
+
+/* Resolution Section */
+
+.resolution-section {
+    margin-top: 18px;
+    padding: 18px;
+    background: #faf9f5;
+    border: 1px solid #eee9df;
+    border-radius: 10px;
+}
+
+.resolution-section > span {
+    color: #6b7280;
+}
+
+
+/* Resolved Date */
+
+.resolved-date {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 15px;
+    margin-top: 18px;
+    padding-top: 15px;
+    border-top: 1px solid #eee9df;
+}
+
+.resolved-date > span {
+    margin: 0;
+    color: #6b7280;
+}
+
+.resolved-date strong {
+    color: #166534;
+    font-size: 13px;
+}
+
+
+/* No Complaints */
+
+.no-complaints {
+    padding: 55px 30px;
+    background: #ffffff;
+    border: 1px solid #e5e0d5;
+    border-radius: 18px;
+    text-align: center;
+    box-shadow: 0 8px 25px rgba(31, 41, 55, 0.07);
+}
+
+.no-complaints h3 {
+    margin: 0 0 8px;
+    color: #166534;
+    font-size: 24px;
+}
+
+.no-complaints p {
+    margin: 0;
+    color: #777;
+    font-size: 14px;
+}
+
+
+/* Footer */
+
+.complaints-footer {
+    margin-top: 30px;
+    text-align: center;
+}
+
+
+/* Back Button */
+
+.complaints-footer button {
+    padding: 12px 22px;
+    border: none;
+    border-radius: 10px;
+    background: #166534;
+    color: #ffffff;
+    font-size: 14px;
+    font-weight: 700;
+    cursor: pointer;
+    box-shadow: 0 5px 15px rgba(22, 101, 52, 0.20);
+    transition: 0.25s ease;
+}
+
+.complaints-footer button:hover {
+    background: #C9A227;
+    color: #1f2937;
+    transform: translateY(-2px);
+}
+
+
+/* =========================================================
+   RESPONSIVE DESIGN
+   ========================================================= */
+
+@media (max-width: 800px) {
+
+    .my-complaints-page {
+        padding: 30px 18px 40px;
+    }
+
+    .complaint-details {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+}
+
+
+@media (max-width: 550px) {
+
+    .my-complaints-page {
+        padding: 25px 12px 35px;
+    }
+
+    .my-complaints-header h2 {
+        font-size: 28px;
+    }
+
+    .complaint-card {
+        padding: 18px;
+    }
+
+    .complaint-card-header {
+        align-items: flex-start;
+        flex-direction: column;
+    }
+
+    .complaint-status {
+        text-align: left;
+    }
+
+    .complaint-details {
+        grid-template-columns: 1fr;
+        gap: 12px;
+    }
+
+    .resolved-date {
+        align-items: flex-start;
+        flex-direction: column;
+    }
+
+}
+/* =========================================================
+   MY COMPLAINTS - TOP DASHBOARD BUTTON
+   ========================================================= */
+
+.complaints-top-bar {
+    width: 100%;
+    max-width: 1100px;
+    margin: 0 auto 30px;
+
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    gap: 20px;
+}
+
+.complaints-top-bar h2 {
+    margin: 0 0 7px;
+    color: #166534;
+    font-size: 34px;
+    font-weight: 800;
+}
+
+.complaints-top-bar p {
+    margin: 0;
+    color: #6b7280;
+    font-size: 14px;
+    line-height: 1.6;
+}
+
+
+/* Back to Dashboard */
+
+.top-dashboard-button {
+    flex-shrink: 0;
+    padding: 12px 20px;
+
+    border: none;
+    border-radius: 10px;
+
+    background: #166534;
+    color: #ffffff;
+
+    font-size: 14px;
+    font-weight: 700;
+
+    cursor: pointer;
+
+    box-shadow: 0 5px 15px rgba(22, 101, 52, 0.20);
+
+    transition: 0.25s ease;
+}
+
+.top-dashboard-button:hover {
+    background: #C9A227;
+    color: #1F2937;
+    transform: translateY(-2px);
+}
+
+
+/* Mobile */
+
+@media (max-width: 550px) {
+
+    .complaints-top-bar {
+        align-items: flex-start;
+        flex-direction: column;
+    }
+
+    .top-dashboard-button {
+        width: 100%;
+    }
+
+}
+/* =========================================================
+   CIVICVOICE LOGIN - FINAL SIZE FIX
+   ========================================================= */
+
+.civic-container {
+    width: 1050px;
+    max-width: calc(100% - 40px);
+    min-height: 600px;
+}
+
+.civic-logo {
+    width: 110px !important;
+    height: 110px !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    background: #ffffff !important;
+    padding: 10px !important;
+    margin-bottom: 18px !important;
+    border-radius: 20px !important;
+    box-sizing: border-box !important;
+    overflow: hidden !important;
+}
+
+.civic-logo img {
+    width: 100% !important;
+    height: 100% !important;
+    object-fit: contain !important;
+    display: block !important;
+}
+
+.civic-intro h1 {
+    font-size: 42px !important;
+}
+
+.civic-intro h3 {
+    font-size: 17px !important;
+}
+
+.intro-text {
+    font-size: 14px !important;
+    line-height: 1.6 !important;
+}
+
+.civic-features {
+    gap: 12px;
+}
+
+.civic-features .feature {
+    padding: 15px;
+}
+
+.civic-features .feature-icon {
+    font-size: 22px;
+}
+
+.civic-features .feature strong {
+    font-size: 15px;
+}
+
+.civic-features .feature p {
+    font-size: 12px;
+}
+
+.civic-tagline {
+    margin-top: 22px;
+    font-size: 16px;
+}
+/* =========================================================
+   CIVICVOICE LOGIN - TOP NOTCH FINAL THEME
+   ========================================================= */
+
+/* Page Background */
+body {
+    background:
+        radial-gradient(circle at top left, rgba(22, 101, 52, 0.08), transparent 35%),
+        linear-gradient(135deg, #E8E2D5, #f7f4ec) !important;
+}
+
+/* Main Login Card */
+.civic-container {
+    width: 1050px !important;
+    max-width: calc(100% - 40px) !important;
+    min-height: 600px !important;
+    margin: 45px auto !important;
+
+    display: flex !important;
+
+    background: #ffffff !important;
+
+    border-radius: 28px !important;
+    overflow: hidden !important;
+
+    box-shadow:
+        0 20px 50px rgba(31, 41, 55, 0.18),
+        0 5px 15px rgba(31, 41, 55, 0.08) !important;
+}
+
+
+/* =========================================================
+   LEFT CIVICVOICE BRAND SECTION
+   ========================================================= */
+
+.civic-intro {
+    width: 55% !important;
+
+    padding: 45px 45px !important;
+
+    background:
+        radial-gradient(circle at 15% 15%, rgba(255,255,255,0.10), transparent 25%),
+        linear-gradient(145deg, #166534, #14532d) !important;
+
+    position: relative;
+
+    display: flex !important;
+    flex-direction: column !important;
+    justify-content: center !important;
+
+    box-sizing: border-box !important;
+}
+
+
+/* Decorative Glow */
+.civic-intro::after {
+    content: "";
+    position: absolute;
+
+    width: 220px;
+    height: 220px;
+
+    right: -100px;
+    bottom: -100px;
+
+    border-radius: 50%;
+
+    background: rgba(201, 162, 39, 0.10);
+}
+
+
+/* =========================================================
+   LOGO
+   ========================================================= */
+
+.civic-logo {
+    width: 110px !important;
+    height: 110px !important;
+
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+
+    background: #ffffff !important;
+
+    padding: 10px !important;
+
+    margin-bottom: 18px !important;
+
+    border-radius: 20px !important;
+
+    box-sizing: border-box !important;
+
+    overflow: hidden !important;
+
+    box-shadow:
+        0 10px 25px rgba(0,0,0,0.20) !important;
+}
+
+
+.civic-logo img {
+    width: 100% !important;
+    height: 100% !important;
+
+    object-fit: contain !important;
+
+    display: block !important;
+}
+
+
+/* =========================================================
+   CIVICVOICE TITLE
+   ========================================================= */
+
+.civic-intro h1 {
+    margin: 0 0 8px !important;
+
+    color: #ffffff !important;
+
+    font-size: 42px !important;
+
+    font-weight: 800 !important;
+
+    letter-spacing: 1px !important;
+}
+
+
+.civic-intro h3 {
+    margin: 0 0 18px !important;
+
+    color: #C9A227 !important;
+
+    font-size: 17px !important;
+
+    line-height: 1.5 !important;
+
+    font-weight: 700 !important;
+}
+
+
+/* Description */
+
+.intro-text {
+    max-width: 500px !important;
+
+    margin: 0 0 24px !important;
+
+    color: #f1f5f1 !important;
+
+    font-size: 14px !important;
+
+    line-height: 1.7 !important;
+}
+
+
+/* =========================================================
+   FEATURES
+   ========================================================= */
+
+.civic-features {
+    display: flex !important;
+
+    gap: 12px !important;
+
+    width: 100% !important;
+}
+
+
+.civic-features .feature {
+    flex: 1 !important;
+
+    min-width: 0 !important;
+
+    padding: 16px !important;
+
+    background: rgba(255,255,255,0.09) !important;
+
+    border: 1px solid rgba(255,255,255,0.20) !important;
+
+    border-radius: 14px !important;
+
+    box-sizing: border-box !important;
+
+    backdrop-filter: blur(5px);
+
+    transition: 0.25s ease !important;
+}
+
+
+.civic-features .feature:hover {
+    background: rgba(255,255,255,0.16) !important;
+
+    border-color: rgba(201,162,39,0.60) !important;
+
+    transform: translateY(-4px) !important;
+}
+
+
+.civic-features .feature-icon {
+    font-size: 22px !important;
+
+    margin-bottom: 7px !important;
+}
+
+
+.civic-features .feature strong {
+    display: block !important;
+
+    margin-bottom: 6px !important;
+
+    color: #ffffff !important;
+
+    font-size: 15px !important;
+}
+
+
+.civic-features .feature p {
+    margin: 0 !important;
+
+    color: #e5e7eb !important;
+
+    font-size: 12px !important;
+
+    line-height: 1.5 !important;
+}
+
+
+/* Tagline */
+
+.civic-tagline {
+    margin: 22px 0 0 !important;
+
+    color: #C9A227 !important;
+
+    font-family: Georgia, "Times New Roman", serif !important;
+
+    font-size: 16px !important;
+
+    font-weight: 700 !important;
+
+    letter-spacing: 0.5px !important;
+}
+
+
+/* =========================================================
+   RIGHT LOGIN SECTION
+   ========================================================= */
+
+.login-section {
+    width: 45% !important;
+
+    padding: 45px 45px !important;
+
+    background: #ffffff !important;
+
+    box-sizing: border-box !important;
+
+    display: flex !important;
+
+    flex-direction: column !important;
+
+    justify-content: center !important;
+}
+
+
+/* Login Heading */
+
+.login-section h2 {
+    margin: 0 0 7px !important;
+
+    color: #166534 !important;
+
+    font-size: 30px !important;
+
+    font-weight: 800 !important;
+}
+
+
+.login-subtitle {
+    margin: 0 0 24px !important;
+
+    color: #777777 !important;
+
+    font-size: 13px !important;
+}
+
+
+/* Labels */
+
+.login-section form label {
+    color: #166534 !important;
+
+    font-size: 13px !important;
+
+    font-weight: 700 !important;
+}
+
+
+/* Inputs */
+
+.login-section form input[type="text"],
+.login-section form input[type="password"] {
+    width: 100% !important;
+
+    padding: 12px 14px !important;
+
+    border: 2px solid #ddd6c8 !important;
+
+    border-radius: 10px !important;
+
+    background: #faf9f5 !important;
+
+    color: #1F2937 !important;
+
+    font-size: 14px !important;
+
+    box-sizing: border-box !important;
+
+    transition: 0.2s ease !important;
+}
+
+
+.login-section form input[type="text"]:focus,
+.login-section form input[type="password"]:focus {
+    border-color: #166534 !important;
+
+    background: #ffffff !important;
+
+    box-shadow:
+        0 0 0 3px rgba(22,101,52,0.10) !important;
+
+    outline: none !important;
+}
+
+
+/* =========================================================
+   PASSWORD EYE
+   ========================================================= */
+
+.password-box {
+    position: relative !important;
+
+    width: 100% !important;
+}
+
+
+.password-box input {
+    padding-right: 50px !important;
+}
+
+
+.password-toggle {
+    position: absolute !important;
+
+    right: 7px !important;
+
+    top: 50% !important;
+
+    transform: translateY(-50%) !important;
+
+    width: 36px !important;
+
+    height: 36px !important;
+
+    padding: 0 !important;
+
+    border: none !important;
+
+    background: transparent !important;
+
+    color: #166534 !important;
+
+    cursor: pointer !important;
+
+    box-shadow: none !important;
+}
+
+
+/* Login Button */
+
+.login-section form button[type="submit"] {
+    width: 100% !important;
+
+    padding: 13px !important;
+
+    margin-top: 5px !important;
+
+    border: none !important;
+
+    border-radius: 10px !important;
+
+    background: #166534 !important;
+
+    color: #ffffff !important;
+
+    font-size: 15px !important;
+
+    font-weight: 700 !important;
+
+    cursor: pointer !important;
+
+    box-shadow:
+        0 6px 18px rgba(22,101,52,0.22) !important;
+
+    transition: 0.25s ease !important;
+}
+
+
+.login-section form button[type="submit"]:hover {
+    background: #C9A227 !important;
+
+    color: #1F2937 !important;
+
+    transform: translateY(-2px) !important;
+}
+
+
+/* =========================================================
+   REGISTER LINK
+   ========================================================= */
+
+.register-section {
+    margin-top: 18px !important;
+
+    padding-top: 15px !important;
+
+    border-top: 1px solid #ddd6c8 !important;
+
+    text-align: center !important;
+}
+
+
+.register-section p {
+    margin: 0 0 6px !important;
+
+    color: #777777 !important;
+
+    font-size: 13px !important;
+}
+
+
+.register-section a {
+    color: #166534 !important;
+
+    font-size: 14px !important;
+
+    font-weight: 700 !important;
+
+    text-decoration: none !important;
+}
+
+
+.register-section a:hover {
+    color: #C9A227 !important;
+
+    text-decoration: underline !important;
+}
+
+
+/* =========================================================
+   MOBILE
+   ========================================================= */
+
+@media (max-width: 850px) {
+
+    .civic-container {
+        flex-direction: column !important;
+
+        max-width: calc(100% - 25px) !important;
+
+        margin: 20px auto !important;
+    }
+
+    .civic-intro,
+    .login-section {
+        width: 100% !important;
+    }
+
+    .civic-intro {
+        padding: 40px 30px !important;
+    }
+
+    .login-section {
+        padding: 40px 30px !important;
+    }
+
+}
+
+
+@media (max-width: 500px) {
+
+    .civic-container {
+        max-width: calc(100% - 15px) !important;
+
+        margin: 10px auto !important;
+
+        border-radius: 18px !important;
+    }
+
+    .civic-intro {
+        padding: 30px 20px !important;
+    }
+
+    .login-section {
+        padding: 30px 20px !important;
+    }
+
+    .civic-logo {
+        width: 90px !important;
+        height: 90px !important;
+    }
+
+    .civic-intro h1 {
+        font-size: 32px !important;
+    }
+
+    .civic-features {
+        flex-direction: column !important;
+    }
+
+}
+/* =========================================================
+   CIVICVOICE LOGIN - MODERN INDIA CIVIC THEME 🇮🇳
+   ========================================================= */
+
+/* ---------------------------------------------------------
+   PAGE BACKGROUND
+   --------------------------------------------------------- */
+
+body {
+    background:
+        linear-gradient(
+            180deg,
+            rgba(255, 153, 51, 0.10) 0%,
+            rgba(255, 255, 255, 0.95) 48%,
+            rgba(19, 136, 8, 0.10) 100%
+        ) !important;
+
+    min-height: 100vh;
+}
+
+
+/* ---------------------------------------------------------
+   MAIN LOGIN CARD
+   --------------------------------------------------------- */
+
+.civic-container {
+    position: relative !important;
+
+    width: 1050px !important;
+    max-width: calc(100% - 40px) !important;
+    min-height: 600px !important;
+
+    margin: 45px auto !important;
+
+    display: flex !important;
+
+    background: #ffffff !important;
+
+    border-radius: 28px !important;
+
+    overflow: hidden !important;
+
+    border: 1px solid rgba(22, 101, 52, 0.12) !important;
+
+    box-shadow:
+        0 20px 55px rgba(31, 41, 55, 0.18),
+        0 5px 18px rgba(22, 101, 52, 0.08) !important;
+}
+
+
+/* ---------------------------------------------------------
+   TOP INDIAN FLAG ACCENT
+   --------------------------------------------------------- */
+
+.civic-container::before {
+    content: "";
+
+    position: absolute;
+
+    top: 0;
+    left: 0;
+
+    width: 100%;
+    height: 5px;
+
+    background: linear-gradient(
+        to right,
+        #FF9933 0%,
+        #FF9933 33.33%,
+        #ffffff 33.33%,
+        #ffffff 66.66%,
+        #138808 66.66%,
+        #138808 100%
+    );
+
+    z-index: 10;
+}
+
+
+/* ---------------------------------------------------------
+   LEFT CIVICVOICE SECTION
+   --------------------------------------------------------- */
+
+.civic-intro {
+    position: relative !important;
+
+    width: 55% !important;
+
+    padding: 45px !important;
+
+    box-sizing: border-box !important;
+
+    background:
+        radial-gradient(
+            circle at 15% 15%,
+            rgba(255, 153, 51, 0.14),
+            transparent 28%
+        ),
+        radial-gradient(
+            circle at 85% 85%,
+            rgba(19, 136, 8, 0.15),
+            transparent 30%
+        ),
+        linear-gradient(
+            145deg,
+            #166534,
+            #14532d
+        ) !important;
+
+    display: flex !important;
+
+    flex-direction: column !important;
+
+    justify-content: center !important;
+
+    overflow: hidden !important;
+}
+
+
+/* ---------------------------------------------------------
+   ASHOKA CHAKRA INSPIRED BACKGROUND CIRCLE
+   --------------------------------------------------------- */
+
+.civic-intro::before {
+    content: "✦";
+
+    position: absolute;
+
+    right: -85px;
+    bottom: -85px;
+
+    width: 260px;
+    height: 260px;
+
+    border: 2px solid rgba(255, 255, 255, 0.10);
+
+    border-radius: 50%;
+
+    color: rgba(255, 255, 255, 0.10);
+
+    font-size: 120px;
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    box-sizing: border-box;
+}
+
+
+/* ---------------------------------------------------------
+   LOGO
+   --------------------------------------------------------- */
+
+.civic-logo {
+    position: relative !important;
+    z-index: 2 !important;
+
+    width: 110px !important;
+    height: 110px !important;
+
+    display: flex !important;
+
+    align-items: center !important;
+    justify-content: center !important;
+
+    background: #ffffff !important;
+
+    padding: 10px !important;
+
+    margin-bottom: 18px !important;
+
+    border-radius: 20px !important;
+
+    box-sizing: border-box !important;
+
+    overflow: hidden !important;
+
+    border: 3px solid rgba(255, 153, 51, 0.55) !important;
+
+    box-shadow:
+        0 10px 25px rgba(0, 0, 0, 0.22) !important;
+}
+
+
+.civic-logo img {
+    width: 100% !important;
+    height: 100% !important;
+
+    object-fit: contain !important;
+
+    display: block !important;
+}
+
+
+/* ---------------------------------------------------------
+   CIVICVOICE NAME
+   --------------------------------------------------------- */
+
+.civic-intro h1 {
+    position: relative !important;
+    z-index: 2 !important;
+
+    margin: 0 0 8px !important;
+
+    color: #ffffff !important;
+
+    font-size: 42px !important;
+
+    font-weight: 800 !important;
+
+    letter-spacing: 1px !important;
+}
+
+
+/* ---------------------------------------------------------
+   PROJECT TITLE
+   --------------------------------------------------------- */
+
+.civic-intro h3 {
+    position: relative !important;
+    z-index: 2 !important;
+
+    margin: 0 0 18px !important;
+
+    color: #FFB347 !important;
+
+    font-size: 17px !important;
+
+    line-height: 1.5 !important;
+
+    font-weight: 700 !important;
+}
+
+
+/* ---------------------------------------------------------
+   DESCRIPTION
+   --------------------------------------------------------- */
+
+.intro-text {
+    position: relative !important;
+    z-index: 2 !important;
+
+    max-width: 500px !important;
+
+    margin: 0 0 24px !important;
+
+    color: #f4f7f4 !important;
+
+    font-size: 14px !important;
+
+    line-height: 1.7 !important;
+}
+
+
+/* ---------------------------------------------------------
+   FEATURES
+   --------------------------------------------------------- */
+
+.civic-features {
+    position: relative !important;
+    z-index: 2 !important;
+
+    display: flex !important;
+
+    gap: 12px !important;
+
+    width: 100% !important;
+}
+
+
+.civic-features .feature {
+    flex: 1 !important;
+
+    min-width: 0 !important;
+
+    padding: 16px !important;
+
+    background: rgba(255, 255, 255, 0.09) !important;
+
+    border: 1px solid rgba(255, 255, 255, 0.20) !important;
+
+    border-radius: 14px !important;
+
+    box-sizing: border-box !important;
+
+    transition: 0.25s ease !important;
+}
+
+
+.civic-features .feature:hover {
+    background: rgba(255, 255, 255, 0.15) !important;
+
+    border-color: rgba(255, 179, 71, 0.65) !important;
+
+    transform: translateY(-4px) !important;
+}
+
+
+.civic-features .feature-icon {
+    font-size: 22px !important;
+
+    margin-bottom: 7px !important;
+}
+
+
+.civic-features .feature strong {
+    display: block !important;
+
+    margin-bottom: 6px !important;
+
+    color: #ffffff !important;
+
+    font-size: 15px !important;
+}
+
+
+.civic-features .feature p {
+    margin: 0 !important;
+
+    color: #e5e7eb !important;
+
+    font-size: 12px !important;
+
+    line-height: 1.5 !important;
+}
+
+
+/* ---------------------------------------------------------
+   TAGLINE
+   --------------------------------------------------------- */
+
+.civic-tagline {
+    position: relative !important;
+    z-index: 2 !important;
+
+    margin: 22px 0 0 !important;
+
+    color: #FFB347 !important;
+
+    font-family: Georgia, "Times New Roman", serif !important;
+
+    font-size: 16px !important;
+
+    font-weight: 700 !important;
+
+    letter-spacing: 0.5px !important;
+}
+
+
+/* ---------------------------------------------------------
+   RIGHT LOGIN SECTION
+   --------------------------------------------------------- */
+
+.login-section {
+    width: 45% !important;
+
+    padding: 45px !important;
+
+    box-sizing: border-box !important;
+
+    background:
+        linear-gradient(
+            180deg,
+            #ffffff,
+            #fffdfa
+        ) !important;
+
+    display: flex !important;
+
+    flex-direction: column !important;
+
+    justify-content: center !important;
+}
+
+
+/* ---------------------------------------------------------
+   LOGIN HEADING
+   --------------------------------------------------------- */
+
+.login-section h2 {
+    margin: 0 0 7px !important;
+
+    color: #166534 !important;
+
+    font-size: 30px !important;
+
+    font-weight: 800 !important;
+}
+
+
+.login-subtitle {
+    margin: 0 0 24px !important;
+
+    color: #777777 !important;
+
+    font-size: 13px !important;
+}
+
+
+/* ---------------------------------------------------------
+   LABELS
+   --------------------------------------------------------- */
+
+.login-section form label {
+    color: #166534 !important;
+
+    font-size: 13px !important;
+
+    font-weight: 700 !important;
+}
+
+
+/* ---------------------------------------------------------
+   INPUT FIELDS
+   --------------------------------------------------------- */
+
+.login-section form input[type="text"],
+.login-section form input[type="password"] {
+    width: 100% !important;
+
+    padding: 12px 14px !important;
+
+    border: 2px solid #ddd6c8 !important;
+
+    border-radius: 10px !important;
+
+    background: #faf9f5 !important;
+
+    color: #1F2937 !important;
+
+    font-size: 14px !important;
+
+    box-sizing: border-box !important;
+
+    outline: none !important;
+
+    transition: 0.2s ease !important;
+}
+
+
+.login-section form input[type="text"]:focus,
+.login-section form input[type="password"]:focus {
+    border-color: #138808 !important;
+
+    background: #ffffff !important;
+
+    box-shadow:
+        0 0 0 3px rgba(19, 136, 8, 0.10) !important;
+}
+
+
+/* ---------------------------------------------------------
+   PASSWORD BOX
+   --------------------------------------------------------- */
+
+.password-box {
+    position: relative !important;
+
+    width: 100% !important;
+}
+
+
+.password-box input {
+    padding-right: 50px !important;
+}
+
+
+.password-toggle {
+    position: absolute !important;
+
+    right: 7px !important;
+
+    top: 50% !important;
+
+    transform: translateY(-50%) !important;
+
+    width: 36px !important;
+
+    height: 36px !important;
+
+    padding: 0 !important;
+
+    border: none !important;
+
+    background: transparent !important;
+
+    color: #166534 !important;
+
+    cursor: pointer !important;
+
+    box-shadow: none !important;
+}
+
+
+.password-toggle:hover {
+    color: #FF9933 !important;
+
+    background: #fff4e8 !important;
+}
+
+
+/* ---------------------------------------------------------
+   CAPTCHA REFRESH BUTTON
+   --------------------------------------------------------- */
+
+.login-section form button[type="button"] {
+    border: none !important;
+
+    background: transparent !important;
+
+    color: #166534 !important;
+
+    cursor: pointer !important;
+
+    font-size: 16px !important;
+
+    padding: 3px 6px !important;
+}
+
+
+.login-section form button[type="button"]:hover {
+    color: #FF9933 !important;
+}
+
+
+/* ---------------------------------------------------------
+   LOGIN BUTTON
+   --------------------------------------------------------- */
+
+.login-section form button[type="submit"] {
+    width: 100% !important;
+
+    padding: 13px !important;
+
+    margin-top: 5px !important;
+
+    border: none !important;
+
+    border-radius: 10px !important;
+
+    background:
+        linear-gradient(
+            90deg,
+            #166534,
+            #138808
+        ) !important;
+
+    color: #ffffff !important;
+
+    font-size: 15px !important;
+
+    font-weight: 700 !important;
+
+    letter-spacing: 0.3px !important;
+
+    cursor: pointer !important;
+
+    box-shadow:
+        0 7px 20px rgba(19, 136, 8, 0.22) !important;
+
+    transition: 0.25s ease !important;
+}
+
+
+.login-section form button[type="submit"]:hover {
+    background:
+        linear-gradient(
+            90deg,
+            #FF9933,
+            #e68a00
+        ) !important;
+
+    color: #ffffff !important;
+
+    transform: translateY(-2px) !important;
+
+    box-shadow:
+        0 8px 22px rgba(255, 153, 51, 0.25) !important;
+}
+
+
+/* ---------------------------------------------------------
+   REGISTER SECTION
+   --------------------------------------------------------- */
+
+.register-section {
+    margin-top: 18px !important;
+
+    padding-top: 15px !important;
+
+    border-top: 1px solid #e5e0d5 !important;
+
+    text-align: center !important;
+}
+
+
+.register-section p {
+    margin: 0 0 6px !important;
+
+    color: #777777 !important;
+
+    font-size: 13px !important;
+}
+
+
+.register-section a {
+    color: #166534 !important;
+
+    font-size: 14px !important;
+
+    font-weight: 700 !important;
+
+    text-decoration: none !important;
+
+    transition: 0.2s ease !important;
+}
+
+
+.register-section a:hover {
+    color: #FF9933 !important;
+
+    text-decoration: underline !important;
+}
+
+/
+
+/* Mobile */
+
+@media (max-width: 500px) {
+
+    .civic-logo {
+        width: 150px !important;
+        height: 90px !important;
+    }
+
+}
+/* ---------------------------------------------------------
+   MOBILE
+   --------------------------------------------------------- */
+
+@media (max-width: 850px) {
+
+    .civic-container {
+        flex-direction: column !important;
+
+        max-width: calc(100% - 25px) !important;
+
+        margin: 20px auto !important;
+    }
+
+
+    .civic-intro,
+    .login-section {
+        width: 100% !important;
+    }
+
+
+    .civic-intro {
+        padding: 40px 30px !important;
+    }
+
+
+    .login-section {
+        padding: 40px 30px !important;
+    }
+
+}
+
+
+@media (max-width: 500px) {
+
+    .civic-container {
+        max-width: calc(100% - 15px) !important;
+
+        margin: 10px auto !important;
+
+        border-radius: 18px !important;
+    }
+
+
+    .civic-intro {
+        padding: 30px 20px !important;
+    }
+
+
+    .login-section {
+        padding: 30px 20px !important;
+    }
+
+
+    .civic-logo {
+        width: 90px !important;
+
+        height: 90px !important;
+    }
+
+
+    .civic-intro h1 {
+        font-size: 32px !important;
+    }
+
+
+    .civic-features {
+        flex-direction: column !important;
+    }
+
+}
+    .civic-features {
+        flex-direction: column !important;
+    }
+
+}
+
+
+/* =========================================================
+   CIVICVOICE LOGO - RECTANGULAR STYLE
+   ========================================================= */
+
+.civic-logo {
+    width: 180px !important;
+    height: 105px !important;
+
+    border-radius: 16px !important;
+
+    padding: 8px !important;
+
+    background: #ffffff !important;
+
+    border: 3px solid rgba(255, 153, 51, 0.55) !important;
+
+    overflow: hidden !important;
+
+    box-sizing: border-box !important;
+}
+
+.civic-logo img {
+    width: 100% !important;
+    height: 100% !important;
+
+    object-fit: contain !important;
+}
+
+
+@media (max-width: 500px) {
+
+    .civic-logo {
+        width: 150px !important;
+        height: 90px !important;
+    }
+
+}
+/* =========================================================
+   CIVICVOICE LOGO - FORCE RECTANGLE
+   ========================================================= */
+
+.civic-intro .civic-logo {
+    width: 190px !important;
+    height: 105px !important;
+
+    min-width: 190px !important;
+    min-height: 105px !important;
+
+    max-width: 190px !important;
+    max-height: 105px !important;
+
+    border-radius: 14px !important;
+
+    padding: 8px !important;
+
+    box-sizing: border-box !important;
+
+    overflow: hidden !important;
+
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+}
+
+.civic-intro .civic-logo img {
+    width: 100% !important;
+    height: 100% !important;
+
+    max-width: 100% !important;
+    max-height: 100% !important;
+
+    object-fit: contain !important;
+
+    display: block !important;
+}
+
+
+/* Mobile */
+
+@media (max-width: 500px) {
+
+    .civic-intro .civic-logo {
+        width: 160px !important;
+        height: 90px !important;
+
+        min-width: 160px !important;
+        min-height: 90px !important;
+
+        max-width: 160px !important;
+        max-height: 90px !important;
+    }
+
+}
+/* =========================================================
+   CIVICVOICE - INDIA CIVIC THEME
+   FLAG + ASHOKA CHAKRA + CITIZENS
+   ========================================================= */
+
+
+/* ---------------------------------------------------------
+   MAIN PAGE
+   --------------------------------------------------------- */
+
+body {
+    background:
+        linear-gradient(
+            180deg,
+            #fff7ef 0%,
+            #ffffff 48%,
+            #f1f8ef 100%
+        ) !important;
+
+    min-height: 100vh;
+}
+
+
+/* ---------------------------------------------------------
+   MAIN LOGIN CARD
+   --------------------------------------------------------- */
+
+.civic-container {
+    position: relative !important;
+
+    width: 1050px !important;
+    max-width: calc(100% - 40px) !important;
+    min-height: 600px !important;
+
+    margin: 45px auto !important;
+
+    display: flex !important;
+
+    background: #ffffff !important;
+
+    border-radius: 26px !important;
+
+    overflow: hidden !important;
+
+    border: 1px solid #e3e3e3 !important;
+
+    box-shadow:
+        0 20px 50px rgba(0,0,0,0.16) !important;
+}
+
+
+/* ---------------------------------------------------------
+   INDIAN FLAG STRIP
+   --------------------------------------------------------- */
+
+.civic-container::before {
+    content: "";
+
+    position: absolute;
+
+    top: 0;
+    left: 0;
+
+    width: 100%;
+    height: 6px;
+
+    background: linear-gradient(
+        to right,
+        #FF9933 0%,
+        #FF9933 33.33%,
+        #ffffff 33.33%,
+        #ffffff 66.66%,
+        #138808 66.66%,
+        #138808 100%
+    );
+
+    z-index: 20;
+}
+
+
+/* ---------------------------------------------------------
+   LEFT INDIA CIVIC SECTION
+   --------------------------------------------------------- */
+
+.civic-intro {
+    position: relative !important;
+
+    width: 55% !important;
+
+    padding: 45px !important;
+
+    box-sizing: border-box !important;
+
+    overflow: hidden !important;
+
+    background:
+        linear-gradient(
+            145deg,
+            #0f5132,
+            #166534
+        ) !important;
+
+    display: flex !important;
+
+    flex-direction: column !important;
+
+    justify-content: center !important;
+}
+
+
+/* ---------------------------------------------------------
+   ASHOKA CHAKRA
+   --------------------------------------------------------- */
+
+.civic-intro::before {
+    content: "☸";
+
+    position: absolute;
+
+    right: -55px;
+    top: 50%;
+
+    transform: translateY(-50%);
+
+    width: 270px;
+    height: 270px;
+
+    border: 4px solid rgba(255,255,255,0.13);
+
+    border-radius: 50%;
+
+    color: rgba(255,255,255,0.13);
+
+    font-size: 205px;
+
+    line-height: 255px;
+
+    text-align: center;
+
+    z-index: 0;
+}
+
+
+/* ---------------------------------------------------------
+   GROUP OF CITIZENS
+   --------------------------------------------------------- */
+
+.civic-intro::after {
+    content: "👥";
+
+    position: absolute;
+
+    right: 25px;
+    bottom: 25px;
+
+    font-size: 70px;
+
+    letter-spacing: -18px;
+
+    opacity: 0.22;
+
+    z-index: 1;
+}
+
+
+/* ---------------------------------------------------------
+   LOGO - RECTANGULAR
+   --------------------------------------------------------- */
+
+.civic-intro .civic-logo {
+    position: relative !important;
+
+    z-index: 5 !important;
+
+    width: 190px !important;
+    height: 105px !important;
+
+    min-width: 190px !important;
+    min-height: 105px !important;
+
+    max-width: 190px !important;
+    max-height: 105px !important;
+
+    padding: 8px !important;
+
+    margin-bottom: 18px !important;
+
+    box-sizing: border-box !important;
+
+    display: flex !important;
+
+    align-items: center !important;
+
+    justify-content: center !important;
+
+    background: #ffffff !important;
+
+    border: 3px solid #FF9933 !important;
+
+    border-radius: 14px !important;
+
+    overflow: hidden !important;
+
+    box-shadow:
+        0 10px 25px rgba(0,0,0,0.25) !important;
+}
+
+
+.civic-intro .civic-logo img {
+    width: 100% !important;
+    height: 100% !important;
+
+    max-width: 100% !important;
+    max-height: 100% !important;
+
+    object-fit: contain !important;
+
+    display: block !important;
+}
+
+
+/* ---------------------------------------------------------
+   CIVICVOICE CONTENT ABOVE DECORATIONS
+   --------------------------------------------------------- */
+
+.civic-intro h1,
+.civic-intro h3,
+.civic-intro .intro-text,
+.civic-intro .civic-features,
+.civic-intro .civic-tagline {
+    position: relative !important;
+
+    z-index: 5 !important;
+}
+
+
+/* ---------------------------------------------------------
+   CIVICVOICE NAME
+   --------------------------------------------------------- */
+
+.civic-intro h1 {
+    margin: 0 0 8px !important;
+
+    color: #ffffff !important;
+
+    font-size: 42px !important;
+
+    font-weight: 800 !important;
+
+    letter-spacing: 1px !important;
+}
+
+
+/* ---------------------------------------------------------
+   PROJECT TITLE
+   --------------------------------------------------------- */
+
+.civic-intro h3 {
+    margin: 0 0 18px !important;
+
+    color: #FFB347 !important;
+
+    font-size: 17px !important;
+
+    line-height: 1.5 !important;
+
+    font-weight: 700 !important;
+}
+
+
+/* ---------------------------------------------------------
+   DESCRIPTION
+   --------------------------------------------------------- */
+
+.intro-text {
+    max-width: 500px !important;
+
+    margin: 0 0 24px !important;
+
+    color: #f4f7f4 !important;
+
+    font-size: 14px !important;
+
+    line-height: 1.7 !important;
+}
+
+
+/* ---------------------------------------------------------
+   CITIZEN FEATURES
+   --------------------------------------------------------- */
+
+.civic-features {
+    display: flex !important;
+
+    gap: 12px !important;
+
+    width: 100% !important;
+}
+
+
+.civic-features .feature {
+    flex: 1 !important;
+
+    padding: 16px !important;
+
+    background: rgba(255,255,255,0.10) !important;
+
+    border: 1px solid rgba(255,255,255,0.22) !important;
+
+    border-radius: 14px !important;
+
+    box-sizing: border-box !important;
+
+    transition: 0.25s ease !important;
+}
+
+
+.civic-features .feature:hover {
+    transform: translateY(-4px) !important;
+
+    background: rgba(255,255,255,0.16) !important;
+
+    border-color: #FF9933 !important;
+}
+
+
+.civic-features .feature-icon {
+    font-size: 22px !important;
+
+    margin-bottom: 7px !important;
+}
+
+
+.civic-features .feature strong {
+    display: block !important;
+
+    margin-bottom: 6px !important;
+
+    color: #ffffff !important;
+
+    font-size: 15px !important;
+}
+
+
+.civic-features .feature p {
+    margin: 0 !important;
+
+    color: #e5e7eb !important;
+
+    font-size: 12px !important;
+
+    line-height: 1.5 !important;
+}
+
+
+/* ---------------------------------------------------------
+   TAGLINE
+   --------------------------------------------------------- */
+
+.civic-tagline {
+    margin: 22px 0 0 !important;
+
+    color: #FFB347 !important;
+
+    font-family: Georgia, "Times New Roman", serif !important;
+
+    font-size: 16px !important;
+
+    font-weight: 700 !important;
+
+    letter-spacing: 0.5px !important;
+}
+
+
+/* ---------------------------------------------------------
+   RIGHT LOGIN AREA
+   --------------------------------------------------------- */
+
+.login-section {
+    width: 45% !important;
+
+    padding: 45px !important;
+
+    box-sizing: border-box !important;
+
+    background: #ffffff !important;
+
+    display: flex !important;
+
+    flex-direction: column !important;
+
+    justify-content: center !important;
+}
+
+
+/* ---------------------------------------------------------
+   LOGIN HEADING
+   --------------------------------------------------------- */
+
+.login-section h2 {
+    margin: 0 0 7px !important;
+
+    color: #166534 !important;
+
+    font-size: 30px !important;
+
+    font-weight: 800 !important;
+}
+
+
+.login-subtitle {
+    margin: 0 0 24px !important;
+
+    color: #777777 !important;
+
+    font-size: 13px !important;
+}
+
+
+/* ---------------------------------------------------------
+   INPUTS
+   --------------------------------------------------------- */
+
+.login-section form input[type="text"],
+.login-section form input[type="password"] {
+    width: 100% !important;
+
+    padding: 12px 14px !important;
+
+    border: 2px solid #ddd6c8 !important;
+
+    border-radius: 10px !important;
+
+    background: #faf9f5 !important;
+
+    color: #1F2937 !important;
+
+    font-size: 14px !important;
+
+    box-sizing: border-box !important;
+
+    outline: none !important;
+}
+
+
+.login-section form input[type="text"]:focus,
+.login-section form input[type="password"]:focus {
+    border-color: #138808 !important;
+
+    background: #ffffff !important;
+
+    box-shadow:
+        0 0 0 3px rgba(19,136,8,0.10) !important;
+}
+
+
+/* ---------------------------------------------------------
+   LABELS
+   --------------------------------------------------------- */
+
+.login-section form label {
+    color: #166534 !important;
+
+    font-size: 13px !important;
+
+    font-weight: 700 !important;
+}
+
+
+/* ---------------------------------------------------------
+   PASSWORD
+   --------------------------------------------------------- */
+
+.password-box {
+    position: relative !important;
+
+    width: 100% !important;
+}
+
+
+.password-box input {
+    padding-right: 50px !important;
+}
+
+
+.password-toggle {
+    position: absolute !important;
+
+    right: 7px !important;
+
+    top: 50% !important;
+
+    transform: translateY(-50%) !important;
+
+    width: 36px !important;
+
+    height: 36px !important;
+
+    padding: 0 !important;
+
+    border: none !important;
+
+    background: transparent !important;
+
+    color: #166534 !important;
+
+    cursor: pointer !important;
+
+    box-shadow: none !important;
+}
+
+
+/* ---------------------------------------------------------
+   LOGIN BUTTON
+   --------------------------------------------------------- */
+
+.login-section form button[type="submit"] {
+    width: 100% !important;
+
+    padding: 13px !important;
+
+    margin-top: 5px !important;
+
+    border: none !important;
+
+    border-radius: 10px !important;
+
+    background: linear-gradient(
+        90deg,
+        #166534,
+        #138808
+    ) !important;
+
+    color: #ffffff !important;
+
+    font-size: 15px !important;
+
+    font-weight: 700 !important;
+
+    cursor: pointer !important;
+
+    transition: 0.25s ease !important;
+
+    box-shadow:
+        0 7px 20px rgba(19,136,8,0.22) !important;
+}
+
+
+.login-section form button[type="submit"]:hover {
+    background: linear-gradient(
+        90deg,
+        #FF9933,
+        #e68a00
+    ) !important;
+
+    transform: translateY(-2px) !important;
+}
+
+
+/* ---------------------------------------------------------
+   REGISTER LINK
+   --------------------------------------------------------- */
+
+.register-section {
+    margin-top: 18px !important;
+
+    padding-top: 15px !important;
+
+    border-top: 1px solid #e5e0d5 !important;
+
+    text-align: center !important;
+}
+
+
+.register-section p {
+    margin: 0 0 6px !important;
+
+    color: #777777 !important;
+
+    font-size: 13px !important;
+}
+
+
+.register-section a {
+    color: #166534 !important;
+
+    font-size: 14px !important;
+
+    font-weight: 700 !important;
+
+    text-decoration: none !important;
+}
+
+
+.register-section a:hover {
+    color: #FF9933 !important;
+
+    text-decoration: underline !important;
+}
+
+
+/* ---------------------------------------------------------
+   MOBILE
+   --------------------------------------------------------- */
+
+@media (max-width: 850px) {
+
+    .civic-container {
+        flex-direction: column !important;
+
+        max-width: calc(100% - 25px) !important;
+    }
+
+    .civic-intro,
+    .login-section {
+        width: 100% !important;
+    }
+
+    .civic-intro {
+        padding: 40px 30px !important;
+    }
+
+    .login-section {
+        padding: 40px 30px !important;
+    }
+
+}
+
+
+@media (max-width: 500px) {
+
+    .civic-container {
+        max-width: calc(100% - 15px) !important;
+
+        margin: 10px auto !important;
+
+        border-radius: 18px !important;
+    }
+
+    .civic-intro {
+        padding: 30px 20px !important;
+    }
+
+    .login-section {
+        padding: 30px 20px !important;
+    }
+
+    .civic-intro .civic-logo {
+        width: 160px !important;
+        height: 90px !important;
+
+        min-width: 160px !important;
+        min-height: 90px !important;
+
+        max-width: 160px !important;
+        max-height: 90px !important;
+    }
+
+    .civic-intro h1 {
+        font-size: 32px !important;
+    }
+
+    .civic-features {
+        flex-direction: column !important;
+    }
+
+    .civic-intro::before {
+        right: -100px;
+
+        width: 220px;
+        height: 220px;
+
+        font-size: 165px;
+    }
+
+}
+/* =========================================================
+   CIVICVOICE - CLEAR INDIAN CIVIC THEME
+   ========================================================= */
+
+/* LEFT PANEL */
+.civic-intro {
+    position: relative !important;
+    overflow: hidden !important;
+
+    background:
+        /* Indian flag - saffron */
+        linear-gradient(
+            rgba(255, 153, 51, 0.95),
+            rgba(255, 153, 51, 0.95)
+        ) no-repeat right 35px bottom 125px / 150px 24px,
+
+        /* Indian flag - white */
+        linear-gradient(
+            #ffffff,
+            #ffffff
+        ) no-repeat right 35px bottom 101px / 150px 24px,
+
+        /* Indian flag - green */
+        linear-gradient(
+            #138808,
+            #138808
+        ) no-repeat right 35px bottom 77px / 150px 24px,
+
+        linear-gradient(
+            145deg,
+            #0f5132,
+            #166534
+        ) !important;
+}
+
+
+/* =========================================================
+   ASHOKA CHAKRA
+   ========================================================= */
+
+.civic-intro::before {
+    content: "☸" !important;
+
+    position: absolute !important;
+
+    right: 55px !important;
+    bottom: 55px !important;
+
+    width: 110px !important;
+    height: 110px !important;
+
+    display: flex !important;
+
+    align-items: center !important;
+    justify-content: center !important;
+
+    color: #0755a5 !important;
+
+    font-size: 82px !important;
+
+    line-height: 1 !important;
+
+    border: 3px solid rgba(7, 85, 165, 0.55) !important;
+
+    border-radius: 50% !important;
+
+    background: rgba(255,255,255,0.82) !important;
+
+    z-index: 2 !important;
+
+    opacity: 0.95 !important;
+
+    box-sizing: border-box !important;
+}
+
+
+/* =========================================================
+   GROUP OF CITIZENS
+   ========================================================= */
+
+.civic-intro::after {
+    content: "👨‍👩‍👧‍👦" !important;
+
+    position: absolute !important;
+
+    right: 42px !important;
+    bottom: 185px !important;
+
+    font-size: 58px !important;
+
+    letter-spacing: 0 !important;
+
+    z-index: 2 !important;
+
+    opacity: 0.9 !important;
+
+    filter: none !important;
+
+    text-shadow:
+        0 3px 8px rgba(0,0,0,0.25) !important;
+}
+
+
+/* =========================================================
+   KEEP CIVICVOICE CONTENT ABOVE DECORATIONS
+   ========================================================= */
+
+.civic-intro > * {
+    position: relative !important;
+    z-index: 5 !important;
+}
+
+
+/* =========================================================
+   LOGO - RECTANGULAR
+   ========================================================= */
+
+.civic-intro .civic-logo {
+    width: 190px !important;
+    height: 105px !important;
+
+    min-width: 190px !important;
+    min-height: 105px !important;
+
+    max-width: 190px !important;
+    max-height: 105px !important;
+
+    padding: 8px !important;
+
+    border-radius: 14px !important;
+
+    border: 3px solid #FF9933 !important;
+
+    background: #ffffff !important;
+
+    box-sizing: border-box !important;
+
+    overflow: hidden !important;
+
+    z-index: 10 !important;
+}
+
+
+.civic-intro .civic-logo img {
+    width: 100% !important;
+    height: 100% !important;
+
+    object-fit: contain !important;
+
+    display: block !important;
+}
+
+
+/* =========================================================
+   MAKE DECORATIONS VISIBLE BUT NOT DISTRACTING
+   ========================================================= */
+
+.civic-features .feature {
+    position: relative !important;
+    z-index: 8 !important;
+}
+
+.civic-intro h1,
+.civic-intro h3,
+.civic-intro .intro-text,
+.civic-intro .civic-tagline {
+    position: relative !important;
+    z-index: 8 !important;
+}
+
+
+/* =========================================================
+   MOBILE
+   ========================================================= */
+
+@media (max-width: 850px) {
+
+    .civic-intro::after {
+        right: 25px !important;
+        bottom: 35px !important;
+    }
+
+    .civic-intro::before {
+        right: 25px !important;
+        bottom: 20px !important;
+    }
+
+}
+
+
+@media (max-width: 500px) {
+
+    .civic-intro .civic-logo {
+        width: 160px !important;
+        height: 90px !important;
+
+        min-width: 160px !important;
+        min-height: 90px !important;
+
+        max-width: 160px !important;
+        max-height: 90px !important;
+    }
+
+    .civic-intro::before {
+        width: 85px !important;
+        height: 85px !important;
+
+        font-size: 62px !important;
+
+        right: 20px !important;
+        bottom: 25px !important;
+    }
+
+    .civic-intro::after {
+        font-size: 45px !important;
+
+        right: 15px !important;
+        bottom: 120px !important;
+    }
+
+}
+/* REMOVE INDIA THEME DECORATIONS */
+
+.civic-intro::before {
+    content: none !important;
+    display: none !important;
+}
+
+.civic-intro::after {
+    content: none !important;
+    display: none !important;
+}
+/* REMOVE ALL INDIAN FLAG DECORATIONS */
+
+.civic-container::before {
+    content: none !important;
+    display: none !important;
+    background: none !important;
+}
+
+.civic-intro::before {
+    content: none !important;
+    display: none !important;
+    background: none !important;
+}
+
+.civic-intro::after {
+    content: none !important;
+    display: none !important;
+    background: none !important;
+}
+
+/* Remove flag-colored background layers */
+.civic-intro {
+    background: #166534 !important;
+}
