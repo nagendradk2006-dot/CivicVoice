@@ -1,5 +1,11 @@
 profile_images/
+
 generate_hash.php
+
 hash.php
+
 make_password.php
+
 test_admin_password.php
+
+config.php

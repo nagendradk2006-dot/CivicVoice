@@ -265,11 +265,53 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
 
     <textarea
-        name="issue_description"
-        rows="5"
-        required
-    ></textarea>
+    name="issue_description"
+    rows="5"
+    required
+></textarea>
+<br>
 
+<button type="button" id="aiSuggestBtn">
+    🤖 AI Suggest Department
+</button>
+
+<div id="aiLoading" style="display:none;">
+    🤖 AI is analyzing your complaint...
+</div>
+
+<div id="aiResult" style="display:none;">
+
+    <h3>🤖 AI Recommendation</h3>
+
+    <p>
+        <strong>Department:</strong>
+        <span id="aiDepartment"></span>
+    </p>
+
+    <p>
+        <strong>Category:</strong>
+        <span id="aiCategory"></span>
+    </p>
+
+    <p>
+        <strong>Priority:</strong>
+        <span id="aiPriority"></span>
+    </p>
+
+    <p>
+        <strong>Reason:</strong>
+        <span id="aiReason"></span>
+    </p>
+
+    <button type="button" id="useAiDepartment">
+        ✓ Use This Department
+    </button>
+
+</div>
+
+<div id="aiError" style="display:none;color:red;"></div>
+
+<br><br>
 
     <br><br>
 
@@ -301,7 +343,99 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
 </form>
 
+<script>
 
+document.getElementById("aiSuggestBtn").addEventListener("click", function () {
+
+    const issue =
+        document.querySelector('textarea[name="issue_description"]').value.trim();
+
+    if (issue === "") {
+        alert("Please describe your complaint first.");
+        return;
+    }
+
+    const formData = new FormData();
+
+    formData.append("issue_description", issue);
+
+    document.getElementById("aiLoading").style.display = "block";
+    document.getElementById("aiResult").style.display = "none";
+    document.getElementById("aiError").style.display = "none";
+
+    this.disabled = true;
+
+    fetch("ai_recommend.php", {
+        method: "POST",
+        body: formData
+    })
+
+    .then(response => response.json())
+
+    .then(data => {
+
+        document.getElementById("aiLoading").style.display = "none";
+
+        document.getElementById("aiSuggestBtn").disabled = false;
+
+        if (!data.success) {
+
+            document.getElementById("aiError").innerText =
+                data.message || "AI recommendation failed.";
+
+            document.getElementById("aiError").style.display = "block";
+
+            return;
+        }
+
+        document.getElementById("aiDepartment").innerText =
+            data.department_name;
+
+        document.getElementById("aiCategory").innerText =
+            data.category;
+
+        document.getElementById("aiPriority").innerText =
+            data.priority;
+
+        document.getElementById("aiReason").innerText =
+            data.reason;
+
+        document.getElementById("aiResult").style.display = "block";
+
+
+        document.getElementById("useAiDepartment").onclick = function () {
+
+            const departmentSelect =
+                document.querySelector('select[name="department"]');
+
+            departmentSelect.value = data.department_name;
+
+            alert(
+                "AI recommended department selected. You can still change it before submitting."
+            );
+
+        };
+
+    })
+
+    .catch(error => {
+
+        document.getElementById("aiLoading").style.display = "none";
+
+        document.getElementById("aiSuggestBtn").disabled = false;
+
+        document.getElementById("aiError").innerText =
+            "Unable to connect to AI.";
+
+        document.getElementById("aiError").style.display = "block";
+
+        console.error(error);
+
+    });
+
+});
+
+</script>
 </body>
 
 </html>

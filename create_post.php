@@ -297,7 +297,134 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
    ";
 ?>
 <style>
-   
+   /* =========================================================
+   CREATE POST - LARGER CARD DESIGN
+   ========================================================= */
+
+.create-page {
+    max-width: 1000px;
+    margin: 40px auto;
+    padding: 0 25px 50px;
+}
+
+.create-post-container {
+    max-width: 950px;
+    margin: 0 auto;
+    padding: 40px;
+    border-radius: 20px;
+}
+
+/* Heading */
+.create-post-heading {
+    margin-bottom: 35px;
+}
+
+.create-post-heading h1 {
+    font-size: 32px;
+}
+
+.create-post-heading p {
+    font-size: 16px;
+}
+
+/* Larger form sections */
+.form-section {
+    margin-bottom: 30px;
+    padding: 28px;
+    border-radius: 16px;
+}
+
+.form-section h3 {
+    font-size: 20px;
+    margin-bottom: 22px;
+}
+
+/* Larger labels */
+.create-post-container label {
+    font-size: 16px;
+    margin-top: 18px;
+    margin-bottom: 9px;
+}
+
+/* Larger input fields */
+.create-post-container input[type="text"],
+.create-post-container input[type="number"],
+.create-post-container input[type="email"],
+.create-post-container input[type="file"],
+.create-post-container select,
+.create-post-container textarea {
+    padding: 15px 16px;
+    font-size: 16px;
+    border-radius: 10px;
+}
+
+/* Bigger description box */
+.create-post-container textarea {
+    min-height: 150px;
+    resize: vertical;
+}
+
+/* More space between two-column fields */
+.form-row {
+    gap: 25px;
+}
+
+/* Larger upload area */
+.upload-box {
+    padding: 30px;
+    border-radius: 14px;
+}
+
+.upload-box input[type="file"] {
+    padding: 14px;
+    font-size: 15px;
+}
+
+.upload-box p {
+    font-size: 15px;
+}
+
+/* Larger publish button */
+.publish-button {
+    padding: 17px 20px;
+    font-size: 18px;
+    border-radius: 12px;
+    margin-top: 5px;
+}
+
+/* Back button */
+.back-home {
+    font-size: 16px;
+    margin-top: 25px;
+}
+
+/* Mobile */
+@media (max-width: 700px) {
+
+    .create-page {
+        max-width: 100%;
+        padding: 0 12px 30px;
+    }
+
+    .create-post-container {
+        width: 100%;
+        box-sizing: border-box;
+        padding: 22px 16px;
+    }
+
+    .form-section {
+        padding: 20px 16px;
+    }
+
+    .create-post-heading h1 {
+        font-size: 26px;
+    }
+
+    .form-row {
+        flex-direction: column;
+        gap: 0;
+    }
+}
 </style>
 
 <?php
@@ -426,14 +553,17 @@ body {
    ========================================================= */
 
 .create-post-container {
-    max-width: 700px;
+    width: 95%;
+    max-width: 1100px;
     margin: 35px auto;
-    padding: 30px;
+    padding: 45px;
+    box-sizing: border-box;
     background-color: #ffffff;
     border: 2px solid #166534;
     border-radius: 18px;
     box-shadow: 0 6px 18px rgba(22, 101, 52, 0.12);
 }
+
 /* =========================================================
    6. FORM HEADINGS
    ========================================================= */
@@ -481,11 +611,12 @@ body {
 /* =========================================================
    9. CREATE PAGE
    ========================================================= */
-
 .create-page {
-    max-width: 760px;
+    width: 100%;
+    max-width: 1200px;
     margin: 30px auto;
-    padding: 0 20px 40px;
+    padding: 0 30px 40px;
+    box-sizing: border-box;
 }
 /* =========================================================
    10. CREATE POST HEADING
@@ -526,10 +657,10 @@ body {
 /* =========================================================
    11. FORM SECTIONS
    ========================================================= */
-
 .form-section {
-    margin-bottom: 25px;
-    padding: 20px;
+    margin-bottom: 30px;
+    padding: 30px;
+    box-sizing: border-box;
     background-color: #faf9f5;
     border: 1px solid #ddd6c8;
     border-radius: 14px;
@@ -664,6 +795,99 @@ body {
     .create-post-heading h1 {
         font-size: 24px;
     }
+}
+/* =========================================================
+   FINAL FIX - MAKE CREATE POST CARD FULL WIDTH
+   ========================================================= */
+
+main.create-page > .create-post-container {
+    width: 100% !important;
+    max-width: 100% !important;
+    margin: 0 auto !important;
+    padding: 45px !important;
+    box-sizing: border-box !important;
+}
+
+/* Make every form section use the full card width */
+main.create-page .form-section {
+    width: 100% !important;
+    box-sizing: border-box !important;
+}
+
+/* Make input fields properly fill the sections */
+main.create-page .create-post-container input,
+main.create-page .create-post-container select,
+main.create-page .create-post-container textarea {
+    width: 100% !important;
+    box-sizing: border-box !important;
+}
+
+/* Larger description area */
+main.create-page .create-post-container textarea {
+    min-height: 160px !important;
+}
+
+/* Larger upload area */
+main.create-page .upload-box {
+    width: 100% !important;
+    box-sizing: border-box !important;
+    padding: 35px !important;
+}
+
+/* Larger publish button */
+main.create-page .publish-button {
+    width: 100% !important;
+    padding: 18px !important;
+}
+/* =========================================================
+   FIX CREATE POST FORM WIDTH
+   ========================================================= */
+
+main.create-page > .create-post-container > form {
+    width: 100% !important;
+    max-width: none !important;
+    min-width: 0 !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    box-sizing: border-box !important;
+}
+
+/* Make all sections inside the form wide */
+main.create-page > .create-post-container > form .form-section {
+    width: 100% !important;
+    max-width: none !important;
+    box-sizing: border-box !important;
+}
+
+/* Full-width fields */
+main.create-page > .create-post-container > form input,
+main.create-page > .create-post-container > form select,
+main.create-page > .create-post-container > form textarea {
+    box-sizing: border-box !important;
+    max-width: 100% !important;
+}
+
+/* Keep the two location fields side-by-side */
+main.create-page > .create-post-container > form .form-row {
+    display: flex !important;
+    width: 100% !important;
+    gap: 25px !important;
+}
+
+main.create-page > .create-post-container > form .form-group {
+    flex: 1 !important;
+    min-width: 0 !important;
+}
+
+/* Bigger upload box */
+main.create-page > .create-post-container > form .upload-box {
+    width: 100% !important;
+    box-sizing: border-box !important;
+}
+
+/* Full-width publish button */
+main.create-page > .create-post-container > form .publish-button {
+    width: 100% !important;
 }
 </style>
 <!-- =========================

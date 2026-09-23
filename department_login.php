@@ -82,9 +82,12 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
 </head>
 
+<body class="department-login-page">
 
-<body>
-
+<img src="logo.jpg"
+     alt="CivicVoice Logo"
+     class="department-login-logo"
+     style="width:200px !important; height:200px !important; object-fit:contain;">
 <h2>🏢 CivicVoice Department Login</h2>
 
 
@@ -131,15 +134,30 @@ Department Login
 </form>
 
 
-<br>
-
-
-<a href="login.php">
-
-
-
-</a>
-
+<div style="
+    text-align: center;
+    margin-top: 20px;
+    position: relative;
+    z-index: 9999;
+">
+    <a href="index.php"
+       style="
+           display: inline-block !important;
+           padding: 11px 24px !important;
+           border-radius: 30px !important;
+           border: 2px solid #d4af37 !important;
+           background: linear-gradient(135deg, #146b3e, #0f5732) !important;
+           color: #ffffff !important;
+           text-decoration: none !important;
+           font-family: Arial, sans-serif !important;
+           font-size: 14px !important;
+           font-weight: 700 !important;
+           letter-spacing: 0.3px !important;
+           box-shadow: 0 6px 18px rgba(0,0,0,0.18) !important;
+       ">
+        ← &nbsp; Back to Home
+    </a>
+</div>
 
 <script>
 

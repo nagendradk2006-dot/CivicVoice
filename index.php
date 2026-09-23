@@ -1,113 +1,460 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 
 <head>
-    <title>CivicVoice</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>CivicVoice - Public Grievance System</title>
+
+    <link rel="stylesheet" href="style.css">
 </head>
 
 <body>
 
-    <div id="welcome">
-        <img src="logo.png" alt="CivicVoice Logo">
-        <h1>Welcome to CivicVoice</h1>
-        <p>Your Voice. Better Community.</p>
-    </div>
+    <!-- =========================
+         HERO SECTION
+    ========================== -->
+
+    <section class="cv-hero">
+
+        <div class="cv-hero-content">
+
+            <div class="cv-logo-box">
+               <img src="logo.jpg" alt="CivicVoice Logo">
+            </div>
+
+            <h1>CivicVoice</h1>
+
+            <p class="cv-tagline">
+                Your Voice. Your City. Your Change.
+            </p>
+
+            <p class="cv-description">
+                An intelligent public grievance and issue tracking system
+                that connects citizens, administrators and departments
+                to build a better community.
+            </p>
 
 
-    <div id="issues">
-        <h2>Issue Categories</h2>
+            <!-- LOGIN OPTIONS -->
 
-        <ul>
-            <li>Roads</li>
-            <li>Water Supply</li>
-            <li>Garbage</li>
-            <li>Street Lights</li>
-            <li>Drainage System</li>
-            <li>Electricity</li>
-            <li>Parks & Trees</li>
-            <li>Public Transport</li>
-            <li>Traffic Signals</li>
-            <li>Stray Animals</li>
-        </ul>
-    </div>
+            <div class="cv-login-options">
 
+                <a href="login.php" class="cv-login-card">
 
-    <div id="how-it-works">
-        <h2>How CivicVoice Works</h2>
+                    <div class="cv-login-title">
+                        Citizen Login
+                    </div>
 
-        <ol>
-            <li>Register</li>
-            <li>Login</li>
-            <li>Report Complaint</li>
-            <li>Track Complaint</li>
-        </ol>
-    </div>
+                    <p>
+                        Report and track public issues
+                    </p>
+
+                    <span>
+                        Login →
+                    </span>
+
+                </a>
 
 
-    <div id="links">
-        <h2>Useful Links</h2>
+                <a href="admin_login.php" class="cv-login-card">
 
-        <a href="https://www.google.com">Visit Google</a>
-    </div>
+                    <div class="cv-login-title">
+                        Admin Login
+                    </div>
+
+                    <p>
+                        Manage and monitor grievances
+                    </p>
+
+                    <span>
+                        Login →
+                    </span>
+
+                </a>
 
 
-    <div id="actions">
-        <h2>Citizen Actions</h2>
+                <a href="department_login.php" class="cv-login-card">
 
-        <button class="main-button">Register</button>
+                    <div class="cv-login-title">
+                        Department Login
+                    </div>
 
-        <br><br>
+                    <p>
+                        Handle assigned public complaints
+                    </p>
 
-        <button class="main-button">Login</button>
+                    <span>
+                        Login →
+                    </span>
 
-        <br><br>
+                </a>
 
-        <button class="main-button">Report Complaint</button>
+            </div>
 
-        <br><br>
+        </div>
 
-        <button class="main-button">Track Status</button>
-    </div>
-<h2>Report a Public Issue</h2>
+    </section>
 
-<form action="submit_complaint.php" method="post" enctype="multipart/form-data">
-    <label>Constituency Name:</label>
-<input type="text" name="constituency_name" required placeholder="Enter constituency name">
-   <label>Ward Number:</label>
-<input type="text" name="Ward_number" required placeholder="Enter constituency number"> 
-<label>Area Name:</label>
-<input type="text" name="area_name" required placeholder="Enter area name">
-<label>PIN Code:</label>
-<input type="text" name="pincode" required placeholder="Enter PIN code">
-<label>Describe Issue:</label>
-<textarea name="issue_description" required placeholder="Describe your issue here..."></textarea>
-<label>Select Department:</label>
 
-<select name="department" required>
- <option value="">Select Department</option>    
-<option>Water Department</option>
-    <option>Roads and Transport Department</option>
-    <option>Sanitation Department</option>
-    <option>Drainage Department</option>
-    <option>Electrical Department</option>
-    <option>Health Department</option>
-    <option>Education Department</option>
-    <option>Waste Management Department</option>
-    <option>Public Works Department</option>
-    <option>Revenue Department</option>
-    <option>Municipal Department</option>
-    <option>Police Department</option>
-    <option>Environment Department</option>
-    <option>Housing Department</option>
-    <option>Other</option>
-</select>
- <label>Issue Image:</label>
-    <input type="file" name="issue_image" accept="image/*" required>
 
-    <br><br>
+    <!-- =========================
+         ABOUT CIVICVOICE
+    ========================== -->
 
-    <button type="submit">Submit Complaint</button>
-</form>
+    <section class="cv-section">
+
+        <div class="cv-section-heading">
+
+            <h2>About CivicVoice</h2>
+
+            <p>
+                CivicVoice provides a simple platform for citizens
+                to report public issues and follow their progress.
+            </p>
+
+        </div>
+
+
+        <div class="cv-about-grid">
+
+            <div class="cv-about-card">
+
+                <h3>Report Issues</h3>
+
+                <p>
+                    Citizens can report problems in their local areas
+                    and provide important issue details.
+                </p>
+
+            </div>
+
+
+            <div class="cv-about-card">
+
+                <h3>Track Complaints</h3>
+
+                <p>
+                    Citizens can check the status and resolution
+                    progress of their complaints.
+                </p>
+
+            </div>
+
+
+            <div class="cv-about-card">
+
+                <h3>Department Action</h3>
+
+                <p>
+                    Departments can view assigned complaints and
+                    take appropriate action.
+                </p>
+
+            </div>
+
+
+            <div class="cv-about-card">
+
+                <h3>Administration</h3>
+
+                <p>
+                    Administrators can monitor complaints and
+                    manage the overall grievance system.
+                </p>
+
+            </div>
+
+        </div>
+
+    </section>
+
+
+
+    <!-- =========================
+         HOW IT WORKS
+    ========================== -->
+
+    <section class="cv-how-section">
+
+        <div class="cv-section-heading">
+
+            <h2>How CivicVoice Works</h2>
+
+            <p>
+                A simple process for reporting and resolving public issues.
+            </p>
+
+        </div>
+
+
+        <div class="cv-steps">
+
+            <div class="cv-step">
+
+                <div class="cv-step-number">
+                    01
+                </div>
+
+                <h3>Register & Login</h3>
+
+                <p>
+                    Create your citizen account and securely log in.
+                </p>
+
+            </div>
+
+
+            <div class="cv-step">
+
+                <div class="cv-step-number">
+                    02
+                </div>
+
+                <h3>Report an Issue</h3>
+
+                <p>
+                    Submit details about a public issue in your area.
+                </p>
+
+            </div>
+
+
+            <div class="cv-step">
+
+                <div class="cv-step-number">
+                    03
+                </div>
+
+                <h3>Department Action</h3>
+
+                <p>
+                    The concerned department reviews and handles the issue.
+                </p>
+
+            </div>
+
+
+            <div class="cv-step">
+
+                <div class="cv-step-number">
+                    04
+                </div>
+
+                <h3>Track Resolution</h3>
+
+                <p>
+                    Citizens can follow the progress and resolution.
+                </p>
+
+            </div>
+
+        </div>
+
+    </section>
+
+
+
+    <!-- =========================
+         DEPARTMENTS
+    ========================== -->
+
+    <section class="cv-section cv-department-section">
+
+        <div class="cv-section-heading">
+
+            <h2>Available Departments</h2>
+
+            <p>
+                CivicVoice connects public complaints with the appropriate department.
+            </p>
+
+        </div>
+
+
+        <div class="cv-department-grid">
+
+
+            <div class="cv-department-card">
+
+                <h3>Water Department</h3>
+
+                <p>
+                    Handles water supply and related issues.
+                </p>
+
+            </div>
+
+
+            <div class="cv-department-card">
+
+                <h3>Roads and Transport Department</h3>
+
+                <p>
+                    Handles roads, transport and traffic-related issues.
+                </p>
+
+            </div>
+
+
+            <div class="cv-department-card">
+
+                <h3>Sanitation Department</h3>
+
+                <p>
+                    Handles sanitation and cleanliness issues.
+                </p>
+
+            </div>
+
+
+            <div class="cv-department-card">
+
+                <h3>Drainage Department</h3>
+
+                <p>
+                    Handles drainage and sewage-related issues.
+                </p>
+
+            </div>
+
+
+            <div class="cv-department-card">
+
+                <h3>Electrical Department</h3>
+
+                <p>
+                    Handles street lights and electrical issues.
+                </p>
+
+            </div>
+
+
+            <div class="cv-department-card">
+
+                <h3>Health Department</h3>
+
+                <p>
+                    Handles public health and sanitation concerns.
+                </p>
+
+            </div>
+
+
+            <div class="cv-department-card">
+
+                <h3>Education Department</h3>
+
+                <p>
+                    Handles public education-related issues.
+                </p>
+
+            </div>
+
+
+            <div class="cv-department-card">
+
+                <h3>Waste Management Department</h3>
+
+                <p>
+                    Handles garbage collection and waste disposal.
+                </p>
+
+            </div>
+
+
+            <div class="cv-department-card">
+
+                <h3>Public Works Department</h3>
+
+                <p>
+                    Handles public buildings and infrastructure.
+                </p>
+
+            </div>
+
+
+            <div class="cv-department-card">
+
+                <h3>Revenue Department</h3>
+
+                <p>
+                    Handles land, property and revenue-related matters.
+                </p>
+
+            </div>
+
+
+            <div class="cv-department-card">
+
+                <h3>Municipal Department</h3>
+
+                <p>
+                    Handles local civic and municipal services.
+                </p>
+
+            </div>
+
+
+            <div class="cv-department-card">
+
+                <h3>Police Department</h3>
+
+                <p>
+                    Handles public safety and law-and-order complaints.
+                </p>
+
+            </div>
+
+
+            <div class="cv-department-card">
+
+                <h3>Environment Department</h3>
+
+                <p>
+                    Handles environmental and pollution-related issues.
+                </p>
+
+            </div>
+
+
+            <div class="cv-department-card">
+
+                <h3>Housing Department</h3>
+
+                <p>
+                    Handles public housing and housing-related issues.
+                </p>
+
+            </div>
+
+
+        </div>
+
+    </section>
+
+
+
+    <!-- =========================
+         FOOTER
+    ========================== -->
+
+    <footer class="cv-footer">
+
+        <h2>CivicVoice</h2>
+
+        <p>
+            Intelligent Public Grievance and Issue Tracking System
+        </p>
+
+        <p class="cv-footer-copy">
+            © 2026 CivicVoice. All rights reserved.
+        </p>
+
+    </footer>
+
+
 </body>
 
 </html>

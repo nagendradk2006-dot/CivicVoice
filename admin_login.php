@@ -1,3 +1,4 @@
+
 <?php
 
 session_start();
@@ -43,13 +44,13 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
         } else {
 
-            echo "<p>Invalid username or password</p>";
+            $error = "Invalid username or password";
 
         }
 
     } else {
 
-        echo "<p>Invalid username or password</p>";
+        $error = "Invalid username or password";
 
     }
 
@@ -57,68 +58,131 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
 ?>
 
-
 <!DOCTYPE html>
-<html>
+<html lang="en">
 
 <head>
-<link rel="stylesheet" href="style.css">
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
     <title>CivicVoice Admin Login</title>
+
+    <link rel="stylesheet" href="style.css">
 
 </head>
 
-<body>
 
-<h2>🏛️ CivicVoice Admin Login</h2>
-
-
-<form method="POST">
+<body class="admin-login-page">
 
 
-    <label>Username:</label><br>
+<div class="admin-login-card">
+<!-- CivicVoice Logo -->
 
-    <input
-        type="text"
-        name="username"
-        required
-    >
-
-    <br><br>
+<div class="admin-login-logo">
+    <img src="logo.jpg" alt="CivicVoice Logo">
+</div>
 
 
-    <label>Password:</label><br>
+    <!-- Heading -->
 
-    <input
-        type="password"
-        name="password"
-        id="password"
-        required
-    >
+    <h2>CivicVoice Admin</h2>
 
-    <button
-        type="button"
-        onclick="showPassword()"
-    >
-        👁
-    </button>
-
-    <br><br>
+    <p class="admin-login-subtitle">
+        
+    Secure administration portal
+    </p>
 
 
-    <button type="submit">
-        Admin Login
-    </button>
+    <!-- Error Message -->
+
+    <?php if (isset($error)) { ?>
+
+        <div class="admin-error">
+            <?php echo $error; ?>
+        </div>
+
+    <?php } ?>
 
 
-</form>
+    <!-- Login Form -->
+
+    <form method="POST">
 
 
-<br>
+        <div class="admin-input-group">
+
+            <label for="username">
+                Username
+            </label>
+
+            <input
+                type="text"
+                id="username"
+                name="username"
+                placeholder="Enter admin username"
+                required
+            >
+
+        </div>
 
 
-<a href="login.php">
-    ← Citizen Login
-</a>
+        <div class="admin-input-group">
+
+            <label for="password">
+                Password
+            </label>
+
+
+            <div class="password-wrapper">
+
+                <input
+                    type="password"
+                    name="password"
+                    id="password"
+                    placeholder="Enter your password"
+                    required
+                >
+
+                <button
+                    type="button"
+                    class="password-toggle"
+                    onclick="showPassword()"
+                    aria-label="Show password"
+                >
+                    👁
+                </button>
+
+            </div>
+
+        </div>
+
+
+        <button
+            type="submit"
+            class="admin-login-button"
+        >
+            Login to Admin Panel
+        </button>
+
+
+    </form>
+
+
+    <!-- Navigation -->
+
+    <div class="admin-login-links">
+
+    <a href="index.php" class="back-home-btn">
+        🏠 Back to Home
+    </a>
+
+</div>
+
+
+</div>
 
 
 <script>
@@ -128,14 +192,21 @@ function showPassword() {
     var password =
         document.getElementById("password");
 
+    var button =
+        document.querySelector(".password-toggle");
+
 
     if (password.type === "password") {
 
         password.type = "text";
 
+        button.innerHTML = "🙈";
+
     } else {
 
         password.type = "password";
+
+        button.innerHTML = "👁";
 
     }
 
@@ -147,3 +218,4 @@ function showPassword() {
 </body>
 
 </html>
+
