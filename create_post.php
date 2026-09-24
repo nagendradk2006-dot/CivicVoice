@@ -297,136 +297,195 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
    ";
 ?>
 <style>
-   /* =========================================================
-   CREATE POST - LARGER CARD DESIGN
+
+/* =========================================================
+   POST SUCCESS PAGE
    ========================================================= */
 
-.create-page {
-    max-width: 1000px;
-    margin: 40px auto;
-    padding: 0 25px 50px;
+body {
+    margin: 0;
+    min-height: 100vh;
+    background: #E8E2D5;
+    font-family: Arial, sans-serif;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 
-.create-post-container {
-    max-width: 950px;
-    margin: 0 auto;
-    padding: 40px;
+
+/* SUCCESS CARD */
+
+.success-container {
+    width: 90%;
+    max-width: 600px;
+    box-sizing: border-box;
+    background: #ffffff;
+    padding: 45px 40px;
     border-radius: 20px;
+    text-align: center;
+
+    border: 1px solid #ddd6c8;
+
+    box-shadow:
+        0 10px 30px rgba(0, 0, 0, 0.12);
 }
 
-/* Heading */
-.create-post-heading {
-    margin-bottom: 35px;
+
+/* SUCCESS ICON */
+
+.success-icon {
+    width: 75px;
+    height: 75px;
+
+    margin: 0 auto 22px;
+
+    border-radius: 50%;
+
+    background: #166534;
+    color: #ffffff;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    font-size: 42px;
+    font-weight: bold;
+
+    box-shadow:
+        0 5px 15px rgba(22, 101, 52, 0.25);
 }
 
-.create-post-heading h1 {
-    font-size: 32px;
+
+/* HEADING */
+
+.success-container h2 {
+    margin: 0 0 12px;
+
+    color: #166534;
+
+    font-size: 30px;
+    font-weight: 700;
 }
 
-.create-post-heading p {
+
+/* MESSAGE */
+
+.success-container > p {
+    margin: 0 0 28px;
+
+    color: #666666;
+
     font-size: 16px;
+    line-height: 1.6;
 }
 
-/* Larger form sections */
-.form-section {
-    margin-bottom: 30px;
-    padding: 28px;
-    border-radius: 16px;
-}
 
-.form-section h3 {
-    font-size: 20px;
-    margin-bottom: 22px;
-}
+/* DETAILS BOX */
 
-/* Larger labels */
-.create-post-container label {
-    font-size: 16px;
-    margin-top: 18px;
-    margin-bottom: 9px;
-}
+.success-details {
+    width: 100%;
+    box-sizing: border-box;
 
-/* Larger input fields */
-.create-post-container input[type="text"],
-.create-post-container input[type="number"],
-.create-post-container input[type="email"],
-.create-post-container input[type="file"],
-.create-post-container select,
-.create-post-container textarea {
-    padding: 15px 16px;
-    font-size: 16px;
-    border-radius: 10px;
-}
+    background: #faf9f5;
 
-/* Bigger description box */
-.create-post-container textarea {
-    min-height: 150px;
-    resize: vertical;
-}
+    border: 1px solid #ddd6c8;
 
-/* More space between two-column fields */
-.form-row {
-    gap: 25px;
-}
-
-/* Larger upload area */
-.upload-box {
-    padding: 30px;
-    border-radius: 14px;
-}
-
-.upload-box input[type="file"] {
-    padding: 14px;
-    font-size: 15px;
-}
-
-.upload-box p {
-    font-size: 15px;
-}
-
-/* Larger publish button */
-.publish-button {
-    padding: 17px 20px;
-    font-size: 18px;
     border-radius: 12px;
-    margin-top: 5px;
+
+    padding: 18px 20px;
+
+    margin-bottom: 28px;
+
+    text-align: left;
 }
 
-/* Back button */
-.back-home {
+
+/* DETAILS */
+
+.success-details p {
+    margin: 8px 0;
+
+    color: #333333;
+
+    font-size: 15px;
+}
+
+
+.success-details strong {
+    color: #166534;
+}
+
+
+/* HOME BUTTON */
+
+.success-button {
+    display: inline-block;
+
+    padding: 13px 25px;
+
+    background: #166534;
+
+    color: #ffffff;
+
+    text-decoration: none;
+
+    border-radius: 10px;
+
     font-size: 16px;
-    margin-top: 25px;
+    font-weight: 700;
+
+    transition: 0.2s ease;
 }
 
-/* Mobile */
-@media (max-width: 700px) {
 
-    .create-page {
-        max-width: 100%;
-        padding: 0 12px 30px;
+.success-button:hover {
+    background: #14532d;
+
+    transform: translateY(-1px);
+}
+
+
+/* MOBILE */
+
+@media (max-width: 600px) {
+
+    body {
+        padding: 20px;
+        box-sizing: border-box;
     }
 
-    .create-post-container {
+    .success-container {
+        width: 100%;
+        padding: 35px 22px;
+        border-radius: 16px;
+    }
+
+    .success-icon {
+        width: 65px;
+        height: 65px;
+        font-size: 35px;
+    }
+
+    .success-container h2 {
+        font-size: 25px;
+    }
+
+    .success-container > p {
+        font-size: 15px;
+    }
+
+    .success-details {
+        padding: 15px;
+    }
+
+    .success-button {
         width: 100%;
         box-sizing: border-box;
-        padding: 22px 16px;
     }
 
-    .form-section {
-        padding: 20px 16px;
-    }
-
-    .create-post-heading h1 {
-        font-size: 26px;
-    }
-
-    .form-row {
-        flex-direction: column;
-        gap: 0;
-    }
 }
-</style>
 
+</style>
 <?php
 echo "
 </head>

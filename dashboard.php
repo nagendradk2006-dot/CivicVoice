@@ -255,6 +255,41 @@ $citizen_id = $_SESSION["citizen_id"];
 .civic-info {
     font-family: Georgia, "Times New Roman", serif;
 }
+.citizen-dashboard-logo {
+    width: 100px;
+    height: 100px;
+}
+/* =========================================================
+   CITIZEN DASHBOARD LOGO
+   ========================================================= */
+
+.citizen-dashboard-logo {
+    width: 120px;
+    height: 120px;
+    object-fit: contain;
+    display: block;
+    margin: 0 auto 18px;
+}
+.back-dashboard {
+    display: block;
+    width: 220px;
+    margin: 0 auto 20px;
+    padding: 11px 18px;
+    background-color: #333333;
+    color: #ffffff;
+    text-align: center;
+    text-decoration: none;
+    border-radius: 8px;
+    font-size: 15px;
+    font-weight: 700;
+    box-sizing: border-box;
+    transition: 0.2s ease;
+}
+
+.back-dashboard:hover {
+    background-color: #111111;
+    transform: translateY(-2px);
+}
     </style>
 
 </head>
@@ -268,6 +303,12 @@ $citizen_id = $_SESSION["citizen_id"];
      ========================================================= -->
 
 <div class="dashboard-header">
+
+    <img
+        src="logo.jpg"
+        alt="CivicVoice Logo"
+        class="citizen-dashboard-logo"
+    >
 
     <h2>
         👋 Welcome to CivicVoice
@@ -291,6 +332,10 @@ $citizen_id = $_SESSION["citizen_id"];
 <div class="dashboard-title">
     Citizen Dashboard
 </div>
+
+<a href="home.php" class="back-dashboard">
+    ← Back to Dashboard
+</a>
 
 
 <!-- =========================================================

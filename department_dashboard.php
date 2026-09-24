@@ -761,48 +761,88 @@ $result = mysqli_query($conn, $sql);
         }
 
 
-        .cv-image-grid {
+        /* ============================= */
+/* COMPLAINT IMAGE SLIDER */
+/* ============================= */
 
-            width: 100%;
+.cv-image-slider {
+    position: relative;
+    width: 100%;
+    max-width: 850px;
+    margin: 0 auto;
+    background: #f5f5f5;
+    border: 2px solid #dddddd;
+    border-radius: 14px;
+    padding: 10px;
+    box-sizing: border-box;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.12);
+}
 
-            display: grid;
+.cv-slide {
+    display: none;
+    width: 100%;
+    text-align: center;
+}
 
-            grid-template-columns:
-                repeat(2, minmax(0, 1fr));
+.cv-slide.active {
+    display: block;
+}
 
-            gap: 18px;
+.cv-slide img {
+    display: block;
+    width: 100%;
+    height: 430px;
+    object-fit: contain;
+    border-radius: 10px;
+    background: #f5f5f5;
+}
 
-            align-items: center;
+.cv-slider-btn {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 42px;
+    height: 42px;
+    border: none;
+    border-radius: 50%;
+    background: rgba(0,0,0,0.65);
+    color: white;
+    font-size: 22px;
+    cursor: pointer;
+    z-index: 5;
+}
 
-        }
+.cv-slider-btn:hover {
+    background: rgba(0,0,0,0.85);
+}
 
+.cv-slider-prev {
+    left: 18px;
+}
 
-        .cv-image-grid img {
+.cv-slider-next {
+    right: 18px;
+}
 
-            display: block;
+.cv-slider-dots {
+    display: flex;
+    justify-content: center;
+    gap: 8px;
+    margin-top: 12px;
+}
 
-            width: 100%;
+.cv-slider-dot {
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    background: #cfcfcf;
+    cursor: pointer;
+}
 
-            max-width: 100%;
-
-            height: 300px;
-
-            object-fit: contain;
-
-            background: #f5f5f5;
-
-            border: 2px solid #dddddd;
-
-            border-radius: 12px;
-
-            padding: 5px;
-
-            box-sizing: border-box;
-
-            box-shadow:
-                0 4px 12px rgba(0,0,0,0.12);
-
-        }
+.cv-slider-dot.active {
+    background: #166534;
+    transform: scale(1.2);
+}
 
 
         /* ================================================= */
@@ -965,7 +1005,15 @@ $result = mysqli_query($conn, $sql);
                 font-size: 13px;
 
             }
+            .cv-slide img {
+                height: 240px;
+            }
 
+            .cv-slider-btn {
+                width: 34px;
+                height: 34px;
+                font-size: 16px;
+            }
 
             .department-dashboard-container {
 
@@ -1167,6 +1215,105 @@ $result = mysqli_query($conn, $sql);
     transform: translateY(-2px);
 
 }
+/* =================================================
+   DEPARTMENT SERVICE VISION
+   ================================================= */
+
+.department-vision {
+    width: 92%;
+    max-width: 1150px;
+    margin: 25px auto 30px;
+    padding: 28px 20px;
+    box-sizing: border-box;
+
+    text-align: center;
+
+    background: linear-gradient(
+        135deg,
+        #064e3b,
+        #087f5b,
+        #0b6b4f
+    );
+
+    border: 2px solid #d4af37;
+    border-radius: 20px;
+
+    box-shadow:
+        0 10px 28px rgba(0, 0, 0, 0.16),
+        inset 0 1px 0 rgba(255, 255, 255, 0.15);
+
+    position: relative;
+    overflow: hidden;
+}
+
+.department-vision h1 {
+    margin: 0;
+
+    font-family: Georgia, "Times New Roman", serif;
+    font-size: 34px;
+    font-weight: 700;
+    letter-spacing: 0.8px;
+
+    color: #ffd86b;
+
+    text-shadow:
+        0 2px 4px rgba(0, 0, 0, 0.35);
+}
+
+.department-vision .vision-line {
+    width: 140px;
+    height: 4px;
+
+    margin: 12px auto 18px;
+
+    background: linear-gradient(
+        90deg,
+        transparent,
+        #ffd86b,
+        #fff2b3,
+        #ffd86b,
+        transparent
+    );
+
+    border-radius: 20px;
+}
+
+.department-vision .vision-subtitle {
+    margin: 0;
+
+    font-family: "Trebuchet MS", Arial, sans-serif;
+    font-size: 18px;
+    font-weight: 600;
+
+    letter-spacing: 3px;
+
+    color: #ffffff;
+}
+
+
+/* MOBILE */
+
+@media (max-width: 600px) {
+
+    .department-vision {
+        width: 94%;
+        padding: 23px 15px;
+    }
+
+    .department-vision h1 {
+        font-size: 26px;
+        line-height: 1.3;
+    }
+
+    .department-vision .vision-subtitle {
+        font-size: 14px;
+        letter-spacing: 2px;
+    }
+
+    .department-vision .vision-line {
+        width: 110px;
+    }
+}
     </style>
 
 </head>
@@ -1228,7 +1375,23 @@ $result = mysqli_query($conn, $sql);
 
 <main class="department-dashboard-container">
 
+<!-- =================================================
+     DEPARTMENT SERVICE VISION
+     ================================================= -->
 
+<div class="department-vision">
+
+    <h1>
+        Service to the People is Service to God
+    </h1>
+
+    <div class="vision-line"></div>
+
+    <p class="vision-subtitle">
+        Purpose. Perspective. Perfection.
+    </p>
+
+</div>
     <!-- ================================================= -->
     <!-- DEPARTMENT NAME -->
     <!-- ================================================= -->
@@ -1597,148 +1760,107 @@ $result = mysqli_query($conn, $sql);
 
             </div>
 
-
             <!-- ================================================= -->
-            <!-- COMPLAINT IMAGES -->
             <!-- ================================================= -->
+<!-- COMPLAINT IMAGES -->
+<!-- ================================================= -->
 
-            <?php
+<?php
 
-            $image_sql = "SELECT image_path
-                          FROM complaint_images
-                          WHERE complaint_id='"
-                          . mysqli_real_escape_string(
-                              $conn,
-                              $row["complaint_id"]
-                          )
-                          . "'
-                          ORDER BY image_id ASC";
+$image_sql = "SELECT image_path
+              FROM complaint_images
+              WHERE complaint_id='" .
+              mysqli_real_escape_string(
+                  $conn,
+                  $row["complaint_id"]
+              ) . "'
+              ORDER BY image_id ASC";
 
+$image_result = mysqli_query($conn, $image_sql);
 
-            $image_result = mysqli_query(
-                $conn,
-                $image_sql
-            );
+if ($image_result && mysqli_num_rows($image_result) > 0) {
 
+    $complaint_images = [];
 
-            if (
-                $image_result &&
-                mysqli_num_rows($image_result) > 0
-            ) {
+    while ($image = mysqli_fetch_assoc($image_result)) {
 
-            ?>
+        $image_url = getComplaintImageUrl(
+            $image["image_path"]
+        );
 
-            <div class="cv-images">
+        if (!empty($image_url)) {
+            $complaint_images[] = $image_url;
+        }
+    }
 
+    if (count($complaint_images) > 0) {
 
-                <h4>
-                    📷 Complaint Images
-                </h4>
+?>
 
+<div class="cv-images">
 
-                <div class="cv-image-grid">
+    <h4>📷 Complaint Images</h4>
 
+    <div class="cv-image-slider">
 
-                    <?php
+        <?php foreach ($complaint_images as $index => $image_url) { ?>
 
-                    while (
-                        $image =
-                        mysqli_fetch_assoc(
-                            $image_result
-                        )
-                    ) {
+            <div class="cv-slide <?php echo ($index === 0) ? 'active' : ''; ?>">
 
-
-                        $image_url =
-                            getComplaintImageUrl(
-                                $image["image_path"]
-                            );
-
-
-                        if (!empty($image_url)) {
-
-                    ?>
-
-
-                    <img
-                        src="<?php
-                            echo htmlspecialchars(
-                                $image_url
-                            );
-                        ?>"
-                        alt="Complaint Image"
-                    >
-
-
-                    <?php
-
-                        }
-
-                    }
-
-                    ?>
-
-
-                </div>
-
+                <img
+                    src="<?php echo htmlspecialchars($image_url); ?>"
+                    alt="Complaint Image"
+                >
 
             </div>
 
-
-            <?php
-
-            }
-
-            elseif (
-                !empty($row["issue_image"])
-            ) {
+        <?php } ?>
 
 
-                $image_url =
-                    getComplaintImageUrl(
-                        $row["issue_image"]
-                    );
+        <?php if (count($complaint_images) > 1) { ?>
 
+            <button
+                type="button"
+                class="cv-slider-btn cv-slider-prev"
+                onclick="changeComplaintSlide(-1)"
+            >
+                ❮
+            </button>
 
-                if (!empty($image_url)) {
+            <button
+                type="button"
+                class="cv-slider-btn cv-slider-next"
+                onclick="changeComplaintSlide(1)"
+            >
+                ❯
+            </button>
 
-            ?>
+            <div class="cv-slider-dots">
 
+                <?php foreach ($complaint_images as $index => $image_url) { ?>
 
-            <div class="cv-images">
+                    <span
+                        class="cv-slider-dot <?php echo ($index === 0) ? 'active' : ''; ?>"
+                        onclick="showComplaintSlide(<?php echo $index; ?>)"
+                    ></span>
 
-
-                <h4>
-                    📷 Complaint Image
-                </h4>
-
-
-                <div class="cv-image-grid">
-
-
-                    <img
-                        src="<?php
-                            echo htmlspecialchars(
-                                $image_url
-                            );
-                        ?>"
-                        alt="Complaint Image"
-                    >
-
-
-                </div>
-
+                <?php } ?>
 
             </div>
 
+        <?php } ?>
 
-            <?php
+    </div>
 
-                }
+</div>
 
-            }
+<?php
 
-            ?>
+    }
+
+}
+
+?>
 
 
             <!-- ================================================= -->
@@ -1765,11 +1887,7 @@ $result = mysqli_query($conn, $sql);
         </article>
 
 
-    <?php
-
-    }
-
-    ?>
+    <?php } ?>
 
 
     </div>
@@ -1777,9 +1895,7 @@ $result = mysqli_query($conn, $sql);
 
     <?php
 
-    }
-
-    else {
+    } else {
 
     ?>
 
@@ -1835,6 +1951,47 @@ $result = mysqli_query($conn, $sql);
 </footer>
 
 
-</body>
+<script>
+let complaintSlideIndex = 0;
 
+function showComplaintSlide(index) {
+
+    const slides = document.querySelectorAll(".cv-slide");
+    const dots = document.querySelectorAll(".cv-slider-dot");
+
+    if (slides.length === 0) {
+        return;
+    }
+
+    if (index >= slides.length) {
+        complaintSlideIndex = 0;
+    } 
+    else if (index < 0) {
+        complaintSlideIndex = slides.length - 1;
+    } 
+    else {
+        complaintSlideIndex = index;
+    }
+
+    for (let i = 0; i < slides.length; i++) {
+        slides[i].classList.remove("active");
+    }
+
+    for (let i = 0; i < dots.length; i++) {
+        dots[i].classList.remove("active");
+    }
+
+    slides[complaintSlideIndex].classList.add("active");
+
+    if (dots[complaintSlideIndex]) {
+        dots[complaintSlideIndex].classList.add("active");
+    }
+}
+
+function changeComplaintSlide(direction) {
+    showComplaintSlide(complaintSlideIndex + direction);
+}
+</script>
+
+</body>
 </html>

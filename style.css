@@ -1572,10 +1572,8 @@ a:hover {
 }
 
 .civic-logo img {
-    width: 100% !important;
-    height: 100% !important;
-    object-fit: contain !important;
     display: block !important;
+    object-fit: contain !important;
 }
 
 .civic-intro h1 {
@@ -2122,7 +2120,8 @@ body {
         padding: 30px 20px !important;
     }
 
-    .civic-logo {
+   .civic-logo img{
+    
         width: 90px !important;
         height: 90px !important;
     }
@@ -9210,4 +9209,111 @@ body.admin-dashboard-page .admin-logout-btn {
 
         flex-wrap: wrap !important;
     }
+}
+/* CivicVoice Header Logo - Final Override */
+.civic-header .civic-logo {
+    width: 180px !important;
+    height: auto !important;
+    min-width: 180px !important;
+    max-width: 180px !important;
+    overflow: visible !important;
+    display: flex !important;
+    align-items: center !important;
+}
+
+.civic-header .civic-logo img {
+    width: 180px !important;
+    height: auto !important;
+    max-width: none !important;
+    object-fit: contain !important;
+    display: block !important;
+}
+/* CivicVoice logo size fix */
+.civic-header .civic-logo {
+    width: 180px !important;
+    height: 80px !important;
+    overflow: visible !important;
+    display: flex !important;
+    align-items: center !important;
+}
+
+.civic-header .civic-logo img {
+    width: 180px !important;
+    height: auto !important;
+    max-width: none !important;
+    transform: scale(1.6) !important;
+    transform-origin: left center !important;
+    object-fit: contain !important;
+}
+/* Remove box around CivicVoice logo */
+.civic-header .civic-logo {
+    border: none !important;
+    outline: none !important;
+    box-shadow: none !important;
+    background: transparent !important;
+    padding: 0 !important;
+}
+.civic-header .civic-logo img {
+    border: none !important;
+    outline: none !important;
+    box-shadow: none !important;
+    background: transparent !important;
+}
+/* Fix CivicVoice header logo container */
+.civic-header .civic-logo {
+    width: auto !important;
+    height: auto !important;
+    min-width: 0 !important;
+    min-height: 0 !important;
+    max-width: none !important;
+    max-height: none !important;
+
+    border: none !important;
+    border-radius: 0 !important;
+    box-shadow: none !important;
+    background: transparent !important;
+
+    padding: 0 !important;
+    margin: 0 !important;
+    overflow: visible !important;
+}
+
+.civic-header .civic-logo img {
+    width: 300px !important;
+    height: auto !important;
+    max-width: none !important;
+
+    border: none !important;
+    border-radius: 0 !important;
+    box-shadow: none !important;
+    display: block !important;
+}
+/* Fix CivicVoice header logo container */
+.civic-header .civic-logo {
+    width: auto !important;
+    height: auto !important;
+    min-width: 0 !important;
+    min-height: 0 !important;
+    max-width: none !important;
+    max-height: none !important;
+
+    border: none !important;
+    border-radius: 0 !important;
+    box-shadow: none !important;
+    background: transparent !important;
+
+    padding: 0 !important;
+    margin: 0 !important;
+    overflow: visible !important;
+}
+
+.civic-header .civic-logo img {
+    width: 300px !important;
+    height: auto !important;
+    max-width: none !important;
+
+    border: none !important;
+    border-radius: 0 !important;
+    box-shadow: none !important;
+    display: block !important;
 }

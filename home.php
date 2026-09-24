@@ -182,12 +182,26 @@ if (!$result) {
 
             z-index: 1000;
         }
-
-         .civic-logo img {
-    width: 180px !important;
-    max-width: 180px !important;
+.civic-logo {
+    width: 300px !important;
     height: auto !important;
-    display: block;
+    overflow: visible !important;
+    background: transparent !important;
+    border: none !important;
+    box-shadow: none !important;
+    padding: 0 !important;
+    margin: 0 !important;
+}
+
+.civic-logo img {
+    width: 300px !important;
+    height: auto !important;
+    max-width: none !important;
+    display: block !important;
+    object-fit: contain !important;
+    overflow: visible !important;
+    border: none !important;
+    box-shadow: none !important;
 }
 
 .civic-nav a {
@@ -606,15 +620,12 @@ if (!$result) {
 </div>
 
     <nav class="civic-nav">
-
-        <a href="home.php">
-            🏠 Home
-        </a>
+<a href="index.php">🏠 Home</a>
 
 
-        <a href="create_post.php">
-            ➕ Create Post
-        </a>
+        <a href="submit_complaint.php">
+    📝 Submit Complaint
+</a>
 
 
         <a href="profile.php">
@@ -652,9 +663,9 @@ if (!$result) {
             👤 My Profile
         </a>
 
-        <a href="create_post.php">
-            ➕ Create Post
-        </a>
+        <a href="submit_complaint.php">
+    📝 Submit Complaint
+</a>
 
         <a href="my_complaints.php">
             📋 My Issues
@@ -672,16 +683,14 @@ if (!$result) {
 <div class="welcome-section">
 
     <h2>
-        Welcome, Citizen <?php echo $citizen_id; ?>
+        Welcome, <?php echo htmlspecialchars($_SESSION["citizen_name"]); ?>
     </h2>
-
 
     <p>
         Stay informed. Support civic issues. Make your community better.
     </p>
 
 </div>
-
 
 <!-- ================================================= -->
 <!-- HOME FEED TITLE -->

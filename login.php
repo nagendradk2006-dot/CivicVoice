@@ -58,8 +58,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
  
             if (password_verify($password, $user["password"])) { 
  
-                $_SESSION["citizen_id"] = $user["citizen_id"]; 
- 
+              
+    $_SESSION["citizen_id"] = $user["citizen_id"];
+    $_SESSION["citizen_name"] = $user["citizen_name"];
  
                 /* Generate new CAPTCHA for next login */ 
  

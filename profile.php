@@ -1,7 +1,11 @@
-
 <?php
+
 session_start();
 include "db.php";
+
+/* ================================================= */
+/* CHECK CITIZEN LOGIN */
+/* ================================================= */
 
 if (!isset($_SESSION["citizen_id"])) {
     header("Location: login.php");
@@ -11,79 +15,98 @@ if (!isset($_SESSION["citizen_id"])) {
 $citizen_id = $_SESSION["citizen_id"];
 
 
+/* ================================================= */
 /* PROFILE IMAGE UPLOAD */
+/* ================================================= */
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
-    $profile_image = $_FILES["profile_image"];
+    if (isset($_FILES["profile_image"]) && $_FILES["profile_image"]["error"] == 0) {
 
-    if ($profile_image["error"] != 0) {
-        echo "<h3>Upload Error Code: " . $profile_image["error"] . "</h3>";
-        exit;
-    }
+        $profile_image = $_FILES["profile_image"];
 
-    $extension = pathinfo($profile_image["name"], PATHINFO_EXTENSION);
+        $extension = strtolower(
+            pathinfo($profile_image["name"], PATHINFO_EXTENSION)
+        );
 
-    $file_name = "profile_" . $citizen_id . "." . $extension;
+        $allowed_extensions = ["jpg", "jpeg", "png", "webp"];
 
-    $file_path = "C:/xampp/htdocs/CivicVoice/profile_images/" . $file_name;
-
-    if (move_uploaded_file($profile_image["tmp_name"], $file_path)) {
-
-        $database_path = "profile_images/" . $file_name;
-
-        $sql = "UPDATE citizens
-                SET profile_image='$database_path'
-                WHERE citizen_id='$citizen_id'";
-
-        if (mysqli_query($conn, $sql)) {
-            header("Location: profile.php");
-            exit;
+        if (!in_array($extension, $allowed_extensions)) {
+            die("Invalid profile image format.");
         }
 
-    } else {
+        $file_name = "profile_" . $citizen_id . "." . $extension;
 
-        echo "<h3>Profile image upload failed.</h3>";
-        exit;
+        $upload_directory = "C:/xampp/htdocs/CivicVoice/profile_images/";
 
+        if (!is_dir($upload_directory)) {
+            mkdir($upload_directory, 0777, true);
+        }
+
+        $file_path = $upload_directory . $file_name;
+
+        if (move_uploaded_file($profile_image["tmp_name"], $file_path)) {
+
+            $database_path = "profile_images/" . $file_name;
+
+            $sql = "
+                UPDATE citizens
+                SET profile_image='$database_path'
+                WHERE citizen_id='$citizen_id'
+            ";
+
+            if (mysqli_query($conn, $sql)) {
+                header("Location: profile.php");
+                exit;
+            }
+
+        } else {
+
+            die("Profile image upload failed.");
+        }
     }
 }
 
 
+/* ================================================= */
 /* GET CITIZEN DETAILS */
+/* ================================================= */
 
-$sql = "SELECT citizen_name, username, profile_image
-        FROM citizens
-        WHERE citizen_id='$citizen_id'";
+$sql = "
+    SELECT citizen_name, username, profile_image
+    FROM citizens
+    WHERE citizen_id='$citizen_id'
+";
 
 $result = mysqli_query($conn, $sql);
+
+if (!$result) {
+    die("Citizen Query Error: " . mysqli_error($conn));
+}
 
 $citizen = mysqli_fetch_assoc($result);
 
 
-/* COUNT CITIZEN POSTS */
+/* ================================================= */
+/* GET CITIZEN COMPLAINTS */
+/* ================================================= */
 
-$post_count_sql = "SELECT COUNT(*) AS total_posts
-                   FROM civic_posts
-                   WHERE citizen_id='$citizen_id'";
+$complaint_sql = "
+    SELECT
+        complaints.*,
+        departments.department_name
+    FROM complaints
+    INNER JOIN departments
+        ON complaints.department_id = departments.department_id
+    WHERE complaints.citizen_id='$citizen_id'
+    ORDER BY complaints.created_at DESC
+";
 
-$post_count_result = mysqli_query($conn, $post_count_sql);
+$complaint_result = mysqli_query($conn, $complaint_sql);
 
-$post_count_data = mysqli_fetch_assoc($post_count_result);
-
-$total_posts = $post_count_data["total_posts"];
-
-
-/* GET CITIZEN POSTS */
-
-$post_sql = "SELECT civic_posts.*, departments.department_name
-             FROM civic_posts
-             INNER JOIN departments
-             ON civic_posts.department_id = departments.department_id
-             WHERE civic_posts.citizen_id='$citizen_id'
-             ORDER BY civic_posts.created_at DESC";
-
-$post_result = mysqli_query($conn, $post_sql);
+if (!$complaint_result) {
+    die("Complaint Query Error: " . mysqli_error($conn));
+}
 
 ?>
 
@@ -92,736 +115,586 @@ $post_result = mysqli_query($conn, $post_sql);
 
 <head>
 
-<link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="style.css">
 
-<title>CivicVoice Profile</title>
+    <title>CivicVoice Profile</title>
 
-<style>
+    <style>
 
-/* =========================================================
-   1. PROFILE PAGE BACKGROUND
-   ========================================================= */
+        /* =========================================================
+           PROFILE PAGE
+           ========================================================= */
 
-body {
-    margin: 0;
-    background-color: #E8E2D5;
-    color: #1F2937;
-}
-/* CLICKABLE PROFILE IMAGE */
+        body {
+            margin: 0;
+            background-color: #E8E2D5;
+            color: #1F2937;
+        }
 
-.profile-image-container {
-    text-align: center;
-    margin: 20px auto;
-}
 
-.profile-image-label {
-    display: inline-block;
-    cursor: pointer;
-}
+        /* =========================================================
+           PROFILE HEADER
+           ========================================================= */
 
-.profile-image {
-    width: 150px;
-    height: 150px;
-    border-radius: 50%;
-    object-fit: cover;
-    border: 4px solid #C9A227;
-    box-shadow: 0 5px 15px rgba(31, 41, 55, 0.15);
-    transition: 0.2s ease;
-}
+        body > h2 {
+            max-width: 760px;
+            margin: 30px auto 20px;
+            padding: 18px;
+            background-color: #ffffff;
+            border: 2px solid #166534;
+            border-top: 6px solid #166534;
+            border-radius: 18px;
+            box-shadow: 0 6px 18px rgba(22, 101, 52, 0.12);
+            color: #166534;
+            font-size: 26px;
+            font-weight: 700;
+            box-sizing: border-box;
+            text-align: center;
+        }
 
-.profile-image:hover {
-    opacity: 0.8;
-    transform: scale(1.03);
-}
 
-.no-profile-image {
-    width: 150px;
-    height: 150px;
-    border-radius: 50%;
-    background-color: #ffffff;
-    border: 4px solid #C9A227;
+        /* =========================================================
+           PROFILE IMAGE
+           ========================================================= */
 
-    display: flex;
-    align-items: center;
-    justify-content: center;
+        .profile-image-container {
+            text-align: center;
+            margin: 20px auto;
+        }
 
-    font-size: 50px;
-}
-/* =========================================================
-   2. PROFILE HEADER
-   ========================================================= */
+        .profile-image-label {
+            display: inline-block;
+            cursor: pointer;
+        }
 
-body > h2 {
-    max-width: 760px;
-    margin: 30px auto 20px;
-    padding: 18px;
-    background-color: #ffffff;
-    border: 2px solid #166534;
-    border-top: 6px solid #166534;
-    border-radius: 18px;
-    box-shadow: 0 6px 18px rgba(22, 101, 52, 0.12);
-    color: #166534;
-    font-size: 26px;
-    font-weight: 700;
-    box-sizing: border-box;
-}
-/* =========================================================
-   3. PROFILE INFORMATION
-   ========================================================= */
+        .profile-image {
+            width: 150px;
+            height: 150px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 4px solid #C9A227;
+            box-shadow: 0 5px 15px rgba(31, 41, 55, 0.15);
+            transition: 0.2s ease;
+        }
 
-body > div[style*="text-align:center"] {
-    max-width: 760px;
-    margin: 0 auto;
-}
+        .profile-image:hover {
+            opacity: 0.8;
+            transform: scale(1.03);
+        }
 
-body > div[style*="text-align:center"] img {
-    border: 4px solid #C9A227;
-    box-shadow: 0 5px 15px rgba(31, 41, 55, 0.12);
-}
+        .no-profile-image {
+            width: 150px;
+            height: 150px;
+            border-radius: 50%;
+            background-color: #ffffff;
+            border: 4px solid #C9A227;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 50px;
+        }
 
-body > h3 {
-    color: #166534;
-    font-size: 22px;
-    margin: 15px 0 5px;
-}
 
-body > p[style*="text-align:center"] {
-    color: #666666;
-    font-size: 15px;
-    margin: 5px 0;
-}
-/* =========================================================
-   4. POSTS COUNT
-   ========================================================= */
+        /* =========================================================
+           PROFILE NAME
+           ========================================================= */
 
-body > div[style*="margin:20px 0"] {
-    max-width: 760px;
-    margin: 20px auto !important;
-    padding: 16px;
-    background-color: #ffffff;
-    border: 1px solid #ddd6c8;
-    border-radius: 14px;
-    box-shadow: 0 4px 12px rgba(31, 41, 55, 0.06);
-    box-sizing: border-box;
-    color: #166534;
-    font-size: 16px;
-}
-/* =========================================================
-   5. PROFILE IMAGE UPLOAD
-   ========================================================= */
+        .profile-name {
+            text-align: center;
+            color: #166534;
+            font-size: 22px;
+            margin: 15px 0 5px;
+        }
 
-body > h3 {
-    max-width: 760px;
-    margin: 25px auto 12px;
-}
 
-body > form {
-    max-width: 760px;
-    margin: 0 auto 25px;
-    padding: 20px;
-    background-color: #ffffff;
-    border: 1px solid #ddd6c8;
-    border-radius: 14px;
-    box-shadow: 0 4px 12px rgba(31, 41, 55, 0.06);
-    box-sizing: border-box;
-}
+        /* =========================================================
+           PROFILE USERNAME
+           ========================================================= */
 
-body > form input[type="file"] {
-    width: 100%;
-    box-sizing: border-box;
-    padding: 12px;
-    border: 2px dashed #C9A227;
-    border-radius: 10px;
-    background-color: #faf9f5;
-}
+        .profile-username {
+            display: block;
+            width: fit-content;
+            margin: 8px auto 22px;
+            padding: 6px 16px;
+            color: #166534;
+            background-color: #ffffff;
+            border: 1px solid #C9A227;
+            border-radius: 20px;
+            font-family: Georgia, "Times New Roman", serif;
+            font-size: 16px;
+            font-weight: 600;
+            letter-spacing: 0.5px;
+            box-shadow: 0 3px 10px rgba(31, 41, 55, 0.08);
+        }
 
-body > form button {
-    padding: 11px 18px;
-    border: none;
-    border-radius: 8px;
-    background-color: #166534;
-    color: #ffffff;
-    font-weight: 700;
-    cursor: pointer;
-}
-/* =========================================================
-   6. CIVIC POSTS HEADING
-   ========================================================= */
 
-body > h2[style*="text-align:center"] {
-    max-width: 760px;
-    margin: 30px auto 20px;
-    color: #166534;
-    font-size: 23px;
-    font-weight: 700;
-}
-/* =========================================================
-   7. CIVIC POST CARDS
-   ========================================================= */
+        /* =========================================================
+           PROFILE IMAGE UPLOAD FORM
+           ========================================================= */
 
-body > hr {
-    max-width: 760px;
-    margin: 25px auto;
-    border: none;
-    border-top: 1px solid #ddd6c8;
-}
+        .profile-upload-form {
+            max-width: 760px;
+            margin: 0 auto 25px;
+            padding: 20px;
+            background-color: #ffffff;
+            border: 1px solid #ddd6c8;
+            border-radius: 14px;
+            box-shadow: 0 4px 12px rgba(31, 41, 55, 0.06);
+            box-sizing: border-box;
+            text-align: center;
+        }
 
-body > p {
-    max-width: 760px;
-    margin: 10px auto;
-    line-height: 1.6;
-    color: #374151;
-}
+        .profile-upload-form input[type="file"] {
+            width: 100%;
+            box-sizing: border-box;
+            padding: 12px;
+            border: 2px dashed #C9A227;
+            border-radius: 10px;
+            background-color: #faf9f5;
+        }
 
-body > p strong {
-    color: #166534;
-}
-/* =========================================================
-   8. POST IMAGES
-   ========================================================= */
 
-body > img {
-    display: block;
-    width: 100%;
-    max-width: 700px;
-    height: 400px;
-    object-fit: cover;
-    margin: 12px auto;
-    border-radius: 12px;
-    border: 1px solid #ddd6c8;
-    box-shadow: 0 4px 12px rgba(31, 41, 55, 0.08);
-}
-/* =========================================================
-   10. POST ACTION BUTTONS
-   ========================================================= */
+        /* =========================================================
+           MY COMPLAINTS HEADING
+           ========================================================= */
 
-body > button {
-    padding: 10px 16px;
-    margin: 5px;
-    border: none;
-    border-radius: 8px;
-    background-color: #C9A227;
-    color: #1F2937;
-    font-size: 14px;
-    font-weight: 700;
-    cursor: pointer;
-    transition: 0.2s ease;
-}
+        .complaints-heading {
+            max-width: 760px;
+            margin: 30px auto 20px;
+            color: #166534;
+            font-size: 23px;
+            font-weight: 700;
+            text-align: center;
+        }
 
-body > button:hover {
-    background-color: #166534;
-    color: #ffffff;
-}
-/* =========================================================
-   11. BACK TO HOME BUTTON
-   ========================================================= */
 
-body > div[style*="text-align:center"] button {
-    padding: 11px 20px;
-    border: none;
-    border-radius: 8px;
-    background-color: #166534;
-    color: #ffffff;
-    font-size: 15px;
-    font-weight: 700;
-    cursor: pointer;
-    transition: 0.2s ease;
-}
+        /* =========================================================
+           COMPLAINT CARD
+           ========================================================= */
 
-body > div[style*="text-align:center"] button:hover {
-    background-color: #C9A227;
-    color: #1F2937;
-}
-/* =========================================================
-   12. MOBILE RESPONSIVE
-   ========================================================= */
+        .profile-post-card {
+            max-width: 760px;
+            margin: 25px auto;
+            padding: 20px;
+            background-color: #ffffff;
+            border: 2px solid #C9A227;
+            border-radius: 16px;
+            box-sizing: border-box;
+            box-shadow: 0 5px 15px rgba(31, 41, 55, 0.08);
+        }
 
-@media (max-width: 700px) {
+        .profile-post-card hr {
+            border: none;
+            border-top: 1px solid #ddd6c8;
+            margin-bottom: 20px;
+        }
 
-    body > h2 {
-        margin: 20px 10px;
-        padding: 15px;
-        font-size: 22px;
-    }
+        .profile-post-card p {
+            line-height: 1.6;
+            color: #374151;
+            margin: 10px 0;
+        }
 
-    body > div[style*="text-align:center"],
-    body > form,
-    body > p,
-    body > hr {
-        max-width: none;
-        margin-left: 10px;
-        margin-right: 10px;
-    }
+        .profile-post-card p strong {
+            color: #166534;
+        }
 
-    body > img {
-        width: calc(100% - 20px);
-        height: 300px;
-    }
 
-    body > video {
-        width: calc(100% - 20px);
-        height: 300px;
-    }
+        /* =========================================================
+           COMPLAINT PHOTOS
+           ========================================================= */
 
-    body > button {
-        margin: 5px 3px;
-    }
-}
-/* POST ACTION BUTTONS */
+        .complaint-photos-heading {
+            color: #166534;
+            font-size: 18px;
+            margin-top: 20px;
+        }
 
-.post-actions {
-    max-width: 700px;
-    margin: 15px auto 25px;
-    display: flex;
-    justify-content: center;
-    gap: 12px;
-}
+        .complaint-photo {
+            display: block;
+            width: 100%;
+            max-width: 650px;
+            height: 350px;
+            object-fit: cover;
+            margin: 15px auto;
+            border-radius: 12px;
+            border: 2px solid #C9A227;
+            box-sizing: border-box;
+        }
 
-.post-actions button {
-    padding: 10px 18px;
-    border: none;
-    border-radius: 8px;
-    font-size: 14px;
-    font-weight: 600;
-    cursor: pointer;
-    transition: 0.2s ease;
-}
 
-.edit-post-btn {
-    background-color: #166534;
-    color: white;
-}
+        /* =========================================================
+           ACTION BUTTONS
+           ========================================================= */
 
-.edit-post-btn:hover {
-    background-color: #14532d;
-}
+        .post-actions {
+            max-width: 700px;
+            margin: 20px auto 5px;
+            display: flex;
+            justify-content: center;
+            gap: 12px;
+        }
 
-.delete-post-btn {
-    background-color: #b91c1c;
-    color: white;
-}
+        .post-actions button {
+            padding: 10px 18px;
+            border: none;
+            border-radius: 8px;
+            font-size: 14px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: 0.2s ease;
+        }
 
-.delete-post-btn:hover {
-    background-color: #991b1b;
-}
-/* PROFILE USERNAME */
+        .edit-post-btn {
+            background-color: #166534;
+            color: white;
+        }
 
-.profile-username {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 8px;
+        .edit-post-btn:hover {
+            background-color: #14532d;
+        }
 
-    margin: 8px auto 20px;
-}
+        .delete-post-btn {
+            background-color: #b91c1c;
+            color: white;
+        }
 
-/* PROFILE USERNAME */
+        .delete-post-btn:hover {
+            background-color: #991b1b;
+        }
 
-.profile-username {
-    display: block;
-    width: fit-content;
 
-    margin: 8px auto 22px;
-    padding: 6px 16px;
+        /* =========================================================
+           NO COMPLAINTS MESSAGE
+           ========================================================= */
 
-    color: #166534;
-    background-color: #ffffff;
+        .no-complaints {
+            max-width: 760px;
+            margin: 30px auto;
+            padding: 20px;
+            background-color: #ffffff;
+            border-radius: 14px;
+            text-align: center;
+            color: #666666;
+            box-shadow: 0 4px 12px rgba(31, 41, 55, 0.06);
+        }
 
-    border: 1px solid #C9A227;
-    border-radius: 20px;
 
-    font-family: Georgia, "Times New Roman", serif;
-    font-size: 16px;
-    font-weight: 600;
-    letter-spacing: 0.5px;
+        /* =========================================================
+           BACK TO HOME
+           ========================================================= */
 
-    box-shadow: 0 3px 10px rgba(31, 41, 55, 0.08);
-}
-.profile-home-button {
-    max-width: 760px;
-    margin: 20px auto 10px;
-    text-align: left;
-}
+        .profile-home-button {
+            position: fixed;
+            top: 20px;
+            left: 20px;
+            z-index: 9999;
+        }
 
-.profile-home-button button {
-    padding: 10px 18px;
-    border: none;
-    border-radius: 8px;
-    background-color: #166534;
-    color: #ffffff;
-    font-size: 14px;
-    font-weight: 700;
-    cursor: pointer;
-    transition: 0.2s ease;
-}
+        .profile-home-button button {
+            padding: 10px 16px;
+            border: none;
+            border-radius: 8px;
+            background-color: #166534;
+            color: #ffffff;
+            font-size: 14px;
+            font-weight: 700;
+            cursor: pointer;
+            transition: 0.2s ease;
+        }
 
-.profile-home-button button:hover {
-    background-color: #C9A227;
-    color: #1F2937;
-}
-.profile-image-section {
-    max-width: 760px;
-    margin: 20px auto;
-    display: flex;
-    align-items: center;
-    gap: 40px;
-}
+        .profile-home-button button:hover {
+            background-color: #C9A227;
+            color: #1F2937;
+        }
 
-.profile-home-button {
-    flex-shrink: 0;
-}
 
-.profile-home-button button {
-    padding: 10px 16px;
-    border: none;
-    border-radius: 8px;
-    background-color: #166534;
-    color: #ffffff;
-    font-size: 14px;
-    font-weight: 700;
-    cursor: pointer;
-    transition: 0.2s ease;
-}
+        /* =========================================================
+           MOBILE
+           ========================================================= */
 
-.profile-home-button button:hover {
-    background-color: #C9A227;
-    color: #1F2937;
-}
+        @media (max-width: 700px) {
 
-.profile-image-section .profile-image-container {
-    margin: 0;
-}
-/* PROFILE CIVIC POST CARD */
+            body > h2 {
+                margin: 20px 10px;
+                padding: 15px;
+                font-size: 22px;
+            }
 
-.profile-post-card {
-    max-width: 760px;
-    margin: 25px auto;
-    padding: 20px;
-    background-color: #ffffff;
-    border: 2px solid #C9A227;
-    border-radius: 16px;
-    box-sizing: border-box;
-    box-shadow: 0 5px 15px rgba(31, 41, 55, 0.08);
-}
-/* PROFILE POST IMAGES */
+            .profile-post-card,
+            .profile-upload-form,
+            .complaints-heading {
+                margin-left: 10px;
+                margin-right: 10px;
+            }
 
-.profile-post-card img {
-    display: block;
-    width: 100%;
-    max-width: 650px;
-    height: 350px;
-    object-fit: cover;
-    margin: 15px auto;
-    border-radius: 12px;
-    border: 2px solid #C9A227;
-    box-sizing: border-box;
-}
-.profile-home-button {
-    position: fixed;
-    top: 20px;
-    left: 20px;
-    z-index: 9999;
-}
+            .complaint-photo {
+                width: 100%;
+                height: 300px;
+            }
 
-</style>
+            .post-actions {
+                flex-direction: column;
+            }
 
-</head>
+            .post-actions button {
+                width: 100%;
+            }
+
+            .profile-home-button {
+                top: 10px;
+                left: 10px;
+            }
+        }
+
+    </style>
+
 </head>
 
 <body>
 
-<h2 style="text-align:center;">👤 My Profile</h2>
+    <!-- BACK TO HOME -->
+
+    <div class="profile-home-button">
+        <button onclick="window.location.href='home.php'">
+            ← Back to Home
+        </button>
+    </div>
 
 
+    <!-- PROFILE HEADING -->
+
+    <h2>👤 My Profile</h2>
 
 
-</div>
-<!-- PROFILE IMAGE -->
+    <!-- PROFILE IMAGE -->
 
-<div class="profile-image-container">
+    <div class="profile-image-container">
 
-    <form method="POST" enctype="multipart/form-data" id="profileForm">
-
-        <label for="profileImageInput" class="profile-image-label">
-
-            <?php if (!empty($citizen["profile_image"])) { ?>
-
-                <img
-                    src="<?php echo $citizen["profile_image"]; ?>?v=<?php echo time(); ?>"
-                    class="profile-image"
-                >
-
-            <?php } else { ?>
-
-                <div class="no-profile-image">
-                    👤
-                </div>
-
-            <?php } ?>
-
-        </label>
-
-        <input
-            type="file"
-            id="profileImageInput"
-            name="profile_image"
-            accept="image/*"
-            hidden
-            onchange="document.getElementById('profileForm').submit();"
+        <form
+            method="POST"
+            enctype="multipart/form-data"
+            id="profileForm"
+            class="profile-upload-form"
         >
 
-    </form>
+            <label
+                for="profileImageInput"
+                class="profile-image-label"
+            >
 
-</div>
+                <?php if (!empty($citizen["profile_image"])) { ?>
 
-<!-- NAME -->
+                    <img
+                        src="<?php echo htmlspecialchars($citizen["profile_image"]); ?>?v=<?php echo time(); ?>"
+                        class="profile-image"
+                        alt="Profile Image"
+                    >
 
-<h3 style="text-align:center;">
+                <?php } else { ?>
 
-<?php echo $citizen["citizen_name"]; ?>
+                    <div class="no-profile-image">
+                        👤
+                    </div>
 
-</h3>
+                <?php } ?>
 
-<!-- USERNAME -->
+            </label>
 
-<div class="profile-username">
-    @<?php echo $citizen["username"]; ?>
-</div>
+            <input
+                type="file"
+                id="profileImageInput"
+                name="profile_image"
+                accept="image/*"
+                hidden
+                onchange="document.getElementById('profileForm').submit();"
+            >
 
+        </form>
 
+    </div>
 
-<!-- MY CIVIC POSTS -->
 
-<h2 style="text-align:center;">📷 My Civic Posts</h2>
+    <!-- NAME -->
 
+    <h3 class="profile-name">
+        <?php echo htmlspecialchars($citizen["citizen_name"]); ?>
+    </h3>
 
-<?php
 
-if (mysqli_num_rows($post_result) > 0) {
-while ($post = mysqli_fetch_assoc($post_result)) {
-?>
+    <!-- USERNAME -->
 
-<div class="profile-post-card">
+    <div class="profile-username">
+        @<?php echo htmlspecialchars($citizen["username"]); ?>
+    </div>
 
-<hr>
 
+    <!-- MY COMPLAINTS -->
 
-<p>
+    <h2 class="complaints-heading">
+        📋 My Complaints
+    </h2>
 
-<strong>Post ID:</strong>
 
-P<?php echo $post["post_id"]; ?>
+    <?php if (mysqli_num_rows($complaint_result) > 0) { ?>
 
-</p>
+        <?php while ($complaint = mysqli_fetch_assoc($complaint_result)) { ?>
 
+            <div class="profile-post-card">
 
-<p>
+                <hr>
 
-<strong>Constituency:</strong>
+                <p>
+                    <strong>Complaint ID:</strong>
+                    <?php echo htmlspecialchars($complaint["complaint_id"]); ?>
+                </p>
 
-<?php echo $post["constituency_name"]; ?>
+                <p>
+                    <strong>Constituency:</strong>
+                    <?php echo htmlspecialchars($complaint["constituency_name"]); ?>
+                </p>
 
-</p>
+                <p>
+                    <strong>Ward Number:</strong>
+                    <?php echo htmlspecialchars($complaint["ward_number"]); ?>
+                </p>
 
+                <p>
+                    <strong>Area:</strong>
+                    <?php echo htmlspecialchars($complaint["area_name"]); ?>
+                </p>
 
-<p>
+                <p>
+                    <strong>PIN Code:</strong>
+                    <?php echo htmlspecialchars($complaint["pincode"]); ?>
+                </p>
 
-<strong>Ward Number:</strong>
+                <p>
+                    <strong>Department:</strong>
+                    <?php echo htmlspecialchars($complaint["department_name"]); ?>
+                </p>
 
-<?php echo $post["ward_number"]; ?>
+                <p>
+                    <strong>Issue:</strong>
+                    <?php echo nl2br(htmlspecialchars($complaint["issue_description"])); ?>
+                </p>
 
-</p>
+                <p>
+                    <strong>Status:</strong>
+                    <?php echo htmlspecialchars($complaint["status"]); ?>
+                </p>
 
+                <p>
+                    <strong>Submitted On:</strong>
+                    <?php echo htmlspecialchars($complaint["created_at"]); ?>
+                </p>
 
-<p>
 
-<strong>Area:</strong>
+                <!-- COMPLAINT PHOTOS -->
 
-<?php echo $post["area_name"]; ?>
+                <?php
 
-</p>
+                $complaint_id_safe = mysqli_real_escape_string(
+                    $conn,
+                    $complaint["complaint_id"]
+                );
 
+                $complaint_image_sql = "
+                    SELECT image_path
+                    FROM complaint_images
+                    WHERE complaint_id='$complaint_id_safe'
+                    ORDER BY image_id ASC
+                ";
 
-<p>
+                $complaint_image_result = mysqli_query(
+                    $conn,
+                    $complaint_image_sql
+                );
 
-<strong>Department:</strong>
+                ?>
 
-<?php echo $post["department_name"]; ?>
+                <?php if ($complaint_image_result && mysqli_num_rows($complaint_image_result) > 0) { ?>
 
-</p>
+                    <h3 class="complaint-photos-heading">
+                        📷 Complaint Photos
+                    </h3>
 
+                    <?php while ($complaint_image = mysqli_fetch_assoc($complaint_image_result)) { ?>
 
-<p>
+                        <img
+                            src="<?php echo htmlspecialchars($complaint_image["image_path"]); ?>"
+                            class="complaint-photo"
+                            alt="Complaint Photo"
+                        >
 
-<strong>Issue:</strong>
+                    <?php } ?>
 
-<?php echo $post["issue_description"]; ?>
+                <?php } elseif (!empty($complaint["issue_image"])) { ?>
 
-</p>
+                    <h3 class="complaint-photos-heading">
+                        📷 Complaint Photo
+                    </h3>
 
+                    <img
+                        src="<?php echo htmlspecialchars($complaint["issue_image"]); ?>"
+                        class="complaint-photo"
+                        alt="Complaint Photo"
+                    >
 
-<!-- POST PHOTOS -->
+                <?php } ?>
 
-<?php
 
-$image_sql = "SELECT image_path
-              FROM civic_post_images
-              WHERE post_id='" . $post["post_id"] . "'
-              ORDER BY image_id ASC";
+                <!-- COMPLAINT ACTIONS -->
 
-$image_result = mysqli_query($conn, $image_sql);
+                <div class="post-actions">
 
-if (mysqli_num_rows($image_result) > 0) {
+                    <button
+                        type="button"
+                        class="edit-post-btn"
+                        onclick="window.location.href='edit_complaint.php?complaint_id=<?php echo urlencode($complaint["complaint_id"]); ?>'"
+                    >
+                        ✏️ Update Complaint
+                    </button>
 
-?>
+                    <button
+                        type="button"
+                        class="delete-post-btn"
+                        onclick="confirmComplaintDelete('<?php echo htmlspecialchars($complaint["complaint_id"], ENT_QUOTES); ?>')"
+                    >
+                        🗑️ Delete Complaint
+                    </button>
 
-<h3>📷 Photos</h3>
+                </div>
 
-<?php
+            </div>
 
-while ($image = mysqli_fetch_assoc($image_result)) {
+        <?php } ?>
 
-?>
+    <?php } else { ?>
 
-<img src="<?php echo $image["image_path"]; ?>"
-     width="300"
-     style="margin:5px;">
+        <div class="no-complaints">
+            You have not submitted any complaints yet.
+        </div>
 
-<?php
+    <?php } ?>
 
-}
 
-} else {
+    <script>
 
-    /* FALLBACK TO MAIN POST IMAGE */
+        function confirmComplaintDelete(complaintId) {
 
-    if (!empty($post["post_image"])) {
+            if (confirm("Are you sure you want to delete this complaint?")) {
 
-?>
+                window.location.href =
+                    "delete_complaint.php?complaint_id=" +
+                    encodeURIComponent(complaintId);
 
-<h3>📷 Photo</h3>
+            }
 
-<img src="<?php echo $post["post_image"]; ?>"
-     width="300">
+        }
 
-<?php
+    </script>
 
-    }
-
-}
-
-?>
-
-
-<br><br>
-
-
-<!-- POST VIDEO -->
-
-<?php
-
-if (!empty($post["post_video"])) {
-
-?>
-
-<h3>🎥 Video</h3>
-
-<video width="300" controls>
-
-<source src="<?php echo $post["post_video"]; ?>"
-        type="video/mp4">
-
-Your browser does not support video playback.
-
-</video>
-
-<br><br>
-
-<?php
-
-}
-
-?>
-
-
-<p>
-
-<strong>Posted On:</strong>
-
-<?php echo $post["created_at"]; ?>
-
-</p>
-<br>
-
-<div class="post-actions">
-
-    <button
-        class="edit-post-btn"
-        onclick="window.location.href='edit_post.php?post_id=<?php echo $post["post_id"]; ?>'">
-        ✏️ Edit Post
-    </button>
-
-    <button
-        class="delete-post-btn"
-        onclick="confirmDelete(<?php echo $post["post_id"]; ?>)">
-        🗑️ Delete Post
-    </button>
-
-</div>
-
-<br>
-</div>
-<?php
-
-    }
-
-} else {
-
-    echo "<p style='text-align:center;'>You have not created any civic posts yet.</p>";
-
-}
-
-?>
-
-
-<hr>
-
-<div class="profile-home-button">
-    <button onclick="window.location.href='home.php'">
-        ← Back to Home
-    </button>
-</div>
-
-</button>
-
-</div>
-
-<script>
-
-function confirmDelete(postId) {
-
-    if (confirm("Are you sure you want to delete this post?")) {
-
-        window.location.href = "delete_post.php?post_id=" + postId;
-
-    }
-
-}
-function confirmDelete(postId) {
-
-    if (confirm("Are you sure you want to delete this post?")) {
-
-        window.location.href = "delete_post.php?post_id=" + postId;
-
-    }
-
-}
-
-
-
-</script>
 </body>
 
 </html>
-
-

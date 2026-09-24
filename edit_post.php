@@ -334,223 +334,503 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
 <head>
 
-<title>Edit Civic Post - CivicVoice</title>
+    <title>Edit Civic Post - CivicVoice</title>
+
+    <style>
+
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            padding: 40px 20px;
+            background: #E8E2D5;
+            font-family: Arial, sans-serif;
+            color: #333333;
+        }
+
+        .edit-container {
+            width: 100%;
+            max-width: 900px;
+            margin: 0 auto;
+            background: #ffffff;
+            padding: 35px;
+            border-radius: 18px;
+            border: 1px solid #ddd6c8;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.10);
+        }
+
+        /* PAGE TITLE */
+
+        .page-title {
+            margin: 0 0 30px;
+            text-align: center;
+            color: #166534;
+            font-size: 30px;
+        }
+
+        /* FORM */
+
+        .form-group {
+            margin-bottom: 22px;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            font-size: 15px;
+            font-weight: 700;
+            color: #333333;
+        }
+
+        input[type="text"],
+        select,
+        textarea {
+            width: 100%;
+            padding: 13px 14px;
+            border: 1px solid #cfc8bb;
+            border-radius: 9px;
+            background: #ffffff;
+            color: #333333;
+            font-size: 15px;
+            font-family: Arial, sans-serif;
+            outline: none;
+            transition: 0.2s ease;
+        }
+
+        input[type="text"]:focus,
+        select:focus,
+        textarea:focus {
+            border-color: #166534;
+            box-shadow: 0 0 0 3px rgba(22, 101, 52, 0.10);
+        }
+
+        textarea {
+            min-height: 140px;
+            resize: vertical;
+            line-height: 1.6;
+        }
+
+        /* SECTION */
+
+        .section-title {
+            margin: 30px 0 18px;
+            padding-bottom: 10px;
+            border-bottom: 2px solid #C9A227;
+            color: #166534;
+            font-size: 21px;
+        }
+
+        /* EXISTING PHOTOS */
+
+        .photo-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 18px;
+            margin-top: 15px;
+        }
+
+        .photo-card {
+            background: #faf9f5;
+            border: 1px solid #ddd6c8;
+            border-radius: 12px;
+            padding: 12px;
+            text-align: center;
+        }
+
+        .photo-card img {
+            width: 100%;
+            height: 180px;
+            object-fit: cover;
+            display: block;
+            border-radius: 8px;
+            margin-bottom: 12px;
+        }
+
+        .delete-label {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 7px;
+            color: #a33a3a;
+            font-size: 14px;
+            font-weight: 600;
+            cursor: pointer;
+        }
+
+        .delete-label input {
+            width: 16px;
+            height: 16px;
+            cursor: pointer;
+        }
+
+        .no-photo {
+            padding: 20px;
+            background: #faf9f5;
+            border: 1px dashed #cfc8bb;
+            border-radius: 10px;
+            color: #777777;
+            text-align: center;
+        }
+
+        /* ADD PHOTOS */
+
+        .upload-box {
+            background: #faf9f5;
+            border: 1px dashed #C9A227;
+            border-radius: 12px;
+            padding: 20px;
+        }
+
+        input[type="file"] {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #d5cec0;
+            border-radius: 8px;
+            background: #ffffff;
+            font-size: 14px;
+        }
+
+        .help-text {
+            margin: 12px 0 0;
+            color: #666666;
+            font-size: 14px;
+            line-height: 1.5;
+        }
+
+        /* BUTTONS */
+
+        .button-area {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            margin-top: 30px;
+        }
+
+        .update-button,
+        .back-button {
+            display: inline-block;
+            padding: 13px 25px;
+            border-radius: 9px;
+            font-size: 15px;
+            font-weight: 700;
+            cursor: pointer;
+            text-decoration: none;
+            transition: 0.2s ease;
+        }
+
+        .update-button {
+            border: none;
+            background: #166534;
+            color: #ffffff;
+        }
+
+        .update-button:hover {
+            background: #14532d;
+            transform: translateY(-1px);
+        }
+
+        .back-button {
+            border: 1px solid #C9A227;
+            background: #ffffff;
+            color: #333333;
+        }
+
+        .back-button:hover {
+            background: #f8f3e5;
+        }
+
+        /* MOBILE */
+
+        @media (max-width: 700px) {
+
+            body {
+                padding: 20px 12px;
+            }
+
+            .edit-container {
+                padding: 25px 18px;
+                border-radius: 14px;
+            }
+
+            .page-title {
+                font-size: 25px;
+            }
+
+            .photo-grid {
+                grid-template-columns: repeat(2, 1fr);
+                gap: 12px;
+            }
+
+            .photo-card img {
+                height: 150px;
+            }
+
+            .button-area {
+                flex-direction: column;
+            }
+
+            .update-button,
+            .back-button {
+                width: 100%;
+                text-align: center;
+            }
+
+        }
+
+        @media (max-width: 450px) {
+
+            .photo-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .photo-card img {
+                height: 200px;
+            }
+
+        }
+
+    </style>
 
 </head>
 
+
 <body>
 
+<div class="edit-container">
 
-<h2>✏️ Edit Civic Post</h2>
-
-
-<form method="POST"
-      enctype="multipart/form-data">
-
-
-<label>Constituency Name:</label><br>
-
-<input type="text"
-       name="constituency_name"
-       value="<?php echo $post["constituency_name"]; ?>"
-       required>
-
-<br><br>
+    <h2 class="page-title">
+        ✏️ Edit Civic Post
+    </h2>
 
 
-<label>Ward Number:</label><br>
-
-<input type="text"
-       name="ward_number"
-       value="<?php echo $post["ward_number"]; ?>"
-       required>
-
-<br><br>
+    <form method="POST"
+          enctype="multipart/form-data">
 
 
-<label>Area Name:</label><br>
+        <div class="form-group">
 
-<input type="text"
-       name="area_name"
-       value="<?php echo $post["area_name"]; ?>"
-       required>
+            <label>Constituency Name:</label>
 
-<br><br>
+            <input type="text"
+                   name="constituency_name"
+                   value="<?php echo $post["constituency_name"]; ?>"
+                   required>
 
-
-<label>Department:</label><br>
-
-<select name="department" required>
-
-<option value="">
-Select Department
-</option>
+        </div>
 
 
-<?php
+        <div class="form-group">
 
-$department_sql = "SELECT department_name
-                   FROM departments";
+            <label>Ward Number:</label>
 
-$department_result = mysqli_query(
-    $conn,
-    $department_sql
-);
+            <input type="text"
+                   name="ward_number"
+                   value="<?php echo $post["ward_number"]; ?>"
+                   required>
 
-
-while (
-    $department = mysqli_fetch_assoc(
-        $department_result
-    )
-) {
+        </div>
 
 
-    $selected = "";
+        <div class="form-group">
+
+            <label>Area Name:</label>
+
+            <input type="text"
+                   name="area_name"
+                   value="<?php echo $post["area_name"]; ?>"
+                   required>
+
+        </div>
 
 
-    if (
-        $department["department_name"]
-        == $post["department_name"]
-    ) {
+        <div class="form-group">
 
-        $selected = "selected";
+            <label>Department:</label>
 
-    }
+            <select name="department" required>
 
-
-    echo "<option value='"
-         . $department["department_name"]
-         . "' "
-         . $selected
-         . ">"
-
-         . $department["department_name"]
-
-         . "</option>";
-
-}
-
-?>
-
-</select>
-
-<br><br>
+                <option value="">
+                    Select Department
+                </option>
 
 
-<label>Describe the Civic Issue:</label><br>
+                <?php
 
-<textarea name="issue_description"
-          rows="5"
-          cols="50"
-          required><?php echo $post["issue_description"]; ?></textarea>
+                $department_sql = "SELECT department_name
+                                   FROM departments";
 
-<br><br>
-
-
-<hr>
+                $department_result = mysqli_query(
+                    $conn,
+                    $department_sql
+                );
 
 
-<h3>📷 Existing Photos</h3>
+                while (
+                    $department = mysqli_fetch_assoc(
+                        $department_result
+                    )
+                ) {
+
+                    $selected = "";
+
+                    if (
+                        $department["department_name"]
+                        == $post["department_name"]
+                    ) {
+
+                        $selected = "selected";
+
+                    }
 
 
-<?php
+                    echo "<option value='"
+                         . $department["department_name"]
+                         . "' "
+                         . $selected
+                         . ">"
+                         . $department["department_name"]
+                         . "</option>";
 
-$image_sql = "SELECT image_id, image_path
-              FROM civic_post_images
-              WHERE post_id='$post_id'
-              ORDER BY image_id ASC";
+                }
 
-$image_result = mysqli_query(
-    $conn,
-    $image_sql
-);
+                ?>
+
+            </select>
+
+        </div>
 
 
-if (mysqli_num_rows($image_result) > 0) {
+        <div class="form-group">
+
+            <label>
+                Describe the Civic Issue:
+            </label>
+
+            <textarea name="issue_description"
+                      required><?php echo $post["issue_description"]; ?></textarea>
+
+        </div>
 
 
-    while (
-        $image = mysqli_fetch_assoc(
-            $image_result
-        )
-    ) {
+        <h3 class="section-title">
+            📷 Existing Photos
+        </h3>
 
-?>
 
-<div style="display:inline-block;
-            text-align:center;
-            margin:10px;">
+        <?php
 
-<img src="<?php echo $image["image_path"]; ?>"
-     width="200"
-     height="150"
-     style="object-fit:cover;">
+        $image_sql = "SELECT image_id, image_path
+                      FROM civic_post_images
+                      WHERE post_id='$post_id'
+                      ORDER BY image_id ASC";
 
-<br>
+        $image_result = mysqli_query(
+            $conn,
+            $image_sql
+        );
 
-<label>
 
-<input type="checkbox"
-       name="delete_images[]"
-       value="<?php echo $image["image_id"]; ?>">
+        if (mysqli_num_rows($image_result) > 0) {
 
-🗑️ Delete this photo
+        ?>
 
-</label>
+        <div class="photo-grid">
+
+        <?php
+
+            while (
+                $image = mysqli_fetch_assoc(
+                    $image_result
+                )
+            ) {
+
+        ?>
+
+            <div class="photo-card">
+
+                <img src="<?php echo $image["image_path"]; ?>"
+                     alt="Post Photo">
+
+                <label class="delete-label">
+
+                    <input type="checkbox"
+                           name="delete_images[]"
+                           value="<?php echo $image["image_id"]; ?>">
+
+                    🗑️ Delete this photo
+
+                </label>
+
+            </div>
+
+        <?php
+
+            }
+
+        ?>
+
+        </div>
+
+        <?php
+
+        } else {
+
+            echo "
+            <div class='no-photo'>
+                No photos available.
+            </div>
+            ";
+
+        }
+
+        ?>
+
+
+        <h3 class="section-title">
+            ➕ Add New Photos
+        </h3>
+
+
+        <div class="upload-box">
+
+            <input type="file"
+                   name="new_images[]"
+                   accept="image/*"
+                   multiple>
+
+            <p class="help-text">
+                You can keep or delete existing photos and add new photos.
+                Maximum total photos: 10.
+            </p>
+
+        </div>
+
+
+        <div class="button-area">
+
+            <button type="submit"
+                    class="update-button">
+
+                💾 Update Post
+
+            </button>
+
+
+            <a href="profile.php"
+               class="back-button">
+
+                ← Back to Profile
+
+            </a>
+
+        </div>
+
+
+    </form>
 
 </div>
-
-<?php
-
-    }
-
-} else {
-
-    echo "<p>No photos available.</p>";
-
-}
-
-?>
-
-
-<br><br>
-
-
-<h3>➕ Add New Photos</h3>
-
-<input type="file"
-       name="new_images[]"
-       accept="image/*"
-       multiple>
-
-<p>
-You can keep or delete existing photos and add new photos.
-Maximum total photos: 10.
-</p>
-
-
-<br>
-
-
-<button type="submit">
-
-💾 Update Post
-
-</button>
-
-
-</form>
-
-
-<br>
-
-
-<button onclick="window.location.href='profile.php'">
-
-← Back to Profile
-
-</button>
-
 
 </body>
 
