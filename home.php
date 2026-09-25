@@ -598,6 +598,94 @@ if (!$result) {
     margin-bottom: 8px;
     padding: 14px 15px;
 }
+/* SMALL PROFILE ON HOME FEED */
+
+.citizen-feed-profile {
+    display: flex !important;
+    align-items: center !important;
+    gap: 10px !important;
+    padding: 6px 10px !important;
+}
+
+.citizen-feed-profile-image {
+    width: 45px !important;
+    height: 45px !important;
+    min-width: 45px !important;
+    min-height: 45px !important;
+    max-width: 45px !important;
+    max-height: 45px !important;
+    border-radius: 50% !important;
+    object-fit: cover !important;
+}
+/* CITIZEN PROFILE NAME */
+
+.citizen-feed-profile-details {
+    display: flex !important;
+    align-items: center !important;
+}
+
+.citizen-feed-profile-details strong {
+    color: #166534 !important;
+    font-size: 16px !important;
+    font-weight: 700 !important;
+    font-family: Arial, sans-serif !important;
+    line-height: 1.2 !important;
+    text-decoration: none !important;
+}
+/* YELLOW CITIZEN PROFILE BADGE */
+
+.citizen-feed-profile {
+    background-color: #C9A227 !important;
+    border-radius: 12px !important;
+    padding: 6px 12px !important;
+    width: fit-content !important;
+    box-sizing: border-box !important;
+}
+
+.citizen-feed-profile-image {
+    border: 2px solid white !important;
+}
+
+.citizen-feed-profile-details strong {
+    color: #1F2937 !important;
+    font-weight: 700 !important;
+}
+/* CONNECTED PROFILE BADGE */
+
+.citizen-feed-profile {
+    display: inline-flex !important;
+    align-items: center !important;
+    gap: 10px !important;
+    background: #C9A227 !important;
+    border-radius: 35px !important;
+    padding: 4px 18px 4px 4px !important;
+    width: fit-content !important;
+    box-sizing: border-box !important;
+}
+
+.citizen-feed-profile-image {
+    width: 45px !important;
+    height: 45px !important;
+    min-width: 45px !important;
+    min-height: 45px !important;
+    max-width: 45px !important;
+    max-height: 45px !important;
+    border-radius: 50% !important;
+    object-fit: cover !important;
+    border: 2px solid white !important;
+}
+
+.citizen-feed-profile-details {
+    display: flex !important;
+    align-items: center !important;
+}
+
+.citizen-feed-profile-details strong {
+    color: #1F2937 !important;
+    font-size: 16px !important;
+    font-weight: 700 !important;
+    white-space: nowrap !important;
+}
   </style>
 
 </head>
@@ -940,9 +1028,6 @@ if ($profile_data) {
             <?php echo htmlspecialchars($profile_name); ?>
         </strong>
 
-        <span>
-            View Profile
-        </span>
 
     </div>
 
