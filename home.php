@@ -72,7 +72,6 @@ if (isset($_GET["support"])) {
     exit;
 }
 
-
 /* ================================================= */
 /* GET COMPLAINTS */
 /* ================================================= */
@@ -92,7 +91,6 @@ $complaint_sql = "
     FROM complaints
 ";
 
-
 /* ================================================= */
 /* GET CIVIC POSTS */
 /* ================================================= */
@@ -111,7 +109,6 @@ $post_sql = "
         created_at
     FROM civic_posts
 ";
-
 
 /* ================================================= */
 /* COMBINE FEED */
@@ -718,7 +715,30 @@ if (mysqli_num_rows($result) > 0) {
 
         $feed_id = $row["feed_id"];
 
+/* ================================================= */
+/* GET CITIZEN PROFILE INFORMATION */
+/* ================================================= */
 
+$profile_citizen_id = (int)$row["citizen_id"];
+
+$profile_sql = "
+    SELECT citizen_name, profile_image
+    FROM citizens
+    WHERE citizen_id='$profile_citizen_id'
+    LIMIT 1
+";
+
+$profile_result = mysqli_query($conn, $profile_sql);
+
+$profile_data = mysqli_fetch_assoc($profile_result);
+
+$profile_name = "";
+$profile_image = "";
+
+if ($profile_data) {
+    $profile_name = $profile_data["citizen_name"];
+    $profile_image = $profile_data["profile_image"];
+}
         /* ================================================= */
         /* DEPARTMENT */
         /* ================================================= */
@@ -880,7 +900,6 @@ if (mysqli_num_rows($result) > 0) {
 
 ?>
 
-
 <!-- ================================================= -->
 <!-- ONE FEED CARD -->
 <!-- ================================================= -->
@@ -890,9 +909,47 @@ if (mysqli_num_rows($result) > 0) {
     id="post_<?php echo htmlspecialchars($feed_id); ?>"
 >
 
+<!-- ================================================= -->
+<!-- CITIZEN PROFILE -->
+<!-- ================================================= -->
+
+<a
+    href="public_profile.php?citizen_id=<?php echo (int)$profile_citizen_id; ?>"
+    class="citizen-feed-profile"
+>
+
+    <?php if (!empty($profile_image)) { ?>
+
+        <img
+            src="<?php echo htmlspecialchars($profile_image); ?>"
+            alt="Profile Photo"
+            class="citizen-feed-profile-image"
+        >
+
+    <?php } else { ?>
+
+        <div class="citizen-feed-profile-placeholder">
+            👤
+        </div>
+
+    <?php } ?>
+
+    <div class="citizen-feed-profile-details">
+
+        <strong>
+            <?php echo htmlspecialchars($profile_name); ?>
+        </strong>
+
+        <span>
+            View Profile
+        </span>
+
+    </div>
+
+</a>
+
 
 <?php
-
 
 /* ================================================= */
 /* FEED TYPE */

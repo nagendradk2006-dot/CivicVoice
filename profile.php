@@ -301,27 +301,90 @@ if (!$complaint_result) {
 
 
         /* =========================================================
-           COMPLAINT PHOTOS
-           ========================================================= */
+   COMPLAINT PHOTOS CAROUSEL
+   ========================================================= */
+.complaint-photos-heading {
+    color: #166534;
+    font-size: 18px;
+    margin-top: 20px;
+}
 
-        .complaint-photos-heading {
-            color: #166534;
-            font-size: 18px;
-            margin-top: 20px;
-        }
+.profile-photo-carousel {
+    position: relative;
+    width: 100%;
+    max-width: 650px;
+    height: 350px;
+    margin: 15px auto;
+    overflow: hidden;
+    border-radius: 12px;
+    border: 2px solid #C9A227;
+    box-sizing: border-box;
+    background-color: #f5f5f5;
+}
 
-        .complaint-photo {
-            display: block;
-            width: 100%;
-            max-width: 650px;
-            height: 350px;
-            object-fit: cover;
-            margin: 15px auto;
-            border-radius: 12px;
-            border: 2px solid #C9A227;
-            box-sizing: border-box;
-        }
+.profile-photo-track {
+    display: flex;
+    width: 100%;
+    height: 100%;
+    transition: transform 0.3s ease;
+}
 
+.profile-photo-slide {
+    min-width: 100%;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    flex-shrink: 0;
+}
+
+.profile-photo-prev,
+.profile-photo-next {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 40px;
+    height: 40px;
+    border: none;
+    border-radius: 50%;
+    background-color: rgba(0, 0, 0, 0.55);
+    color: white;
+    font-size: 22px;
+    font-weight: bold;
+    cursor: pointer;
+    z-index: 5;
+}
+
+.profile-photo-prev {
+    left: 10px;
+}
+
+.profile-photo-next {
+    right: 10px;
+}
+
+.profile-photo-prev:hover,
+.profile-photo-next:hover {
+    background-color: rgba(22, 101, 52, 0.9);
+}
+
+.profile-photo-counter {
+    position: absolute;
+    bottom: 10px;
+    left: 50%;
+    transform: translateX(-50%);
+    padding: 5px 12px;
+    border-radius: 15px;
+    background-color: rgba(0, 0, 0, 0.65);
+    color: white;
+    font-size: 13px;
+    z-index: 5;
+}
+
+@media (max-width: 700px) {
+    .profile-photo-carousel {
+        height: 300px;
+    }
+}
 
         /* =========================================================
            ACTION BUTTONS
@@ -591,57 +654,108 @@ if (!$complaint_result) {
 
 
                 <!-- COMPLAINT PHOTOS -->
+<!-- COMPLAINT PHOTOS -->
+<?php
 
-                <?php
+$complaint_id_safe = mysqli_real_escape_string(
+    $conn,
+    $complaint["complaint_id"]
+);
 
-                $complaint_id_safe = mysqli_real_escape_string(
-                    $conn,
-                    $complaint["complaint_id"]
-                );
+$complaint_image_sql = "
+    SELECT image_path
+    FROM complaint_images
+    WHERE complaint_id='$complaint_id_safe'
+    ORDER BY image_id ASC
+";
 
-                $complaint_image_sql = "
-                    SELECT image_path
-                    FROM complaint_images
-                    WHERE complaint_id='$complaint_id_safe'
-                    ORDER BY image_id ASC
-                ";
+$complaint_image_result = mysqli_query(
+    $conn,
+    $complaint_image_sql
+);
 
-                $complaint_image_result = mysqli_query(
-                    $conn,
-                    $complaint_image_sql
-                );
+if ($complaint_image_result && mysqli_num_rows($complaint_image_result) > 0):
 
-                ?>
+    $profile_images = [];
 
-                <?php if ($complaint_image_result && mysqli_num_rows($complaint_image_result) > 0) { ?>
+    while ($complaint_image = mysqli_fetch_assoc($complaint_image_result)) {
+        $profile_images[] = $complaint_image["image_path"];
+    }
 
-                    <h3 class="complaint-photos-heading">
-                        📷 Complaint Photos
-                    </h3>
+?>
 
-                    <?php while ($complaint_image = mysqli_fetch_assoc($complaint_image_result)) { ?>
+    <h3 class="complaint-photos-heading">
+        📷 Complaint Photos
+    </h3>
 
-                        <img
-                            src="<?php echo htmlspecialchars($complaint_image["image_path"]); ?>"
-                            class="complaint-photo"
-                            alt="Complaint Photo"
-                        >
+    <div class="profile-photo-carousel">
 
-                    <?php } ?>
+        <div class="profile-photo-track">
 
-                <?php } elseif (!empty($complaint["issue_image"])) { ?>
+            <?php foreach ($profile_images as $image_path): ?>
 
-                    <h3 class="complaint-photos-heading">
-                        📷 Complaint Photo
-                    </h3>
+                <img
+                    src="<?php echo htmlspecialchars($image_path); ?>"
+                    class="profile-photo-slide"
+                    alt="Complaint Photo"
+                >
 
-                    <img
-                        src="<?php echo htmlspecialchars($complaint["issue_image"]); ?>"
-                        class="complaint-photo"
-                        alt="Complaint Photo"
-                    >
+            <?php endforeach; ?>
 
-                <?php } ?>
+        </div>
+
+        <?php if (count($profile_images) > 1): ?>
+
+            <button
+                type="button"
+                class="profile-photo-prev"
+                onclick="moveProfilePhoto(this, -1)"
+            >
+                ‹
+            </button>
+
+            <button
+                type="button"
+                class="profile-photo-next"
+                onclick="moveProfilePhoto(this, 1)"
+            >
+                ›
+            </button>
+
+            <div class="profile-photo-counter">
+                <span>1</span> / <?php echo count($profile_images); ?>
+            </div>
+
+        <?php endif; ?>
+
+    </div>
+
+<?php
+elseif (!empty($complaint["issue_image"])):
+?>
+
+    <h3 class="complaint-photos-heading">
+        📷 Complaint Photo
+    </h3>
+
+    <img
+        src="<?php echo htmlspecialchars($complaint["issue_image"]); ?>"
+        class="profile-photo-slide"
+        style="
+            display:block;
+            width:100%;
+            max-width:650px;
+            height:350px;
+            object-fit:cover;
+            margin:15px auto;
+            border-radius:12px;
+            border:2px solid #C9A227;
+            box-sizing:border-box;
+        "
+        alt="Complaint Photo"
+    >
+
+<?php endif; ?>
 
 
                 <!-- COMPLAINT ACTIONS -->
@@ -678,23 +792,66 @@ if (!$complaint_result) {
 
     <?php } ?>
 
+<script>
 
-    <script>
+    /* =========================================================
+       PROFILE COMPLAINT PHOTO CAROUSEL
+       ========================================================= */
 
-        function confirmComplaintDelete(complaintId) {
+    function moveProfilePhoto(button, direction) {
 
-            if (confirm("Are you sure you want to delete this complaint?")) {
+        const carousel = button.closest(".profile-photo-carousel");
 
-                window.location.href =
-                    "delete_complaint.php?complaint_id=" +
-                    encodeURIComponent(complaintId);
+        const track = carousel.querySelector(".profile-photo-track");
 
-            }
+        const slides = carousel.querySelectorAll(".profile-photo-slide");
+
+        const counter = carousel.querySelector(
+            ".profile-photo-counter span"
+        );
+
+        let currentIndex = parseInt(
+            carousel.dataset.currentIndex || "0"
+        );
+
+        currentIndex += direction;
+
+        if (currentIndex < 0) {
+            currentIndex = slides.length - 1;
+        }
+
+        if (currentIndex >= slides.length) {
+            currentIndex = 0;
+        }
+
+        track.style.transform =
+            "translateX(-" + (currentIndex * 100) + "%)";
+
+        carousel.dataset.currentIndex = currentIndex;
+
+        if (counter) {
+            counter.textContent = currentIndex + 1;
+        }
+    }
+
+
+    /* =========================================================
+       COMPLAINT DELETE CONFIRMATION
+       ========================================================= */
+
+    function confirmComplaintDelete(complaintId) {
+
+        if (confirm("Are you sure you want to delete this complaint?")) {
+
+            window.location.href =
+                "delete_complaint.php?complaint_id=" +
+                encodeURIComponent(complaintId);
 
         }
 
-    </script>
+    }
 
+</script>
 </body>
 
 </html>

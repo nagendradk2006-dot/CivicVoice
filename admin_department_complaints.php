@@ -391,42 +391,123 @@ if (!$complaint_result) {
 
 
         /* =================================================
-           IMAGE GRID
-           ================================================= */
+   COMPLAINT IMAGE CAROUSEL
+   ================================================= */
 
-        .complaint-images {
-
-            width: 100%;
-
-            margin-top: 12px;
-
-            display: grid;
-
-            grid-template-columns:
-                repeat(2, 1fr);
-
-            gap: 15px;
-        }
+.complaint-images {
+    position: relative;
+    width: 100%;
+    height: 320px;
+    margin-top: 12px;
+    overflow: hidden;
+    background: white;
+    border-radius: 12px;
+    border: 2px solid #c9a227;
+}
 
 
-        .complaint-image {
+.complaint-image-track {
 
-            width: 100%;
+    display: flex;
 
-            height: 260px;
+    width: 100%;
 
-            object-fit: contain;
+    height: 100%;
 
-            background: #111;
+    transition: transform 0.3s ease;
+}
 
-            border:
-                2px solid #c9a227;
+.complaint-image {
+    min-width: 100%;
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    background: white;
+    display: block;
+    flex-shrink: 0;
+}
 
-            border-radius: 12px;
 
-            display: block;
-        }
+/* =================================================
+   CAROUSEL BUTTONS
+   ================================================= */
 
+.complaint-image-prev,
+.complaint-image-next {
+
+    position: absolute;
+
+    top: 50%;
+
+    transform: translateY(-50%);
+
+    width: 42px;
+
+    height: 42px;
+
+    border: none;
+
+    border-radius: 50%;
+
+    background: rgba(0, 0, 0, 0.60);
+
+    color: white;
+
+    font-size: 26px;
+
+    font-weight: bold;
+
+    cursor: pointer;
+
+    z-index: 5;
+}
+
+
+.complaint-image-prev {
+
+    left: 10px;
+}
+
+
+.complaint-image-next {
+
+    right: 10px;
+}
+
+
+.complaint-image-prev:hover,
+.complaint-image-next:hover {
+
+    background: rgba(23, 107, 58, 0.95);
+}
+
+
+/* =================================================
+   IMAGE COUNTER
+   ================================================= */
+
+.complaint-image-counter {
+
+    position: absolute;
+
+    bottom: 10px;
+
+    left: 50%;
+
+    transform: translateX(-50%);
+
+    padding: 5px 12px;
+
+    background: rgba(0, 0, 0, 0.70);
+
+    color: white;
+
+    border-radius: 15px;
+
+    font-size: 13px;
+
+    z-index: 5;
+}
 
         /* =================================================
            RESOLUTION INFORMATION
@@ -539,17 +620,10 @@ if (!$complaint_result) {
             }
 
 
-            .complaint-images {
+           .complaint-images {
 
-                grid-template-columns: 1fr;
-            }
-
-
-            .complaint-image {
-
-                height: 280px;
-            }
-
+    height: 280px;
+}
         }
 
 
@@ -908,7 +982,12 @@ if (count($complaint_images) > 0) {
     </p>
 
 
-    <div class="complaint-images">
+    <div
+        class="complaint-images"
+        data-current-index="0"
+    >
+
+        <div class="complaint-image-track">
 
 <?php
 
@@ -919,11 +998,52 @@ if (count($complaint_images) > 0) {
 
 ?>
 
-        <img
-            src="<?php echo htmlspecialchars($image); ?>"
-            class="complaint-image"
-            alt="Complaint Evidence"
+            <img
+                src="<?php echo htmlspecialchars($image); ?>"
+                class="complaint-image"
+                alt="Complaint Evidence"
+            >
+
+<?php
+
+    }
+
+?>
+
+        </div>
+
+
+<?php
+
+    if (count($complaint_images) > 1) {
+
+?>
+
+        <button
+            type="button"
+            class="complaint-image-prev"
+            onclick="moveAdminComplaintImage(this, -1)"
         >
+            ‹
+        </button>
+
+
+        <button
+            type="button"
+            class="complaint-image-next"
+            onclick="moveAdminComplaintImage(this, 1)"
+        >
+            ›
+        </button>
+
+
+        <div class="complaint-image-counter">
+
+            <span>1</span>
+            /
+            <?php echo count($complaint_images); ?>
+
+        </div>
 
 <?php
 
@@ -936,6 +1056,8 @@ if (count($complaint_images) > 0) {
 <?php
 
 } else {
+
+?>
 
 ?>
 
@@ -1112,6 +1234,73 @@ if (
 ?>
 
 
-</body>
+<script>
 
+/* =================================================
+   ADMIN COMPLAINT IMAGE CAROUSEL
+   ================================================= */
+
+function moveAdminComplaintImage(button, direction) {
+
+    const carousel =
+        button.closest(".complaint-images");
+
+    const track =
+        carousel.querySelector(
+            ".complaint-image-track"
+        );
+
+    const slides =
+        carousel.querySelectorAll(
+            ".complaint-image"
+        );
+
+    const counter =
+        carousel.querySelector(
+            ".complaint-image-counter span"
+        );
+
+    let currentIndex =
+        parseInt(
+            carousel.dataset.currentIndex || "0"
+        );
+
+
+    currentIndex += direction;
+
+
+    if (currentIndex < 0) {
+
+        currentIndex =
+            slides.length - 1;
+    }
+
+
+    if (currentIndex >= slides.length) {
+
+        currentIndex = 0;
+    }
+
+
+    track.style.transform =
+        "translateX(-" +
+        (currentIndex * 100) +
+        "%)";
+
+
+    carousel.dataset.currentIndex =
+        currentIndex;
+
+
+    if (counter) {
+
+        counter.textContent =
+            currentIndex + 1;
+    }
+}
+
+</script>
+
+
+</body>
 </html>
