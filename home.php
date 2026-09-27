@@ -410,8 +410,9 @@ if (!$result) {
 .slide img {
     display: block;
     width: 100%;
-    height: 450px;
-    object-fit: cover;
+    height: auto;
+    object-fit: contain;
+    background-color: white;
     border-radius: 12px;
     pointer-events: none;
     user-select: none;
@@ -524,9 +525,6 @@ if (!$result) {
             }
 
 
-            .slide img {
-                height: 350px;
-            }
 
         }
 .civic-page-layout {
