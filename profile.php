@@ -309,33 +309,41 @@ if (!$complaint_result) {
     margin-top: 20px;
 }
 
+/* =========================================================
+   PROFILE COMPLAINT IMAGE CAROUSEL
+   FORCE ORIGINAL IMAGE RATIO
+   ========================================================= */
+
 .profile-photo-carousel {
-    position: relative;
-    width: 100%;
-    max-width: 650px;
-    height: 350px;
-    margin: 15px auto;
-    overflow: hidden;
+    position: relative !important;
+    width: 100% !important;
+    max-width: 650px !important;
+    height: auto !important;
+    margin: 15px auto !important;
+    overflow: hidden !important;
     border-radius: 12px;
     border: 2px solid #C9A227;
     box-sizing: border-box;
-    background-color: #f5f5f5;
+    background: #ffffff;
 }
 
 .profile-photo-track {
-    display: flex;
-    width: 100%;
-    height: 100%;
+    display: flex !important;
+    width: 100% !important;
+    height: auto !important;
     transition: transform 0.3s ease;
 }
 
 .profile-photo-slide {
-    min-width: 100%;
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    flex-shrink: 0;
+    min-width: 100% !important;
+    width: 100% !important;
+    height: auto !important;
+    max-height: none !important;
+    object-fit: contain !important;
+    flex-shrink: 0 !important;
+    display: block !important;
 }
+
 
 .profile-photo-prev,
 .profile-photo-next {
@@ -379,14 +387,17 @@ if (!$complaint_result) {
     font-size: 13px;
     z-index: 5;
 }
-
 @media (max-width: 700px) {
     .profile-photo-carousel {
-        height: 300px;
+        width: 100%;
+        height: auto;
+    }
+
+    .profile-photo-slide {
+        max-height: 500px;
     }
 }
-
-        /* =========================================================
+/* =========================================================
            ACTION BUTTONS
            ========================================================= */
 
@@ -738,25 +749,26 @@ elseif (!empty($complaint["issue_image"])):
         📷 Complaint Photo
     </h3>
 
-    <img
-        src="<?php echo htmlspecialchars($complaint["issue_image"]); ?>"
-        class="profile-photo-slide"
-        style="
-            display:block;
-            width:100%;
-            max-width:650px;
-            height:350px;
-            object-fit:cover;
-            margin:15px auto;
-            border-radius:12px;
-            border:2px solid #C9A227;
-            box-sizing:border-box;
-        "
-        alt="Complaint Photo"
-    >
-
+    <img 
+    src="<?php echo htmlspecialchars($complaint["issue_image"]); ?>" 
+    class="profile-photo-slide" 
+    style="
+        display:block;
+        width:100%;
+        max-width:650px;
+        height:auto;
+        max-height:600px;
+        object-fit:contain;
+        margin:15px auto;
+        border-radius:12px;
+        border:2px solid #C9A227;
+        box-sizing:border-box;
+        background-color:#ffffff;
+    " 
+    alt="Complaint Photo"
+>
+ 
 <?php endif; ?>
-
 
                 <!-- COMPLAINT ACTIONS -->
 
