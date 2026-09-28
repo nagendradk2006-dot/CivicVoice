@@ -13,7 +13,7 @@ include "db.php";
 
 
 /* ================================================= */
-/* SUPPORT BUTTON */
+/* SUPPORT / UNSUPPORT BUTTON */
 /* ================================================= */
 
 if (isset($_GET["support"])) {
@@ -24,12 +24,15 @@ if (isset($_GET["support"])) {
     );
 
 
+    /* ================================================= */
     /* CHECK WHETHER THIS CITIZEN ALREADY SUPPORTED */
+    /* ================================================= */
 
     $check = "SELECT *
               FROM complaint_support
               WHERE complaint_id='$feed_id'
               AND citizen_id='$citizen_id'";
+
 
     $check_result = mysqli_query(
         $conn,
@@ -42,13 +45,44 @@ if (isset($_GET["support"])) {
     }
 
 
-    /* INSERT SUPPORT ONLY ONCE */
+    /* ================================================= */
+    /* ALREADY SUPPORTED → UNSUPPORT */
+    /* ================================================= */
 
-    if (mysqli_num_rows($check_result) == 0) {
+    if (mysqli_num_rows($check_result) > 0) {
 
-        $support_sql = "INSERT INTO complaint_support
-                        (complaint_id, citizen_id)
-                        VALUES ('$feed_id', '$citizen_id')";
+        $unsupport_sql = "
+            DELETE FROM complaint_support
+            WHERE complaint_id='$feed_id'
+            AND citizen_id='$citizen_id'
+        ";
+
+
+        $unsupport_result = mysqli_query(
+            $conn,
+            $unsupport_sql
+        );
+
+
+        if (!$unsupport_result) {
+            die("Unsupport Error: " . mysqli_error($conn));
+        }
+
+    }
+
+
+    /* ================================================= */
+    /* NOT SUPPORTED → SUPPORT */
+    /* ================================================= */
+
+    else {
+
+        $support_sql = "
+            INSERT INTO complaint_support
+            (complaint_id, citizen_id)
+            VALUES ('$feed_id', '$citizen_id')
+        ";
+
 
         $support_result = mysqli_query(
             $conn,
@@ -59,14 +93,13 @@ if (isset($_GET["support"])) {
         if (!$support_result) {
             die("Support Error: " . mysqli_error($conn));
         }
+
     }
 
 
-    /*
-     * Return to home page.
-     * JavaScript below will restore the previous
-     * scroll position.
-     */
+    /* ================================================= */
+    /* RETURN TO HOME PAGE */
+    /* ================================================= */
 
     header("Location: home.php");
     exit;
@@ -883,7 +916,31 @@ if ($profile_data) {
         $support_count =
             $support_data["total_support"];
 
+/* ================================================= */
+/* CHECK IF CURRENT CITIZEN SUPPORTED */
+/* ================================================= */
 
+$user_support_sql = "
+    SELECT *
+    FROM complaint_support
+    WHERE complaint_id='$feed_id'
+    AND citizen_id='$citizen_id'
+    LIMIT 1
+";
+
+$user_support_result = mysqli_query(
+    $conn,
+    $user_support_sql
+);
+
+$user_has_supported = false;
+
+if (
+    $user_support_result &&
+    mysqli_num_rows($user_support_result) > 0
+) {
+    $user_has_supported = true;
+}
         /* ================================================= */
         /* COMMENT COUNT */
         /* ================================================= */
@@ -1730,10 +1787,17 @@ if (!empty($row["post_video"])) {
 
         <button type="button">
 
-            👍 Support <?php echo $support_count; ?>
+    <?php if ($user_has_supported): ?>
 
-        </button>
+        👎 Unsupport <?php echo $support_count; ?>
 
+    <?php else: ?>
+
+        👍 Support <?php echo $support_count; ?>
+
+    <?php endif; ?>
+
+</button>
     </a>
 
 

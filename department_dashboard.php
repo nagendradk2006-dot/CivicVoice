@@ -16,7 +16,17 @@ if (!isset($_SESSION["department_user_id"])) {
 $department_user_id = $_SESSION["department_user_id"];
 $department_name = $_SESSION["department_name"];
 $department_id = $_SESSION["department_id"];
+/* ================================================= */
+/* SEARCH COMPLAINTS */
+/* ================================================= */
 
+$search = "";
+
+if (isset($_GET["search"])) {
+    $search = trim($_GET["search"]);
+}
+
+$search_safe = mysqli_real_escape_string($conn, $search);
 
 /* ================================================= */
 /* IMAGE PATH HELPER */
@@ -82,13 +92,21 @@ function getComplaintImageUrl($image_path)
 /* ================================================= */
 /* GET COMPLAINTS FOR THIS DEPARTMENT */
 /* ================================================= */
-
 $sql = "SELECT complaints.*, departments.department_name
         FROM complaints
         INNER JOIN departments
         ON complaints.department_id = departments.department_id
-        WHERE complaints.department_id='$department_id'
-        ORDER BY complaints.created_at DESC";
+        WHERE complaints.department_id='$department_id'";
+
+if ($search != "") {
+
+    $sql .= " AND (
+                complaints.area_name LIKE '%$search_safe%'
+                OR complaints.constituency_name LIKE '%$search_safe%'
+              )";
+}
+
+$sql .= " ORDER BY complaints.created_at DESC";
 
 $result = mysqli_query($conn, $sql);
 
@@ -1314,7 +1332,181 @@ $result = mysqli_query($conn, $sql);
         width: 110px;
     }
 }
-    </style>
+  /* =================================================
+   TOP RIGHT COMPLAINT SEARCH
+================================================= */
+
+.top-complaint-search {
+
+    width: 100%;
+
+    margin: 0 0 18px;
+
+    display: flex;
+
+    justify-content: flex-end;
+
+    box-sizing: border-box;
+
+}
+
+
+.top-complaint-search form {
+
+    display: flex;
+
+    align-items: center;
+
+    gap: 8px;
+
+}
+
+
+.top-complaint-search input {
+
+    width: 240px;
+
+    height: 42px;
+
+    padding: 0 15px;
+
+    border: 2px solid #d4af37;
+
+    border-radius: 22px;
+
+    background: #ffffff;
+
+    color: #333333;
+
+    font-size: 14px;
+
+    outline: none;
+
+    box-sizing: border-box;
+
+}
+
+
+.top-complaint-search input:focus {
+
+    border-color: #1b5e20;
+
+    box-shadow:
+        0 0 0 3px rgba(27, 94, 32, 0.10);
+
+}
+
+
+.top-complaint-search button {
+
+    height: 36px;
+
+    padding: 0 14px;
+
+    border: none;
+
+    border-radius: 18px;
+
+    background: #1b5e20;
+
+    color: #ffffff;
+
+    font-size: 13px;
+
+    font-weight: 700;
+
+    cursor: pointer;
+
+    box-sizing: border-box;
+}
+
+
+.top-complaint-search button:hover {
+
+    background: #0b4d2b;
+
+}
+
+
+.top-complaint-search a {
+
+    width: 42px;
+
+    height: 42px;
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    border: 2px solid #d4af37;
+
+    border-radius: 50%;
+
+    background: #ffffff;
+
+    color: #b71c1c;
+
+    text-decoration: none;
+
+    font-size: 14px;
+
+    font-weight: 700;
+
+    box-sizing: border-box;
+
+}
+
+
+/* =================================================
+   MOBILE SEARCH
+================================================= */
+
+@media (max-width: 600px) {
+
+    .top-complaint-search {
+
+        justify-content: center;
+
+    }
+
+    .top-complaint-search form {
+
+        width: 100%;
+
+    }
+
+    .top-complaint-search input {
+
+        width: 100%;
+
+    }
+
+}
+/* =================================================
+   DEPARTMENT COMPLAINTS POSITION
+================================================= */
+
+.department-section-heading {
+    width: 100% !important;
+    max-width: 850px !important;
+    margin: 35px auto 30px !important;
+    text-align: center !important;
+}
+
+.department-section-heading h2 {
+    display: block !important;
+    width: 100% !important;
+    margin: 0 auto !important;
+    text-align: center !important;
+    box-sizing: border-box !important;
+}
+
+.department-section-heading p {
+    text-align: center !important;
+}
+  </style>
 
 </head>
 
@@ -1374,6 +1566,38 @@ $result = mysqli_query($conn, $sql);
 <!-- ================================================= -->
 
 <main class="department-dashboard-container">
+
+<!-- ================================================= -->
+<!-- TOP RIGHT COMPLAINT SEARCH -->
+<!-- ================================================= -->
+
+<div class="top-complaint-search">
+
+    <form method="GET">
+
+        <input
+            type="text"
+            name="search"
+            value="<?php echo htmlspecialchars($search); ?>"
+            placeholder="Area or Constituency"
+        >
+
+        <button type="submit">
+            🔍 Search
+        </button>
+
+        <?php if ($search != "") { ?>
+
+            <a href="department_dashboard.php" title="Clear Search">
+                ✖
+            </a>
+
+        <?php } ?>
+
+    </form>
+
+</div>
+
 
 <!-- =================================================
      DEPARTMENT SERVICE VISION

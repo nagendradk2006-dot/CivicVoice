@@ -3,7 +3,54 @@
 
 session_start();
 include "db.php";
+/* =========================================================
+   CHECK WHETHER IMAGE CONTAINS GPS LOCATION
+   ========================================================= */
 
+function imageHasGPS($file_path)
+{
+    /* Read EXIF metadata */
+
+    $exif = @exif_read_data($file_path, null, true);
+
+    if (!$exif) {
+        return false;
+    }
+
+    /* Check GPS section */
+
+    if (!isset($exif["GPS"])) {
+        return false;
+    }
+
+    $gps = $exif["GPS"];
+
+    /* Required GPS fields */
+
+    if (
+        !isset($gps["GPSLatitude"]) ||
+        !isset($gps["GPSLongitude"]) ||
+        !isset($gps["GPSLatitudeRef"]) ||
+        !isset($gps["GPSLongitudeRef"])
+    ) {
+        return false;
+    }
+
+    /* Make sure coordinates are not empty */
+
+    if (
+        empty($gps["GPSLatitude"][0]) ||
+        empty($gps["GPSLatitude"][1]) ||
+        empty($gps["GPSLatitude"][2]) ||
+        empty($gps["GPSLongitude"][0]) ||
+        empty($gps["GPSLongitude"][1]) ||
+        empty($gps["GPSLongitude"][2])
+    ) {
+        return false;
+    }
+
+    return true;
+}
 
 /* Check citizen login */
 
@@ -74,20 +121,198 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         }
 
 
-        /* Store uploaded image paths */
+        /* =========================================================
+   CHECK GPS LOCATION FOR EVERY PHOTO
+   ========================================================= */
 
-        $uploaded_images = [];
+for ($i = 0; $i < $file_count; $i++) {
+
+    /* Check whether uploaded file exists */
+
+    if (
+        !isset($media["tmp_name"][$i]) ||
+        !is_uploaded_file($media["tmp_name"][$i])
+    ) {
+
+        echo "<h2>Invalid image upload.</h2>";
+        exit;
+
+    }
 
 
-        /* Upload every photo */
+    /* Check GPS metadata */
 
-        for ($i = 0; $i < $file_count; $i++) {
+    if (!imageHasGPS($media["tmp_name"][$i])) {
+
+        echo "
+        <!DOCTYPE html>
+        <html>
+        <head>
+            <title>GPS Location Required - CivicVoice</title>
+
+            <style>
+
+                body {
+                    margin: 0;
+                    min-height: 100vh;
+                    background: #E8E2D5;
+                    font-family: Arial, sans-serif;
+
+                    display: flex;
+                    align-items: center;
+                    justify-content: center;
+                }
+
+                .gps-error-box {
+                    width: 90%;
+                    max-width: 600px;
+
+                    background: #ffffff;
+
+                    padding: 40px;
+
+                    border-radius: 18px;
+
+                    text-align: center;
+
+                    border: 2px solid #C9A227;
+
+                    box-shadow:
+                        0 10px 30px rgba(0,0,0,0.12);
+                }
+
+                .gps-icon {
+                    font-size: 55px;
+                    margin-bottom: 15px;
+                }
+
+                .gps-error-box h2 {
+                    margin: 0 0 15px;
+
+                    color: #166534;
+
+                    font-size: 26px;
+                }
+
+                .gps-error-box p {
+                    color: #555555;
+
+                    line-height: 1.6;
+
+                    font-size: 15px;
+                }
+
+                .gps-back-button {
+                    display: inline-block;
+
+                    margin-top: 20px;
+
+                    padding: 12px 24px;
+
+                    background: #166534;
+
+                    color: #ffffff;
+
+                    text-decoration: none;
+
+                    border-radius: 10px;
+
+                    font-weight: 700;
+                }
+
+                .gps-back-button:hover {
+                    background: #14532d;
+                }
+
+            </style>
+
+        </head>
+
+        <body>
+
+            <div class='gps-error-box'>
+
+                <div class='gps-icon'>
+                    📍
+                </div>
+
+                <h2>
+                    GPS Location Required
+                </h2>
+
+                <p>
+                    Every photo uploaded for a civic post
+                    must contain GPS location information.
+                </p>
+
+                <p>
+                    Please enable <strong>Location</strong>
+                    on your phone camera and take the photo
+                    again.
+                </p>
+
+                <a
+                    href='javascript:history.back()'
+                    class='gps-back-button'
+                >
+                    ← Go Back
+                </a>
+
+            </div>
+
+        </body>
+        </html>
+        ";
+
+        exit;
+
+    }
+
+}
 
 
-            $extension = pathinfo(
-                $media["name"][$i],
-                PATHINFO_EXTENSION
-            );
+/* =========================================================
+   STORE UPLOADED IMAGE PATHS
+   ========================================================= */
+
+$uploaded_images = [];
+
+
+/* Upload every photo */
+
+for ($i = 0; $i < $file_count; $i++) {
+
+    $extension = pathinfo(
+        $media["name"][$i],
+        PATHINFO_EXTENSION
+    );
+
+
+    $file_name = "post_"
+               . time()
+               . "_"
+               . uniqid()
+               . "_"
+               . ($i + 1)
+               . "."
+               . $extension;
+
+
+    $file_path = "Images/" . $file_name;
+
+
+    /* Move image to Images folder */
+
+    if (move_uploaded_file(
+        $media["tmp_name"][$i],
+        $file_path
+    )) {
+
+        $uploaded_images[] = $file_path;
+
+    }
+
+}
 
 
             $file_name = "post_"
@@ -1187,9 +1412,9 @@ main.create-page > .create-post-container > form .publish-button {
                     >
 
                     <p id="upload_message">
-                        📷 You can upload up to 10 photos.
-                    </p>
-
+    📍 Photos must contain GPS location information.
+    You can upload up to 10 GPS-tagged photos.
+</p>
                 </div>
 
             </div>
@@ -1249,7 +1474,7 @@ postType.addEventListener(
             media.multiple = true;
 
             message.innerHTML =
-                "📷 You can upload up to 10 photos.";
+    "📍 Photos must contain GPS location information. You can upload up to 10 photos.";
 
         }
 

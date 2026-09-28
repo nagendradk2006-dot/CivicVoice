@@ -23,7 +23,17 @@ if (!isset($_GET["department_id"]) || !is_numeric($_GET["department_id"])) {
 }
 
 $department_id = (int) $_GET["department_id"];
+/* ================================================= */
+/* SEARCH COMPLAINTS */
+/* ================================================= */
 
+$search = "";
+
+if (isset($_GET["search"])) {
+    $search = trim($_GET["search"]);
+}
+
+$search_safe = mysqli_real_escape_string($conn, $search);
 
 /* ================================================= */
 /* GET DEPARTMENT DETAILS */
@@ -67,8 +77,17 @@ $complaint_sql = "SELECT
                   FROM complaints
                   INNER JOIN departments
                   ON complaints.department_id = departments.department_id
-                  WHERE complaints.department_id = '$department_id'
-                  ORDER BY complaints.created_at DESC";
+                  WHERE complaints.department_id = '$department_id'";
+
+if ($search != "") {
+
+    $complaint_sql .= " AND (
+        complaints.area_name LIKE '%$search_safe%'
+        OR complaints.constituency_name LIKE '%$search_safe%'
+    )";
+}
+
+$complaint_sql .= " ORDER BY complaints.created_at DESC";
 
 $complaint_result = mysqli_query($conn, $complaint_sql);
 
@@ -645,8 +664,177 @@ if (!$complaint_result) {
             }
 
         }
+/* =================================================
+   DATE-WISE COMPLAINT GROUP
+================================================= */
 
-    </style>
+.admin-complaint-date {
+    width: 92%;
+    max-width: 900px;
+
+    margin: 30px auto 10px;
+    padding: 12px 18px;
+
+    background: #176b3a;
+    color: #ffffff;
+
+    border-left: 5px solid #c9a227;
+    border-radius: 10px;
+
+    font-size: 17px;
+    font-weight: bold;
+
+    box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+}
+  /* =================================================
+   ADMIN COMPLAINT SEARCH
+================================================= */
+
+.admin-complaint-search {
+
+    width: 92%;
+
+    max-width: 1150px;
+
+    margin: 0 auto 20px;
+
+    display: flex;
+
+    justify-content: flex-end;
+
+    box-sizing: border-box;
+}
+
+
+.admin-complaint-search form {
+
+    display: flex;
+
+    align-items: center;
+
+    gap: 8px;
+}
+
+
+.admin-complaint-search input[type="text"] {
+
+    width: 240px;
+
+    height: 36px;
+
+    padding: 0 14px;
+
+    border: 2px solid #c9a227;
+
+    border-radius: 20px;
+
+    background: #ffffff;
+
+    color: #333333;
+
+    font-size: 13px;
+
+    outline: none;
+
+    box-sizing: border-box;
+}
+
+
+.admin-complaint-search input[type="text"]:focus {
+
+    border-color: #176b3a;
+
+    box-shadow:
+        0 0 0 3px rgba(23,107,58,0.10);
+}
+
+
+.admin-complaint-search button {
+
+    height: 36px;
+
+    padding: 0 14px;
+
+    border: none;
+
+    border-radius: 18px;
+
+    background: #176b3a;
+
+    color: #ffffff;
+
+    font-size: 13px;
+
+    font-weight: 700;
+
+    cursor: pointer;
+
+    box-sizing: border-box;
+}
+
+
+.admin-complaint-search button:hover {
+
+    background: #0f542c;
+}
+
+
+.admin-complaint-search a {
+
+    width: 36px;
+
+    height: 36px;
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    border: 2px solid #c9a227;
+
+    border-radius: 50%;
+
+    background: #ffffff;
+
+    color: #b71c1c;
+
+    text-decoration: none;
+
+    font-size: 12px;
+
+    font-weight: 700;
+
+    box-sizing: border-box;
+}
+
+
+/* =================================================
+   MOBILE
+================================================= */
+
+@media (max-width: 700px) {
+
+    .admin-complaint-search {
+
+        justify-content: center;
+
+    }
+
+    .admin-complaint-search form {
+
+        width: 100%;
+
+    }
+
+    .admin-complaint-search input[type="text"] {
+
+        width: 100%;
+
+    }
+
+}
+  </style>
 
 </head>
 
@@ -716,19 +904,84 @@ if (!$complaint_result) {
 
 </div>
 
+<!-- =================================================
+     COMPLAINT SEARCH
+     ================================================= -->
 
+<div class="admin-complaint-search">
+
+    <form method="GET">
+
+        <input
+            type="hidden"
+            name="department_id"
+            value="<?php echo (int)$department_id; ?>"
+        >
+
+        <input
+            type="text"
+            name="search"
+            value="<?php echo htmlspecialchars($search); ?>"
+            placeholder="Area or Constituency"
+        >
+
+        <button type="submit">
+            🔍 Search
+        </button>
+
+        <?php if ($search != "") { ?>
+
+            <a
+                href="admin_department_complaints.php?department_id=<?php echo (int)$department_id; ?>"
+                title="Clear Search"
+            >
+                ✖
+            </a>
+
+        <?php } ?>
+
+    </form>
+
+</div>
 
 <?php
 
 /* =================================================
    CHECK COMPLAINTS
    ================================================= */
-
 if (mysqli_num_rows($complaint_result) > 0) {
 
+    $current_date = "";
 
     while ($row = mysqli_fetch_assoc($complaint_result)) {
 
+        $posted_date = date(
+            "Y-m-d",
+            strtotime($row["created_at"])
+        );
+
+        /* =================================================
+           SHOW DATE HEADING WHEN DATE CHANGES
+        ================================================= */
+
+        if ($posted_date != $current_date) {
+
+            $current_date = $posted_date;
+
+            $display_date = date(
+                "d F Y",
+                strtotime($row["created_at"])
+            );
+?>
+
+            <div class="admin-complaint-date">
+
+                📅 <?php echo htmlspecialchars($display_date); ?>
+
+            </div>
+
+<?php
+        }
 ?>
 
 

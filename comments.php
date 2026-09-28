@@ -16,7 +16,28 @@ $citizen_id = $_SESSION["citizen_id"];
 
 $complaint_id = $_GET["complaint_id"];
 
+/* ================================================= */
+/* DELETE COMMENT */
+/* ================================================= */
 
+if (isset($_GET["delete_comment"])) {
+
+    $delete_comment_id = (int)$_GET["delete_comment"];
+
+    $delete_sql = "
+        DELETE FROM complaint_comments
+        WHERE comment_id='$delete_comment_id'
+        AND citizen_id='$citizen_id'
+        AND complaint_id='$complaint_id'
+    ";
+
+    if (!mysqli_query($conn, $delete_sql)) {
+        die("Delete Comment Error: " . mysqli_error($conn));
+    }
+
+    header("Location: comments.php?complaint_id=" . urlencode($complaint_id));
+    exit;
+}
 /* Add new comment */
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
@@ -195,20 +216,46 @@ $result = mysqli_query($conn, $sql);
            BACK TO HOME
         ================================================= */
 
-        .back-home {
-            display: inline-block;
-            margin-top: 15px;
-            padding: 10px 18px;
-            background: #333;
-            color: white;
-            text-decoration: none;
-            border-radius: 7px;
-            cursor: pointer;
-        }
+        /* =================================================
+   BACK TO HOME BUTTON
+================================================= */
 
-        .back-home:hover {
-            background: #111;
-        }
+.back-home {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+
+    margin-top: 20px;
+    padding: 12px 22px;
+
+    background: #176b3a;
+    color: #ffffff;
+
+    text-decoration: none;
+    border: 2px solid #C9A227;
+    border-radius: 8px;
+
+    font-size: 15px;
+    font-weight: bold;
+
+    cursor: pointer;
+
+    box-shadow: 0 3px 8px rgba(0, 0, 0, 0.15);
+
+    transition: all 0.2s ease;
+}
+
+.back-home:hover {
+    background: #12572f;
+    border-color: #d4af37;
+    transform: translateY(-2px);
+    box-shadow: 0 5px 12px rgba(0, 0, 0, 0.20);
+}
+
+.back-home:active {
+    transform: translateY(0);
+}
 
         /* =================================================
            MOBILE
@@ -241,8 +288,18 @@ $result = mysqli_query($conn, $sql);
             }
 
         }
+/* =================================================
+   DELETE COMMENT
+================================================= */
 
-    </style>
+.delete-comment {
+    margin-left: 8px;
+    text-decoration: none;
+    font-size: 15px;
+    cursor: pointer;
+}
+
+   </style>
 <body>
 
 <div class="comments-container">
@@ -305,8 +362,21 @@ if (mysqli_num_rows($result) > 0) {
 
 <small>
     <?php echo $row["created_at"]; ?>
-</small>
 
+    <?php if ((int)$row["citizen_id"] === (int)$citizen_id): ?>
+
+        <a
+            href="comments.php?complaint_id=<?php echo urlencode($complaint_id); ?>&delete_comment=<?php echo (int)$row["comment_id"]; ?>"
+            onclick="return confirm('Are you sure you want to delete this comment?');"
+            class="delete-comment"
+            title="Delete comment"
+        >
+            🗑️
+        </a>
+
+    <?php endif; ?>
+
+</small>
 <hr>
 
 <?php
@@ -324,9 +394,9 @@ if (mysqli_num_rows($result) > 0) {
 
 <br>
 
-<button onclick="window.location.href='home.php'">
+<a href="home.php" class="back-home">
     ← Back to Home
-</button>
+</a>
 
 
 </body>
