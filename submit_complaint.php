@@ -2,7 +2,16 @@
 
 session_start();
 include "db.php";
+function imageHasGPS($file_path)
+{
+    $exif = @exif_read_data($file_path, null, true);
 
+    if (!$exif) {
+        return false;
+    }
+
+    return isset($exif["GPS"]);
+}
 
 /* ================================================= */
 /* CHECK CITIZEN LOGIN */
@@ -133,50 +142,108 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     }
 
 
-    /* ================================================= */
-    /* INSERT COMPLAINT FIRST */
-    /* ================================================= */
+    
 
-    $sql = "
-        INSERT INTO complaints
-        (
-            complaint_id,
-            citizen_id,
-            constituency_name,
-            ward_number,
-            area_name,
-            pincode,
-            issue_description,
-            department_id,
-            issue_image,
-            status
-        )
-        VALUES
-        (
-            '$complaint_id',
-            '$citizen_id',
-            '$constituency_name',
-            '$Ward_number',
-            '$area_name',
-            '$pincode',
-            '$Describe_Issue',
-            '$department_id',
-            '',
-            'Submitted'
-        )
-    ";
+/* ================================================= */
+/* CHECK GPS IN ALL IMAGES */
+/* ================================================= */
 
+for ($i = 0; $i < $image_count; $i++) {
 
-    if (!mysqli_query($conn, $sql)) {
+    if (!is_uploaded_file($images["tmp_name"][$i])) {
 
-        die(
-            "DATABASE ERROR: " .
-            mysqli_error($conn)
-        );
+        echo "<h2>Invalid image upload.</h2>";
+        exit;
 
     }
 
+    if (!imageHasGPS($images["tmp_name"][$i])) {
 
+        echo "
+        <div style='
+            max-width:600px;
+            margin:60px auto;
+            padding:35px;
+            background:white;
+            border-radius:15px;
+            text-align:center;
+            font-family:Arial;
+            box-shadow:0 8px 25px rgba(0,0,0,0.12);
+        '>
+
+            <h2 style='color:#b71c1c;'>
+                📍 GPS Location Required
+            </h2>
+
+            <p>
+                Image " . ($i + 1) . " does not contain GPS
+                location information.
+            </p>
+
+            <p>
+                Please upload a photo taken with GPS/location
+                enabled.
+            </p>
+
+            <br>
+
+            <button onclick='history.back()' style='
+                padding:12px 25px;
+                background:#166534;
+                color:white;
+                border:none;
+                border-radius:8px;
+                cursor:pointer;
+            '>
+                ← Go Back
+            </button>
+
+        </div>
+        ";
+
+        exit;
+    }
+}
+    
+/* ================================================= */
+/* INSERT COMPLAINT FIRST */
+/* ================================================= */
+
+$sql = "
+    INSERT INTO complaints
+    (
+        complaint_id,
+        citizen_id,
+        constituency_name,
+        ward_number,
+        area_name,
+        pincode,
+        issue_description,
+        department_id,
+        issue_image,
+        status
+    )
+    VALUES
+    (
+        '$complaint_id',
+        '$citizen_id',
+        '$constituency_name',
+        '$Ward_number',
+        '$area_name',
+        '$pincode',
+        '$Describe_Issue',
+        '$department_id',
+        '',
+        'Submitted'
+    )
+";
+
+if (!mysqli_query($conn, $sql)) {
+    die(
+        "DATABASE ERROR: " .
+        mysqli_error($conn)
+    );
+}
     /* ================================================= */
     /* UPLOAD ALL IMAGES */
     /* ================================================= */
@@ -740,11 +807,10 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                     multiple
                     required
                 >
-
-                <p class="upload-info">
-                    📷 You can upload a maximum of 10 images.
-                </p>
-
+<p class="upload-info">
+    📍 Photos must contain GPS location information.
+    You can upload a maximum of 10 GPS-tagged images.
+</p>
             </div>
 
         </div>

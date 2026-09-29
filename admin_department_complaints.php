@@ -63,6 +63,7 @@ $department_name = $department["department_name"];
 $complaint_sql = "SELECT
                     complaints.complaint_id,
                     complaints.citizen_id,
+                    citizens.ssn,
                     complaints.constituency_name,
                     complaints.ward_number,
                     complaints.area_name,
@@ -77,6 +78,8 @@ $complaint_sql = "SELECT
                   FROM complaints
                   INNER JOIN departments
                   ON complaints.department_id = departments.department_id
+                  INNER JOIN citizens
+                  ON complaints.citizen_id = citizens.citizen_id
                   WHERE complaints.department_id = '$department_id'";
 
 if ($search != "") {
@@ -1022,23 +1025,37 @@ if (mysqli_num_rows($complaint_result) > 0) {
 
     <!-- CITIZEN -->
 
-    <p>
+<p>
 
-        👤
+    👤
 
-        <strong>
-            Citizen ID:
-        </strong>
+    <strong>
+        Citizen ID:
+    </strong>
 
-        <?php
+    <?php
+    echo htmlspecialchars($row["citizen_id"]);
+    ?>
 
-        echo htmlspecialchars(
-            $row["citizen_id"]
-        );
+</p>
 
-        ?>
+<p>
 
-    </p>
+    🔐
+
+    <strong>
+        SSN:
+    </strong>
+
+    <?php
+
+    $masked_ssn = "***-**-" . substr($row["ssn"], -4);
+
+    echo htmlspecialchars($masked_ssn);
+
+    ?>
+
+</p>
 
 
     <!-- CONSTITUENCY -->

@@ -7,9 +7,14 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $citizen_name = $_POST["citizen_name"];
     $email = $_POST["email"];
     $username = $_POST["username"];
+    $ssn = $_POST["ssn"];
     $password = $_POST["password"];
     $confirm_password = $_POST["confirm_password"];
 
+    if (!preg_match('/^\d{3}-\d{2}-\d{4}$/', $ssn)) {
+    echo "Please enter SSN in the format 123-45-6789";
+    exit;
+}
     /* Check passwords */
 
     if ($password != $confirm_password) {
@@ -38,10 +43,10 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
     /* Insert new citizen */
 
-    $sql = "INSERT INTO citizens
-            (citizen_name, email, username, password)
-            VALUES
-            ('$citizen_name', '$email', '$username', '$hashed_password')";
+$sql = "INSERT INTO citizens
+        (citizen_name, email, username, ssn, password)
+        VALUES
+        ('$citizen_name', '$email', '$username', '$ssn', '$hashed_password')";
 
     if (mysqli_query($conn, $sql)) {
 
@@ -376,106 +381,121 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             Enter your details to get started with CivicVoice.
         </p>
 
-        <form method="POST"
-              onsubmit="return validateRegistration()">
+       <form method="POST"
+      onsubmit="return validateRegistration()">
 
-            <label>Full Name:</label>
+    <label>Full Name:</label>
 
-            <br>
+    <br>
 
-            <input
-                type="text"
-                name="citizen_name"
-                required
-            >
+    <input
+        type="text"
+        name="citizen_name"
+        required
+    >
 
-            <br><br>
-
-
-            <label>Email:</label>
-
-            <br>
-
-            <input
-                type="email"
-                name="email"
-                required
-            >
-
-            <br><br>
+    <br><br>
 
 
-            <label>Username:</label>
+    <label>Email:</label>
 
-            <br>
+    <br>
 
-            <input
-                type="text"
-                name="username"
-                required
-            >
+    <input
+        type="email"
+        name="email"
+        required
+    >
 
-            <br><br>
-
-
-            <label>Password:</label>
-
-            <br>
-
-            <div class="password-box">
-
-                <input
-                    type="password"
-                    name="password"
-                    id="registerPassword"
-                    required
-                >
-
-                <button
-                    type="button"
-                    class="password-toggle"
-                    onclick="toggleRegisterPassword('registerPassword')"
-                >
-                    👁
-                </button>
-
-            </div>
-
-            <br><br>
+    <br><br>
 
 
-            <label>Confirm Password:</label>
+    <label>Username:</label>
 
-            <br>
+    <br>
 
-            <div class="password-box">
+    <input
+        type="text"
+        name="username"
+        required
+    >
 
-                <input
-                    type="password"
-                    name="confirm_password"
-                    id="confirmPassword"
-                    required
-                >
+    <br><br>
 
-                <button
-                    type="button"
-                    class="password-toggle"
-                    onclick="toggleRegisterPassword('confirmPassword')"
-                >
-                    👁
-                </button>
 
-            </div>
+    <label>SSN:</label>
 
-            <p id="passwordMessage"></p>
+    <br>
 
-            <br>
+    <input
+        type="text"
+        name="ssn"
+        maxlength="11"
+        placeholder="123-45-6789"
+        required
+    >
 
-            <button type="submit">
-                Register
-            </button>
+    <br><br>
 
-        </form>
+
+    <label>Password:</label>
+
+    <br>
+
+    <div class="password-box">
+
+        <input
+            type="password"
+            name="password"
+            id="registerPassword"
+            required
+        >
+
+        <button
+            type="button"
+            class="password-toggle"
+            onclick="toggleRegisterPassword('registerPassword')"
+        >
+            👁
+        </button>
+
+    </div>
+
+    <br><br>
+
+
+    <label>Confirm Password:</label>
+
+    <br>
+
+    <div class="password-box">
+
+        <input
+            type="password"
+            name="confirm_password"
+            id="confirmPassword"
+            required
+        >
+
+        <button
+            type="button"
+            class="password-toggle"
+            onclick="toggleRegisterPassword('confirmPassword')"
+        >
+            👁
+        </button>
+
+    </div>
+
+    <p id="passwordMessage"></p>
+
+    <br>
+
+    <button type="submit">
+        Register
+    </button>
+
+</form>
 
 
         <div class="login-link">

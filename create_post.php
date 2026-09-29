@@ -3,6 +3,31 @@
 
 session_start();
 include "db.php";
+function imageHasGPS($file_path)
+{
+    $exif = @exif_read_data($file_path, null, true);
+
+    if (!$exif) {
+        return false;
+    }
+
+    if (!isset($exif["GPS"])) {
+        return false;
+    }
+
+    $gps = $exif["GPS"];
+
+    if (
+        !isset($gps["GPSLatitude"]) ||
+        !isset($gps["GPSLongitude"]) ||
+        !isset($gps["GPSLatitudeRef"]) ||
+        !isset($gps["GPSLongitudeRef"])
+    ) {
+        return false;
+    }
+
+    return true;
+}
 /* =========================================================
    CHECK WHETHER IMAGE CONTAINS GPS LOCATION
    ========================================================= */
@@ -98,7 +123,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
     /* =========================
        PHOTO POST
-       ========================= */
 
     if ($post_type == "photo") {
 
@@ -270,7 +294,60 @@ for ($i = 0; $i < $file_count; $i++) {
 
 }
 
+/* Check GPS information in every photo */
 
+for ($i = 0; $i < $file_count; $i++) {
+
+    if (
+        !isset($media["tmp_name"][$i]) ||
+        !is_uploaded_file($media["tmp_name"][$i])
+    ) {
+        echo "<h2>Invalid image upload.</h2>";
+        exit;
+    }
+
+    if (!imageHasGPS($media["tmp_name"][$i])) {
+
+        echo "
+        <div style='
+            max-width:600px;
+            margin:80px auto;
+            padding:30px;
+            text-align:center;
+            font-family:Arial;
+            background:#fff;
+            border-radius:15px;
+            box-shadow:0 5px 20px rgba(0,0,0,0.15);
+        '>
+            <h2 style='color:#b71c1c;'>
+                📍 GPS Location Required
+            </h2>
+
+            <p>
+                Photo " . ($i + 1) . " does not contain GPS
+                location information.
+            </p>
+
+            <p>
+                Please upload a photo taken with location/GPS enabled.
+            </p>
+
+            <button onclick='history.back()' style='
+                padding:10px 20px;
+                background:#176b3a;
+                color:white;
+                border:none;
+                border-radius:8px;
+                cursor:pointer;
+            '>
+                ← Go Back
+            </button>
+        </div>
+        ";
+
+        exit;
+    }
+}
 /* =========================================================
    STORE UPLOADED IMAGE PATHS
    ========================================================= */
