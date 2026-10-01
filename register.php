@@ -603,7 +603,41 @@ function validateRegistration() {
     return true;
 
 }
+/* ================================================= */
+/* SSN AUTO FORMAT */
+/* ================================================= */
 
+var ssnInput = document.querySelector('input[name="ssn"]');
+
+ssnInput.addEventListener("input", function () {
+
+    var value = this.value.replace(/\D/g, "");
+
+    if (value.length > 9) {
+        value = value.substring(0, 9);
+    }
+
+    if (value.length > 5) {
+
+        value =
+            value.substring(0, 3) +
+            "-" +
+            value.substring(3, 5) +
+            "-" +
+            value.substring(5);
+
+    } else if (value.length > 3) {
+
+        value =
+            value.substring(0, 3) +
+            "-" +
+            value.substring(3);
+
+    }
+
+    this.value = value;
+
+});
 </script>
 
 </body>

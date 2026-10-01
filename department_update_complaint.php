@@ -2,7 +2,7 @@
 
 session_start();
 include "db.php";
-
+include "send_email.php";
 
 /* ================================================= */
 /* CHECK DEPARTMENT LOGIN */
@@ -119,18 +119,102 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
     if (mysqli_query($conn, $update_sql)) {
 
-        header(
-            "Location: department_dashboard.php"
+    /* ============================================= */
+    /* SEND EMAIL TO CITIZEN */
+    /* ============================================= */
+
+    $citizen_id = $complaint["citizen_id"];
+
+    $citizen_sql = "
+        SELECT citizen_name, email
+        FROM citizens
+        WHERE citizen_id='$citizen_id'
+        LIMIT 1
+    ";
+
+    $citizen_result = mysqli_query($conn, $citizen_sql);
+
+    if ($citizen_result && mysqli_num_rows($citizen_result) == 1) {
+
+        $citizen = mysqli_fetch_assoc($citizen_result);
+
+        $citizen_name = $citizen["citizen_name"];
+        $citizen_email = $citizen["email"];
+
+        $email_subject =
+            "CivicVoice Complaint Status Updated";
+
+        $email_message = "
+            <div style='font-family: Arial, sans-serif;'>
+                <h2 style='color:#1b5e20;'>
+                    CivicVoice Complaint Update
+                </h2>
+
+                <p>
+                    Hello <strong>" .
+                    htmlspecialchars($citizen_name) .
+                    "</strong>,
+                </p>
+
+                <p>
+                    Your complaint
+                    <strong>#{$complaint_id}</strong>
+                    has been updated by the department.
+                </p>
+
+                <p>
+                    <strong>Current Status:</strong>
+                    {$status}
+                </p>
+
+                <p>
+                    <strong>Remarks:</strong><br>
+                    " .
+                    nl2br(htmlspecialchars($resolution_remarks)) .
+                    "
+                </p>
+
+                <p>
+                    Please login to CivicVoice to view the latest
+                    details of your complaint.
+                </p>
+
+                <p>
+                    Regards,<br>
+                    <strong>CivicVoice</strong>
+                </p>
+            </div>
+        ";
+
+        sendCivicVoiceEmail(
+            $citizen_email,
+            $citizen_name,
+            $email_subject,
+            $email_message
         );
-
-        exit;
-
-    } else {
-
-        $update_error =
-            "Unable to update the complaint. Please try again.";
-
     }
+
+
+    /* ============================================= */
+    /* EXISTING REDIRECT */
+    /* ============================================= */
+
+    echo "
+<script>
+    alert('Complaint updated successfully!');
+    window.location.href = 'department_dashboard.php';
+</script>
+";
+exit;
+
+    exit;
+
+} else {
+
+    $update_error =
+        "Unable to update the complaint. Please try again.";
+
+}
 
 }
 
